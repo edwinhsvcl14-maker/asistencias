@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hermandad del Carmen - 14 Cuadrilla</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
         <div class="logo">Hermandad del Carmen</div>
         <nav class="main-nav">
             <ul>
-                <li><a href="#inicio">Inicio___</a></li>
+                <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#cuadrillas">Cuadrillas</a></li>
                 <li><a href="#grupos">Grupos</a></li>
                 <li><a href="#asistencias">Asistencias</a></li>
@@ -34,21 +34,42 @@
 
     <section id="cuadrillas" class="section">
         <h2>Nuestras Cuadrillas</h2>
-        <div class="cuadrillas-grid">
-            <div class="cuadrilla-item">
-                <h3>Cuadrilla 1</h3>
-                <p>Breve descripción de la cuadrilla y sus actividades.</p>
-                <a href="#" class="btn">Ver Más</a>
+        <div class="accordion">
+            <div class="accordion-item">
+                <button class="accordion-button" aria-expanded="false">
+                    Cuadrilla 1
+                </button>
+                <div class="accordion-content">
+                    <p>Breve descripción de la Cuadrilla 1 y sus actividades principales. Aquí puedes añadir información sobre su historia, el capataz, los costaleros, etc.</p>
+                    <div class="accordion-actions">
+                        <a href="#" class="btn btn-secondary">Ver Galería</a>
+                        <a href="#" class="btn btn-primary">Contactar</a>
+                    </div>
+                </div>
             </div>
-            <div class="cuadrilla-item">
-                <h3>Cuadrilla 2</h3>
-                <p>Breve descripción de la cuadrilla y sus actividades.</p>
-                <a href="#" class="btn">Ver Más</a>
+            <div class="accordion-item">
+                <button class="accordion-button" aria-expanded="false">
+                    Cuadrilla 2
+                </button>
+                <div class="accordion-content">
+                    <p>Detalles sobre la Cuadrilla 2. Incluye información relevante sobre su participación en los eventos de la hermandad y cualquier otra particularidad.</p>
+                    <div class="accordion-actions">
+                        <a href="#" class="btn btn-secondary">Ver Galería</a>
+                        <a href="#" class="btn btn-primary">Contactar</a>
+                    </div>
+                </div>
             </div>
-            <div class="cuadrilla-item">
-                <h3>Cuadrilla 3</h3>
-                <p>Breve descripción de la cuadrilla y sus actividades.</p>
-                <a href="#" class="btn">Ver Más</a>
+            <div class="accordion-item">
+                <button class="accordion-button" aria-expanded="false">
+                    Cuadrilla 3
+                </button>
+                <div class="accordion-content">
+                    <p>Información sobre la Cuadrilla 3. Describe su espíritu, miembros destacados o cualquier anécdota interesante.</p>
+                    <div class="accordion-actions">
+                        <a href="#" class="btn btn-secondary">Ver Galería</a>
+                        <a href="#" class="btn btn-primary">Contactar</a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -90,7 +111,21 @@
         <p>Contacto: info@hermandadelcarmen.com</p>
     </footer>
 
+    <script>
+        const accordionButtons = document.querySelectorAll('.accordion-button');
+
+        accordionButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const accordionItem = button.parentNode;
+                const accordionContent = button.nextElementSibling;
+                const isExpanded = button.getAttribute('aria-expanded') === 'true' || false;
+
+                button.classList.toggle('active');
+                button.setAttribute('aria-expanded', !isExpanded);
+                accordionContent.classList.toggle('open');
+            });
+        });
+    </script>
+
 </body>
-
 </html>
-
