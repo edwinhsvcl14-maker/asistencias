@@ -26,6 +26,19 @@
     </header>
 
     <section id="inicio" class="hero">
+        <div class="carousel-container">
+            <div class="carousel-slide">
+                <img src="https://via.placeholder.com/1500x800/795548/F5F5DC?Text=Imagen+1" alt="Imagen 1">
+            </div>
+            <div class="carousel-slide">
+                <img src="https://via.placeholder.com/1500x800/5D4037/F5F5DC?Text=Imagen+2" alt="Imagen 2">
+            </div>
+            <div class="carousel-slide">
+                <img src="https://via.placeholder.com/1500x800/A1887F/F5F5DC?Text=Imagen+3" alt="Imagen 3">
+            </div>
+            <button class="carousel-prev-btn">&#10094;</button>
+            <button class="carousel-next-btn">&#10095;</button>
+        </div>
         <div class="hero-content">
             <h1>Bienvenido a la 14 Cuadrilla</h1>
             <p>Unidos por la fe, el servicio y la devoción al Señor del Carmen.</p>
@@ -113,18 +126,42 @@
 
     <script>
         const accordionButtons = document.querySelectorAll('.accordion-button');
-
         accordionButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const accordionItem = button.parentNode;
                 const accordionContent = button.nextElementSibling;
-                const isExpanded = button.getAttribute('aria-expanded') === 'true' || false;
-
-                button.classList.toggle('active');
+                const isExpanded = button.getAttribute('aria-expanded') === 'true';
                 button.setAttribute('aria-expanded', !isExpanded);
                 accordionContent.classList.toggle('open');
+                button.classList.toggle('active');
             });
         });
+    </script>
+
+    <script>
+        const slides = document.querySelectorAll('.carousel-slide');
+        const prevBtn = document.querySelector('.carousel-prev-btn');
+        const nextBtn = document.querySelector('.carousel-next-btn');
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+        }
+
+        showSlide(currentIndex);
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        setInterval(nextSlide, 5000); // Cambia de imagen cada 5 segundos
     </script>
 
 </body>
