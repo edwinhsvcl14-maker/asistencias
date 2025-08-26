@@ -93,15 +93,80 @@ body {
     transform: translateY(-3px);
 }
 
-/* Sección Héroe (Inicio) */
+/* Sección Héroe con Carrusel */
 .hero {
-    background: linear-gradient(rgba(121, 85, 72, 0.7), rgba(121, 85, 72, 0.7)), url('https://via.placeholder.com/1500x800/795548/F5F5DC?text=Hermandad+del+Carmen') no-repeat center center/cover;
-    color: var(--blanco-color);
+    position: relative;
     height: 80vh;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.carousel-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+}
+
+.carousel-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-prev-btn,
+.carousel-next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--blanco-color);
+    border: none;
+    padding: 15px;
+    font-size: 1.5em;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.3s ease;
+}
+
+.carousel-prev-btn {
+    left: 20px;
+}
+
+.carousel-next-btn {
+    right: 20px;
+}
+
+.carousel-prev-btn:hover,
+.carousel-next-btn:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.hero-content {
+    position: relative;
+    text-align: center;
+    color: var(--blanco-color);
     text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+    z-index: 11;
 }
 
 .hero-content h1 {
