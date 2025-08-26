@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargando Documento...</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        img {
+            width: 80px; /* Tamaño del GIF */
+            height: 80px;
+        }
+        p {
+            margin-top: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <img src="https://drive.google.com/file/d/1R8TUVFXwpeEUZhrABQTTfIbygIB0-8W8/view?usp=drive_link" alt="Cargando...">
+        <p>Cargando el documento...</p>
+    </div>
+
+    <script>
+        // REDIRIGE AL USUARIO DESPUÉS DE UNOS SEGUNDOS
+        setTimeout(function() {
+            window.location.href = 'https://drive.google.com/file/d/1pQNvSeJ1CbROXuJ6vDZqu22hDATrd7ch/view?usp=drive_link';
+        }, 5000); // 3000 milisegundos = 3 segundos de espera
+    </script>
+</body>
+</html>
