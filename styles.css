@@ -1,4 +1,4 @@
-/* Importar fuente de Google Fonts */
+/* Importar fuente de Google Fonts cambio edwin */
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');
 
 /* Colores y Estilos Generales */
@@ -127,10 +127,11 @@ body {
 }
 
 .carousel-slide img {
-    display: block;
+    /* Estas propiedades son la clave para la adaptabilidad */
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 .carousel-prev-btn,
