@@ -129,33 +129,92 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* Grillas y elementos */
-.cuadrillas-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 35px;
-    margin-top: 40px;
+.btn-secondary {
+    background-color: var(--crema-color);
+    color: var(--dark-text);
+    box-shadow: none;
 }
 
-.cuadrilla-item {
-    background: var(--blanco-color);
-    padding: 35px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-radius: 15px;
-    transition: transform 0.4s;
+.btn-secondary:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-3px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
-.cuadrilla-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+/* Acordeón de Cuadrillas */
+.accordion {
+    max-width: 800px;
+    margin: 30px auto;
+    text-align: left;
 }
 
-.cuadrilla-item h3 {
+.accordion-item {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.accordion-button {
+    background-color: var(--blanco-color);
     color: var(--primary-color);
-    margin-bottom: 10px;
-    font-size: 1.8em;
+    padding: 18px 25px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s ease;
 }
 
+.accordion-button::after {
+    content: '+';
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.accordion-button:hover {
+    background-color: var(--crema-color);
+}
+
+.accordion-button.active::after {
+    content: '-';
+    transform: rotate(180deg);
+}
+
+.accordion-content {
+    padding: 25px;
+    background-color: var(--blanco-color);
+    display: none;
+    border-top: 1px solid #eee;
+}
+
+.accordion-content.open {
+    display: block;
+}
+
+.accordion-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.accordion-actions .btn {
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 0.9em;
+}
+
+
+/* Grupos y Elementos */
 .grupos-list {
     display: flex;
     flex-wrap: wrap;
@@ -213,9 +272,6 @@ body {
     }
     .main-nav li a {
         padding: 10px 15px;
-    }
-    .cuadrillas-grid {
-        grid-template-columns: 1fr;
     }
     .hero-content h1 {
         font-size: 2.5em;
