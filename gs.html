@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargando Documento...</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #FFFFFF;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        img {
+            width: 600px; /* Tamaño del GIF */
+            height: 300px;
+        }
+        p {
+            margin-top: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <img src="https://edwinhsvcl14-maker.github.io/asistencias/gs.gif" alt="Cargando...">
+       
+    </div>
+
+    <script>
+        // REDIRIGE AL USUARIO DESPUÉS DE UNOS SEGUNDOS
+        setTimeout(function() {
+            window.location.href = 'https://edwinhsvcl14-maker.github.io/asistencias/gs.pdf';
+        }, 5000); // 3000 milisegundos = 3 segundos de espera
+    </script>
+</body>
+
+</html>
