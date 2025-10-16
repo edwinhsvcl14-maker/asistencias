@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Asistencia - Primera Cuadrilla</title>
+    <style>
+        /* ========================================================== */
+        /* Estilos CSS Integrados para Diseño Profesional */
+        /* ========================================================== */
+
+        :root {
+            --color-principal: #F5F5DC; /* Cream (Crema) */
+            --color-secundario: #FAF0E6; /* Linen (Blanco roto) */
+            --color-acento: #A0522D; /* Sienna (Marrón medio) */
+            --color-texto-oscuro: #3E2723; /* Marrón oscuro para texto */
+            --color-borde: #D2B48C; /* Tan (Marrón claro) */
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-secundario);
+            color: var(--color-texto-oscuro);
+        }
+
+        .contenedor {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+            background-color: var(--color-principal);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        /* ---------------------------------------------------------- */
+        /* Estilos del Nuevo Encabezado con Logo */
+        /* ---------------------------------------------------------- */
+        header {
+            display: flex;
+            justify-content: space-between; /* Distribuye el espacio entre los elementos */
+            align-items: center; /* Centra verticalmente */
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--color-acento);
+            margin-bottom: 30px;
+        }
+
+        .header-titulo {
+            flex-grow: 1; /* Permite que el título ocupe el espacio restante */
+            text-align: center;
+        }
+
+        .header-titulo h1 {
+            color: var(--color-acento);
+            font-size: 2.2em; /* Ligeramente más pequeño para hacer espacio */
+            margin: 0;
+        }
+        
+        .header-titulo p {
+            margin: 5px 0 0 0;
+        }
+
+        .logo-espacio {
+            width: 100px; /* Tamaño fijo para el logo */
+            height: 100px;
+            border: 2px dashed var(--color-borde);
+            border-radius: 50%; /* Forma circular, puedes cambiar a '0' para cuadrado */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8em;
+            color: var(--color-acento);
+            flex-shrink: 0; /* Evita que el logo se encoja */
+            padding: 5px;
+            box-sizing: border-box;
+            background-color: white; /* Fondo blanco para el logo */
+        }
+
+        /* ---------------------------------------------------------- */
+        /* Estilos de la Tabla */
+        /* ---------------------------------------------------------- */
+
+        .tabla-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 1px solid var(--color-borde);
+            border-radius: 8px;
+            overflow: hidden; 
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: center;
+            border-bottom: 1px solid var(--color-borde);
+            border-right: 1px solid var(--color-borde);
+        }
+
+        th:last-child, td:last-child {
+            border-right: none;
+        }
+
+        thead th {
+            background-color: var(--color-acento);
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* Efecto Hover (Interactivo) */
+        tbody tr:hover {
+            background-color: #E8E4D9; 
+            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Colores Alternos para Filas */
+        tbody tr:nth-child(even) {
+            background-color: #FCF8F3; 
+        }
+
+        /* Columna de Asistencia - Colores Condicionales */
+        .asistio { color: #38761D; font-weight: bold; } 
+        .falto { color: #CC0000; font-weight: bold; } 
+
+        /* ---------------------------------------------------------- */
+        /* Botón de Descarga */
+        /* ---------------------------------------------------------- */
+
+        .pie-pagina {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--color-borde);
+        }
+
+        #btnDescargarPDF {
+            background-color: var(--color-acento);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        #btnDescargarPDF:hover {
+            background-color: #8B4513; 
+            transform: translateY(-2px);
+        }
+
+        #btnDescargarPDF:active {
+            transform: translateY(0);
+        }
+
+        /* ---------------------------------------------------------- */
+        /* Efecto de Carga/Fade-in (Profesional) */
+        /* ---------------------------------------------------------- */
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="contenedor fade-in">
+        <header>
+            <div class="logo-espacio" id="logoCuadrilla">
+                Logo Aquí
+            </div>
+            <div class="header-titulo">
+                <h1>Control de Asistencia Primera Cuadrilla</h1>
+                <p>Listado detallado de participación en actividades.</p>
+            </div>
+            <div class="logo-espacio" style="visibility: hidden;"></div> 
+        </header>
+
+        <div class="tabla-responsive">
+            <table id="tablaAsistencias">
+                <thead>
+                    <tr>
+                        <th>Nombre y Apellido</th>
+                        <th>Misas de Retiro</th>
+                        <th>Asambleas</th>
+                        <th>Jornadas</th>
+                        <th>Total Asistencias</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="pie-pagina">
+            <button id="btnDescargarPDF">Descargar Reporte Detallado (Simulación)</button>
+        </div>
+    </div>
+
+    <script>
+        const datosAsistencias = [
+            { id: 1, nombre: "Ana García", retiro: true, asamblea: true, jornadas: false },
+            { id: 2, nombre: "Luis Martínez", retiro: true, asamblea: false, jornadas: true },
+            { id: 3, nombre: "Marta López", retiro: false, asamblea: true, jornadas: true },
+            { id: 4, nombre: "Javier Pérez", retiro: true, asamblea: true, jornadas: true },
+            { id: 5, nombre: "Sofía Rodríguez", retiro: false, asamblea: false, jornadas: false },
+            { id: 6, nombre: "Roberto Gómez", retiro: true, asamblea: true, jornadas: false },
+            { id: 7, nombre: "Elena Ruiz", retiro: false, asamblea: true, jornadas: true }
+        ];
+
+        const tablaBody = document.querySelector('#tablaAsistencias tbody');
+        const btnDescargar = document.getElementById('btnDescargarPDF');
+
+        // Función para renderizar la tabla
+        function renderizarTabla() {
+            tablaBody.innerHTML = ''; 
+
+            datosAsistencias.forEach(persona => {
+                const fila = document.createElement('tr');
+                let totalAsistencias = 0;
+
+                const celdaNombre = document.createElement('td');
+                celdaNombre.textContent = persona.nombre;
+                celdaNombre.style.textAlign = 'left'; 
+                fila.appendChild(celdaNombre);
+
+                ['retiro', 'asamblea', 'jornadas'].forEach(evento => {
+                    const celdaEvento = document.createElement('td');
+                    if (persona[evento]) {
+                        celdaEvento.textContent = '✅'; 
+                        celdaEvento.classList.add('asistio');
+                        totalAsistencias++;
+                    } else {
+                        celdaEvento.textContent = '❌'; 
+                        celdaEvento.classList.add('falto');
+                    }
+                    fila.appendChild(celdaEvento);
+                });
+
+                const celdaTotal = document.createElement('td');
+                celdaTotal.textContent = totalAsistencias;
+                celdaTotal.style.fontWeight = 'bold';
+                fila.appendChild(celdaTotal);
+
+                tablaBody.appendChild(fila);
+            });
+        }
+
+        // Función para simular la descarga de PDF
+        function descargarPDF() {
+            alert("Simulando la generación y descarga del PDF. En un sistema real, el archivo se descargaría ahora.");
+            
+            const contenido = "--- Reporte Detallado de Asistencias - Primera Cuadrilla ---\n\n" + 
+                              "Nombre | Retiro | Asamblea | Jornadas | Total\n" +
+                              "---------------------------------------------------\n" +
+                              datosAsistencias.map(p => 
+                                  `${p.nombre} | ${p.retiro ? 'Si' : 'No'} | ${p.asamblea ? 'Si' : 'No'} | ${p.jornadas ? 'Si' : 'No'} | ${(p.retiro + p.asamblea + p.jornadas)}`
+                              ).join('\n');
+
+            const blob = new Blob([contenido], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Reporte_Asistencias_Cuadrilla.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', renderizarTabla);
+        btnDescargar.addEventListener('click', descargarPDF);
+    </script>
+
+</body>
+</html>
