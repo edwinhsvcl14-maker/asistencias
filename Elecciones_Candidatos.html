@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Elecciones Generales - Hermandad Virgen del Carmen</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Georgia:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <style>
+    
+<style>
         /* ========================================================== */
         /* Estilos CSS Integrados para Diseño Profesional (Elecciones) */
         /* ========================================================== */
@@ -19,7 +20,7 @@
         }
 
         body {
-            font-family: 'Poppins', sans-serif; /* Cambiado a Poppins */
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
             background-color: var(--color-secundario);
@@ -37,7 +38,7 @@
         }
 
         /* ---------------------------------------------------------- */
-        /* Encabezado Principal (Añadido espacio para el logo) */
+        /* Encabezado Principal */
         /* ---------------------------------------------------------- */
         .main-header {
             display: flex;
@@ -71,7 +72,7 @@
 
         .header-texto h1 {
             color: var(--color-acento);
-            font-family: 'Georgia', serif; /* Título principal en fuente clásica */
+            font-family: 'Georgia', serif;
             font-size: 2.5em;
             margin-bottom: 5px;
             text-transform: uppercase;
@@ -105,7 +106,7 @@
         /* ---------------------------------------------------------- */
         .lista-tarjeta {
             background-color: white;
-            padding: 0 0 20px 0; /* Padding solo en la parte inferior */
+            padding: 0 0 20px 0;
             border-radius: 10px;
             border: 2px solid var(--color-acento);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -116,7 +117,7 @@
             color: white;
             background-color: var(--color-acento);
             padding: 15px;
-            margin: 0; /* Sin margen superior/inferior para un look limpio */
+            margin: 0;
             border-radius: 8px 8px 0 0;
             font-size: 1.4em;
             letter-spacing: 1px;
@@ -129,10 +130,10 @@
             padding: 10px 0;
         }
         
-        /* Estilo para la cabecera de la tabla interna (NUEVA) */
+        /* Estilo para la cabecera de la tabla interna */
         .candidato-header-fila {
             display: grid;
-            grid-template-columns: 150px 1fr 70px; /* **AJUSTE CRÍTICO DE ANCHO** */
+            grid-template-columns: 150px 1fr 70px;
             align-items: center;
             padding: 8px 15px;
             margin-top: 10px;
@@ -143,11 +144,10 @@
             text-transform: uppercase;
         }
 
-
         /* Estilo para cada fila de candidato */
         .candidato-fila {
             display: grid;
-            grid-template-columns: 150px 1fr 70px; /* **AJUSTE CRÍTICO DE ANCHO** */
+            grid-template-columns: 150px 1fr 70px;
             align-items: center;
             padding: 10px 15px;
             border-bottom: 1px dashed var(--color-borde);
@@ -166,22 +166,55 @@
             font-size: 1em;
             color: var(--color-acento);
             font-weight: 600;
-            text-transform: none; /* Dejamos el cargo con mayúsculas y minúsculas */
+            text-transform: none;
             line-height: 1.2;
         }
         
-        /* Contenedores de Nombre y Grado */
         .candidato-nombre {
             padding-left: 15px;
         }
 
+        /* ---------------------------------------------------------- */
+        /* ICONO DE CUADRILLA/GRUPO (Ajustado para IMG) */
+        /* ---------------------------------------------------------- */
         .candidato-grado {
-            font-weight: 600;
-            text-align: center;
-            color: #666;
-            font-style: italic;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .grado-icono {
+            width: 30px; /* Tamaño del contenedor/círculo del logo */
+            height: 30px;
+            background-color: var(--color-acento); 
+            border-radius: 50%; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* CRÍTICO: Recorta la imagen si sobresale del círculo */
         }
         
+        .grado-icono img {
+            width: 80%; /* La imagen será 80% del círculo */
+            height: 80%;
+            object-fit: contain; /* Asegura que la imagen completa se vea sin distorsionarse */
+        }
+        
+        /* Estilo específico para G.S. (si no tiene logo numérico, solo texto) */
+        .grado-icono.gs {
+            background-color: #666;
+            width: auto;
+            height: auto;
+            border-radius: 4px;
+            padding: 3px 6px;
+        }
+        
+        .grado-icono.gs span {
+            color: white;
+            font-size: 0.7em;
+            font-weight: bold;
+        }
+
         /* ---------------------------------------------------------- */
         /* Pie de Página */
         /* ---------------------------------------------------------- */
@@ -226,87 +259,153 @@
                     <div class="candidato-fila">
                         <strong>Presidente</strong>
                         <span class="candidato-nombre">MONTI BUSTAMANTE Uldarico Alfredo</span>
-                        <span class="candidato-grado">12</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-12.png" alt="Logo C/GS 12">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Vicepresidente</strong>
                         <span class="candidato-nombre">AMBROSIO PAREJA Fidel Alejandro</span>
-                        <span class="candidato-grado">2</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-2.png" alt="Logo C/GS 2">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Primer Fiscal</strong>
                         <span class="candidato-nombre">HERRERA SOLANO Edward Carlos</span>
-                        <span class="candidato-grado">17</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-17.png" alt="Logo C/GS 17">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Segundo Fiscal</strong>
                         <span class="candidato-nombre">PERALTA MURILLO Oswaldo Leopoldo</span>
-                        <span class="candidato-grado">6</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-6.png" alt="Logo C/GS 6">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Secretario General</strong>
                         <span class="candidato-nombre">PEÑA ANGELES César Augusto</span>
-                        <span class="candidato-grado">5</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-5.png" alt="Logo C/GS 5">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Primer Secretario</strong>
                         <span class="candidato-nombre">CASAS SALAS Diego Oswaldo</span>
-                        <span class="candidato-grado">19</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-19.png" alt="Logo C/GS 19">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Segundo Secretario</strong>
                         <span class="candidato-nombre">BAZALAR TATAJE Jhonny Walter</span>
-                        <span class="candidato-grado">11</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-11.png" alt="Logo C/GS 11">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Tesorero General</strong>
                         <span class="candidato-nombre">MEDINA TORALES Juan Ángel</span>
-                        <span class="candidato-grado">13</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-13.png" alt="Logo C/GS 13">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Tesorero de Ingresos</strong>
                         <span class="candidato-nombre">GUZMÁN ROMERO Marco Gerardo</span>
-                        <span class="candidato-grado">12</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-12.png" alt="Logo C/GS 12">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Tesorero de Egresos</strong>
                         <span class="candidato-nombre">VILLALTA ORMEÑO William Gustavo</span>
-                        <span class="candidato-grado">7</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-7.png" alt="Logo C/GS 7">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Sec. Asistencia Social</strong>
                         <span class="candidato-nombre">MENDOZA DIAZ Mary Ann</span>
-                        <span class="candidato-grado">G.S.</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono gs"><span>G.S.</span></span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Sec. Relaciones Públicas</strong>
                         <span class="candidato-nombre">CRESPO PIZARRO Ángel Daniel</span>
-                        <span class="candidato-grado">10</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-10.png" alt="Logo C/GS 10">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Sec. Cultura y Deportes</strong>
                         <span class="candidato-nombre">SOTO SÁNCHEZ Marcos Geissel</span>
-                        <span class="candidato-grado">7</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-7.png" alt="Logo C/GS 7">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Sec. Bibliotecario</strong>
                         <span class="candidato-nombre">LARA BAQUEDANO Santos Manuel</span>
-                        <span class="candidato-grado">20</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-20.png" alt="Logo C/GS 20">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Pres. Consejo de Disciplina</strong>
                         <span class="candidato-nombre">LAGRAVERE CABRERA José Carlos</span>
-                        <span class="candidato-grado">1</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-1.png" alt="Logo C/GS 1">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Capataz General</strong>
                         <span class="candidato-nombre">GUERRERO CAYCHO Carlos Gustavo</span>
-                        <span class="candidato-grado">15</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-15.png" alt="Logo C/GS 15">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Sub Capataz General</strong>
                         <span class="candidato-nombre">FERNÁNDEZ RUBINA Walter Manuel</span>
-                        <span class="candidato-grado">5</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-5.png" alt="Logo C/GS 5">
+                            </span>
+                        </span>
                     </div>
                     
                 </div>
@@ -325,97 +424,78 @@
                     <div class="candidato-fila">
                         <strong>Presidente</strong>
                         <span class="candidato-nombre">FERNÁNDEZ HERRERA Carlos Daniel</span>
-                        <span class="candidato-grado">16</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-16.png" alt="Logo C/GS 16">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Vicepresidente</strong>
                         <span class="candidato-nombre">LAZARTE PICÓN Gerardo</span>
-                        <span class="candidato-grado">7</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-7.png" alt="Logo C/GS 7">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Primer Fiscal</strong>
                         <span class="candidato-nombre">YOUNG BUTRÓN Leandro Antonio</span>
-                        <span class="candidato-grado">16</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-16.png" alt="Logo C/GS 16">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Segundo Fiscal</strong>
                         <span class="candidato-nombre">ARNEZ DEL SOLAR Rafael Oscar</span>
-                        <span class="candidato-grado">4</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-4.png" alt="Logo C/GS 4">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Secretario General</strong>
                         <span class="candidato-nombre">LA HOZ MENDIZABAL Ernesto Bernardino</span>
-                        <span class="candidato-grado">16</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-16.png" alt="Logo C/GS 16">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Primer Secretario</strong>
                         <span class="candidato-nombre">GÓMEZ ROMÁN Luis Giovani</span>
-                        <span class="candidato-grado">20</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-20.png" alt="Logo C/GS 20">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Segundo Secretario</strong>
                         <span class="candidato-nombre">AREVALO ESTRADA José Gilberto</span>
-                        <span class="candidato-grado">4</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-4.png" alt="Logo C/GS 4">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Tesorero General</strong>
                         <span class="candidato-nombre">LLERENA MARCELO Marco Enrique</span>
-                        <span class="candidato-grado">2</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-2.png" alt="Logo C/GS 2">
+                            </span>
+                        </span>
                     </div>
                     <div class="candidato-fila">
                         <strong>Tesorero de Ingresos</strong>
                         <span class="candidato-nombre">APAZA ALEJOS Julio César</span>
-                        <span class="candidato-grado">9</span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Tesorero de Egresos</strong>
-                        <span class="candidato-nombre">LOZADA BAUTISTA Juan Ernesto</span>
-                        <span class="candidato-grado">10</span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Sec. Asistencia Social</strong>
-                        <span class="candidato-nombre">PAIVA MUCHA Teresa Margarita</span>
-                        <span class="candidato-grado">G.S.</span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Sec. Relaciones Públicas</strong>
-                        <span class="candidato-nombre">CORBELLA ZANABRIA Enrique Damián</span>
-                        <span class="candidato-grado">18</span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Sec. Cultura y Deportes</strong>
-                        <span class="candidato-nombre">PARDO FIGUEROA ANCUA Alberto David</span>
-                        <span class="candidato-grado">5</span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Sec. Bibliotecario</strong>
-                        <span class="candidato-nombre">MACHICADO WALKER Flavio Wilfredo</span>
-                        <span class="candidato-grado">12</span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Pres. Consejo de Disciplina</strong>
-                        <span class="candidato-nombre">OJEDA COSSIO Félix Elías</span>
-                        <span class="candidato-grado">9</span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Capataz General</strong>
-                        <span class="candidato-nombre">HENRIQUEZ ARELLANO Juan Antonio</span>
-                        <span class="candidato-grado">14</span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Sub Capataz General</strong>
-                        <span class="candidato-nombre">VILLAVICENCIO SALAS Jesús Fernando</span>
-                        <span class="candidato-grado">18</span>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        
-        <div class="pie-pagina">
-            <p style="font-size: 0.9em; color: #666;">C/G.S: Cuadrilla/Grado de Servicio.</p>
-        </div>
-    </div>
-
-</body>
-</html>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="ruta/a/logo-cuadrilla-9.png" alt="Logo C/GS 9">
