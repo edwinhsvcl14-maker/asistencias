@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elecciones Generales - Hermandad Virgen del Carmen</title>
+    <style>
+        /* ========================================================== */
+        /* Estilos CSS Integrados para Diseño Profesional (Elecciones) */
+        /* ========================================================== */
+
+        :root {
+            --color-principal: #F5F5DC; /* Cream (Crema) */
+            --color-secundario: #FAF0E6; /* Linen (Blanco roto) */
+            --color-acento: #A0522D; /* Sienna (Marrón medio) */
+            --color-texto-oscuro: #3E2723; /* Marrón oscuro para texto */
+            --color-borde: #D2B48C; /* Tan (Marrón claro) */
+            --color-fondo-tarjeta: #FFFACD; /* Lemon Chiffon (Amarillo claro para las tarjetas) */
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-secundario);
+            color: var(--color-texto-oscuro);
+        }
+
+        .contenedor {
+            width: 95%;
+            max-width: 1400px; /* Ancho ampliado para las 2 listas */
+            margin: 40px auto;
+            background-color: var(--color-principal);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Sombra más profunda */
+            border-radius: 15px;
+            padding: 40px;
+        }
+
+        /* ---------------------------------------------------------- */
+        /* Encabezado Principal */
+        /* ---------------------------------------------------------- */
+        header {
+            text-align: center;
+            padding-bottom: 30px;
+            border-bottom: 4px double var(--color-acento); /* Doble línea elegante */
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            color: var(--color-acento);
+            font-size: 2.5em;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        header h2 {
+            font-size: 1.5em;
+            margin: 0;
+            color: var(--color-texto-oscuro);
+            font-weight: normal;
+        }
+
+        /* ---------------------------------------------------------- */
+        /* Contenedor de Listas (Grid Comparativo) */
+        /* ---------------------------------------------------------- */
+        .listas-contenedor {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+            gap: 30px;
+        }
+        
+        @media (max-width: 900px) {
+            .listas-contenedor {
+                grid-template-columns: 1fr; /* Una sola columna en móvil */
+            }
+        }
+
+        /* ---------------------------------------------------------- */
+        /* Estilos de las Tarjetas de Listas */
+        /* ---------------------------------------------------------- */
+        .lista-tarjeta {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid var(--color-acento);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .lista-tarjeta h3 {
+            text-align: center;
+            color: white;
+            background-color: var(--color-acento);
+            padding: 10px;
+            margin: -25px -25px 20px -25px; /* Extiende el color al borde superior */
+            border-radius: 8px 8px 0 0;
+            font-size: 1.4em;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .candidatos-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Una fila por cargo */
+            gap: 10px;
+        }
+
+        /* Estilo para cada fila de candidato */
+        .candidato-fila {
+            display: grid;
+            grid-template-columns: 100px 1fr; /* Cargo (fijo) y Nombre/Grado (variable) */
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid var(--color-borde);
+        }
+        
+        .candidato-fila:nth-child(odd) {
+            background-color: var(--color-secundario);
+        }
+        
+        .candidato-fila:last-child {
+            border-bottom: none;
+        }
+        
+        .candidato-fila strong {
+            font-size: 0.9em;
+            color: var(--color-acento);
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .candidato-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1em;
+            padding-left: 15px;
+        }
+        
+        .grado-servicio {
+            color: #666;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        
+        /* ---------------------------------------------------------- */
+        /* Efecto de Carga */
+        /* ---------------------------------------------------------- */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="contenedor fade-in">
+        <header>
+            <h1>Hermandad de la Santísima Virgen del Carmen de Lima</h1>
+            <h2>Elecciones Generales Trienio 2026-2028: Candidatos</h2>
+            <p>Comparecencia de las Listas N° 01 y N° 02.</p>
+        </header>
+
+        <div class="listas-contenedor">
+            <div class="lista-tarjeta">
+                <h3>Lista N° 01</h3>
+                <div class="candidatos-grid">
+                    <div class="candidato-fila">
+                        <strong>Presidente</strong>
+                        <div class="candidato-info">
+                            <span>MONTI BUSTAMANTE Uldarico Alfredo</span>
+                            <span class="grado-servicio">C/G.S: 12</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Vicepresidente</strong>
+                        <div class="candidato-info">
+                            <span>AMBROSIO PAREJA Fidel Alejandro</span>
+                            <span class="grado-servicio">C/G.S: 2</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Primer Fiscal</strong>
+                        <div class="candidato-info">
+                            <span>HERRERA SOLANO Edward Carlos</span>
+                            <span class="grado-servicio">C/G.S: 17</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Segundo Fiscal</strong>
+                        <div class="candidato-info">
+                            <span>PERALTA MURILLO Oswaldo Leopoldo</span>
+                            <span class="grado-servicio">C/G.S: 6</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Secretario General</strong>
+                        <div class="candidato-info">
+                            <span>PEÑA ANGELES César Augusto</span>
+                            <span class="grado-servicio">C/G.S: 5</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Primer Secretario</strong>
+                        <div class="candidato-info">
+                            <span>CASAS SALAS Diego Oswaldo</span>
+                            <span class="grado-servicio">C/G.S: 19</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Segundo Secretario</strong>
+                        <div class="candidato-info">
+                            <span>BAZALAR TATAJE Jhonny Walter</span>
+                            <span class="grado-servicio">C/G.S: 11</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Tesorero General</strong>
+                        <div class="candidato-info">
+                            <span>MEDINA TORALES Juan Ángel</span>
+                            <span class="grado-servicio">C/G.S: 13</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Tesorero de Ingresos</strong>
+                        <div class="candidato-info">
+                            <span>GUZMÁN ROMERO Marco Gerardo</span>
+                            <span class="grado-servicio">C/G.S: 12</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Tesorero de Egresos</strong>
+                        <div class="candidato-info">
+                            <span>VILLALTA ORMEÑO William Gustavo</span>
+                            <span class="grado-servicio">C/G.S: 7</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Asistencia Social</strong>
+                        <div class="candidato-info">
+                            <span>MENDOZA DIAZ Mary Ann</span>
+                            <span class="grado-servicio">G.S.</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Relaciones Públicas</strong>
+                        <div class="candidato-info">
+                            <span>CRESPO PIZARRO Ángel Daniel</span>
+                            <span class="grado-servicio">C/G.S: 10</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Cultura y Deportes</strong>
+                        <div class="candidato-info">
+                            <span>SOTO SÁNCHEZ Marcos Geissel</span>
+                            <span class="grado-servicio">C/G.S: 7</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Bibliotecario</strong>
+                        <div class="candidato-info">
+                            <span>LARA BAQUEDANO Santos Manuel</span>
+                            <span class="grado-servicio">C/G.S: 20</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Pres. Consejo de Disciplina</strong>
+                        <div class="candidato-info">
+                            <span>LAGRAVERE CABRERA José Carlos</span>
+                            <span class="grado-servicio">C/G.S: 1</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Capataz General</strong>
+                        <div class="candidato-info">
+                            <span>GUERRERO CAYCHO Carlos Gustavo</span>
+                            <span class="grado-servicio">C/G.S: 15</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sub Capataz General</strong>
+                        <div class="candidato-info">
+                            <span>FERNÁNDEZ RUBINA Walter Manuel</span>
+                            <span class="grado-servicio">C/G.S: 5</span>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="lista-tarjeta">
+                <h3>Lista N° 02</h3>
+                <div class="candidatos-grid">
+                    
+                    <div class="candidato-fila">
+                        <strong>Presidente</strong>
+                        <div class="candidato-info">
+                            <span>FERNÁNDEZ HERRERA Carlos Daniel</span>
+                            <span class="grado-servicio">C/G.S: 16</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Vicepresidente</strong>
+                        <div class="candidato-info">
+                            <span>LAZARTE PICÓN Gerardo</span>
+                            <span class="grado-servicio">C/G.S: 7</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Primer Fiscal</strong>
+                        <div class="candidato-info">
+                            <span>YOUNG BUTRÓN Leandro Antonio</span>
+                            <span class="grado-servicio">C/G.S: 16</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Segundo Fiscal</strong>
+                        <div class="candidato-info">
+                            <span>ARNEZ DEL SOLAR Rafael Oscar</span>
+                            <span class="grado-servicio">C/G.S: 4</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Secretario General</strong>
+                        <div class="candidato-info">
+                            <span>LA HOZ MENDIZABAL Ernesto Bernardino</span>
+                            <span class="grado-servicio">C/G.S: 16</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Primer Secretario</strong>
+                        <div class="candidato-info">
+                            <span>GÓMEZ ROMÁN Luis Giovani</span>
+                            <span class="grado-servicio">C/G.S: 20</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Segundo Secretario</strong>
+                        <div class="candidato-info">
+                            <span>AREVALO ESTRADA José Gilberto</span>
+                            <span class="grado-servicio">C/G.S: 4</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Tesorero General</strong>
+                        <div class="candidato-info">
+                            <span>LLERENA MARCELO Marco Enrique</span>
+                            <span class="grado-servicio">C/G.S: 2</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Tesorero de Ingresos</strong>
+                        <div class="candidato-info">
+                            <span>APAZA ALEJOS Julio César</span>
+                            <span class="grado-servicio">C/G.S: 9</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Tesorero de Egresos</strong>
+                        <div class="candidato-info">
+                            <span>LOZADA BAUTISTA Juan Ernesto</span>
+                            <span class="grado-servicio">C/G.S: 10</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Asistencia Social</strong>
+                        <div class="candidato-info">
+                            <span>PAIVA MUCHA Teresa Margarita</span>
+                            <span class="grado-servicio">G.S.</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Relaciones Públicas</strong>
+                        <div class="candidato-info">
+                            <span>CORBELLA ZANABRIA Enrique Damián</span>
+                            <span class="grado-servicio">C/G.S: 18</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Cultura y Deportes</strong>
+                        <div class="candidato-info">
+                            <span>PARDO FIGUEROA ANCUA Alberto David</span>
+                            <span class="grado-servicio">C/G.S: 5</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Bibliotecario</strong>
+                        <div class="candidato-info">
+                            <span>MACHICADO WALKER Flavio Wilfredo</span>
+                            <span class="grado-servicio">C/G.S: 12</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Pres. Consejo de Disciplina</strong>
+                        <div class="candidato-info">
+                            <span>OJEDA COSSIO Félix Elías</span>
+                            <span class="grado-servicio">C/G.S: 9</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Capataz General</strong>
+                        <div class="candidato-info">
+                            <span>HENRIQUEZ ARELLANO Juan Antonio</span>
+                            <span class="grado-servicio">C/G.S: 14</span>
+                        </div>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sub Capataz General</strong>
+                        <div class="candidato-info">
+                            <span>VILLAVICENCIO SALAS Jesús Fernando</span>
+                            <span class="grado-servicio">C/G.S: 18</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+        <div class="pie-pagina">
+            <p style="font-size: 0.9em; color: #666;">C/G.S: Cuadrilla/Grado de Servicio | Información oficial de la Hermandad.</p>
+        </div>
+    </div>
+
+</body>
+</html>
