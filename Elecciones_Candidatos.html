@@ -19,6 +19,8 @@
         --color-borde: #D2B48C; /* Tan (Marrón claro) */
         --sombra-sutil: 0 4px 6px rgba(0, 0, 0, 0.1);
         --sombra-profunda: 0 12px 24px rgba(0, 0, 0, 0.2);
+        --color-hover-fuerte: rgba(160, 82, 45, 0.9); /* Marrón con más opacidad */
+        --color-hover-fondo: rgba(160, 82, 45, 0.08); /* Fondo suave */
     }
 
     body {
@@ -156,14 +158,27 @@
         padding: 12px 20px;
         border-bottom: 1px dashed var(--color-borde);
         font-size: 0.95em;
-        transition: background-color 0.3s ease; 
+        /* La transición aplica a todo el cambio para un movimiento suave */
+        transition: all 0.2s ease-in-out; 
+        position: relative; /* Necesario para el z-index en hover */
+        z-index: 1; /* Valor base */
     }
     
-    /* INTERACTIVIDAD: Efecto Hover */
+    /* 🔥 INTERACTIVIDAD VISTOSA: Efecto Hover (sobresalir) 🔥 */
     .candidato-fila:hover {
-        background-color: rgba(160, 82, 45, 0.08); 
-        cursor: default; 
+        background-color: var(--color-hover-fondo) !important; /* Fondo suave para resaltar */
+        transform: scale(1.02); /* Agrandamiento sutil */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombra elegante para efecto 3D */
+        border-radius: 5px; /* Bordes redondeados en hover */
+        border-color: transparent; /* Oculta el borde dashed para una apariencia limpia */
+        z-index: 10; /* Eleva la fila sobre las vecinas */
+        cursor: pointer; /* Indica interactividad */
     }
+
+    .candidato-fila:nth-child(even):hover { 
+         background-color: var(--color-hover-fondo) !important; /* Mantiene el mismo fondo de hover */
+    }
+
 
     .candidato-fila:nth-child(even) { 
         background-color: rgba(255, 255, 255, 0.8);
