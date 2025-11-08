@@ -19,8 +19,7 @@
         --color-borde: #D2B48C; /* Tan (Marrón claro) */
         --sombra-sutil: 0 4px 6px rgba(0, 0, 0, 0.1);
         --sombra-profunda: 0 12px 24px rgba(0, 0, 0, 0.2);
-        --color-hover-fuerte: rgba(160, 82, 45, 0.9); /* Marrón con más opacidad */
-        --color-hover-fondo: rgba(160, 82, 45, 0.08); /* Fondo suave */
+        --color-hover-fondo: rgba(160, 82, 45, 0.08); /* Fondo suave para hover */
     }
 
     body {
@@ -85,6 +84,7 @@
         margin-bottom: 5px !important;
         text-transform: uppercase !important;
         letter-spacing: 1.5px !important;
+        line-height: 1.2 !important; /* Ajuste para mejor lectura */
     }
     
     .header-texto h2 {
@@ -94,9 +94,8 @@
         font-weight: 500 !important;
     }
     .header-texto p {
-        font-size: 1em !important;
-        margin-top: 5px !important;
-        font-style: italic !important;
+        /* Este estilo asegura que si se agrega un P, no rompa el diseño */
+        display: none; 
     }
 
     /* ---------------------------------------------------------- */
@@ -158,25 +157,25 @@
         padding: 12px 20px;
         border-bottom: 1px dashed var(--color-borde);
         font-size: 0.95em;
-        /* La transición aplica a todo el cambio para un movimiento suave */
+        /* Transición para el efecto suave */
         transition: all 0.2s ease-in-out; 
-        position: relative; /* Necesario para el z-index en hover */
-        z-index: 1; /* Valor base */
+        position: relative; 
+        z-index: 1; 
     }
     
-    /* 🔥 INTERACTIVIDAD VISTOSA: Efecto Hover (sobresalir) 🔥 */
+    /* 🔥 INTERACTIVIDAD VISTOSA: Efecto Hover 🔥 */
     .candidato-fila:hover {
-        background-color: var(--color-hover-fondo) !important; /* Fondo suave para resaltar */
+        background-color: var(--color-hover-fondo) !important; 
         transform: scale(1.02); /* Agrandamiento sutil */
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombra elegante para efecto 3D */
-        border-radius: 5px; /* Bordes redondeados en hover */
-        border-color: transparent; /* Oculta el borde dashed para una apariencia limpia */
-        z-index: 10; /* Eleva la fila sobre las vecinas */
-        cursor: pointer; /* Indica interactividad */
+        border-radius: 5px; 
+        border-color: transparent; 
+        z-index: 10; 
+        cursor: pointer; 
     }
 
     .candidato-fila:nth-child(even):hover { 
-         background-color: var(--color-hover-fondo) !important; /* Mantiene el mismo fondo de hover */
+         background-color: var(--color-hover-fondo) !important; 
     }
 
 
@@ -291,7 +290,6 @@
             <div class="header-texto">
                 <h1>Hermandad de la Santísima Virgen del Carmen de Lima</h1>
                 <h2>Elecciones Generales Trienio 2026-2028: Candidatos</h2>
-                <p>Comparecencia de las Listas N° 01 y N° 02.</p>
             </div>
             
             <div class="logo-header">
@@ -403,8 +401,8 @@
                         <strong>Sec. Asistencia Social</strong>
                         <span class="candidato-nombre">MENDOZA DIAZ Mary Ann</span>
                         <span class="candidato-grado">
-                           <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/gs_.png" alt="Logo C/GS 10">
+                            <span class="grado-icono gs">
+                                <span>G.S.</span>
                             </span>
                         </span>
                     </div>
@@ -570,8 +568,8 @@
                         <strong>Sec. Asistencia Social</strong>
                         <span class="candidato-nombre">PAIVA MUCHA Teresa Margarita</span>
                         <span class="candidato-grado">
-                              <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/gs_.png" alt="Logo C/GS 10">
+                            <span class="grado-icono gs">
+                                <span>G.S.</span>
                             </span>
                         </span>
                     </div>
