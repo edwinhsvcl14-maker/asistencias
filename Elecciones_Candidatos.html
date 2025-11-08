@@ -32,20 +32,20 @@
     .contenedor {
         width: 95%;
         max-width: 1400px;
-        margin: 30px auto; /* Aumento ligero del margen para escritorio */
+        margin: 30px auto; 
         background-color: var(--color-principal);
         box-shadow: var(--sombra-profunda);
         border-radius: 15px;
-        padding: 30px; /* Aumento ligero del padding para escritorio */
+        padding: 30px; 
         transition: all 0.3s ease;
     }
 
     /* ---------------------------------------------------------- */
-    /* Encabezado Principal (Uniformidad y Centrado) */
+    /* ENCABEZADO PRINCIPAL (IDÉNTICO AL ANTERIOR) */
     /* ---------------------------------------------------------- */
     .main-header {
         display: flex;
-        justify-content: space-between; /* Distribuye espacio entre elementos */
+        justify-content: space-between; 
         align-items: center;
         text-align: center;
         padding-bottom: 20px;
@@ -53,9 +53,9 @@
         margin-bottom: 30px;
     }
 
-    /* Logotipo Uniforme (Ajustado) */
+    /* Logotipos */
     .logo-header {
-        width: 100px; /* Tamaño un poco más grande para uniformizar en desktop */
+        width: 100px; 
         height: 100px;
         margin: 0 20px;
         flex-shrink: 0;
@@ -72,21 +72,21 @@
 
     /* Contenedor de Texto Central */
     .header-texto {
-        flex-grow: 1;
-        padding: 0 15px; /* Pequeño padding para separación */
+        flex-grow: 1; /* Esto asegura que ocupe el espacio central disponible */
+        padding: 0 15px; 
     }
 
     .header-texto h1 {
         color: var(--color-acento);
         font-family: 'Georgia', serif;
-        font-size: 2.2em; /* Tamaño estándar de escritorio */
+        font-size: 2.2em; 
         margin-bottom: 5px;
         text-transform: uppercase;
         letter-spacing: 1.5px;
     }
     
     .header-texto h2 {
-        font-size: 1.4em; /* Tamaño estándar de escritorio */
+        font-size: 1.4em; 
         margin: 0;
         color: var(--color-texto-oscuro);
         font-weight: 500;
@@ -112,7 +112,7 @@
         border-radius: 10px;
         border: 2px solid var(--color-acento);
         box-shadow: var(--sombra-sutil);
-        overflow: hidden; /* Asegura que el borde superior de h3 se ajuste al borde */
+        overflow: hidden; 
     }
 
     .lista-tarjeta h3 {
@@ -137,7 +137,7 @@
     
     .candidato-header-fila {
         display: grid;
-        grid-template-columns: 150px 1fr 80px; /* Ajuste de ancho de columna para escritorio */
+        grid-template-columns: 150px 1fr 80px; 
         align-items: center;
         padding: 10px 20px;
         margin-top: 10px;
@@ -151,21 +151,21 @@
     /* Estilo de Fila (Base) */
     .candidato-fila {
         display: grid;
-        grid-template-columns: 150px 1fr 80px; /* Mismo que el header */
+        grid-template-columns: 150px 1fr 80px; 
         align-items: center;
         padding: 12px 20px;
         border-bottom: 1px dashed var(--color-borde);
         font-size: 0.95em;
-        transition: background-color 0.3s ease; /* Transición para interactividad */
+        transition: background-color 0.3s ease; 
     }
     
-    /* INTERACTIVIDAD: Efecto Hover (resaltado al pasar el ratón) */
+    /* INTERACTIVIDAD: Efecto Hover */
     .candidato-fila:hover {
-        background-color: rgba(160, 82, 45, 0.08); /* Fondo marrón muy suave */
-        cursor: default; /* Indica que la fila es interactiva/relevante */
+        background-color: rgba(160, 82, 45, 0.08); 
+        cursor: default; 
     }
 
-    .candidato-fila:nth-child(even) { /* Filas impares con fondo más claro */
+    .candidato-fila:nth-child(even) { 
         background-color: rgba(255, 255, 255, 0.8);
     }
     
@@ -194,7 +194,7 @@
     }
     
     .grado-icono {
-        width: 55px; /* Tamaño ajustado para escritorio */
+        width: 55px; 
         height: 55px;
         background-color: white;
         border-radius: 50%; 
@@ -248,9 +248,9 @@
             padding: 15px;
         }
 
-        /* Encabezado */
+        /* Encabezado (Asegura el apilamiento en móvil) */
         .main-header { flex-wrap: wrap; justify-content: space-around; }
-        .header-texto { order: 3; width: 100%; margin-top: 15px; } /* Mueve el texto debajo de los logos */
+        .header-texto { order: 3; width: 100%; margin-top: 15px; } 
         .header-texto h1 { font-size: 1.4em; letter-spacing: 1px; }
         .header-texto h2 { font-size: 1em; }
         .logo-header { width: 60px; height: 60px; margin: 0 5px; }
@@ -258,7 +258,6 @@
         /* Grid de Candidatos (Ajuste para móvil) */
         .candidato-header-fila,
         .candidato-fila {
-            /* Cargo: 80px | Nombre: 1fr | C/G.S: 50px */
             grid-template-columns: 80px 1fr 50px; 
             padding: 8px 10px;
             font-size: 0.8em;
@@ -301,7 +300,6 @@
                 <img src="https://edwinhsvcl14-maker.github.io/asistencias/logo_hermandad.png" alt="Logo de la Hermandad">
             </div>
         </div>
-
         <div class="listas-contenedor">
             <div class="lista-tarjeta">
                 <h3>Lista N° 01</h3>
