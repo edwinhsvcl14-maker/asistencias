@@ -30,11 +30,11 @@
         .contenedor {
             width: 95%;
             max-width: 1400px;
-            margin: 40px auto;
+            margin: 20px auto; /* Menos margen en móvil */
             background-color: var(--color-principal);
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
             border-radius: 15px;
-            padding: 40px;
+            padding: 20px; /* Menos padding en móvil */
         }
 
         /* ---------------------------------------------------------- */
@@ -45,15 +45,15 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding-bottom: 30px;
+            padding-bottom: 20px;
             border-bottom: 4px double var(--color-acento);
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .logo-header {
-            width: 100px; /* Tamaño del contenedor del logo */
-            height: 100px;
-            margin: 0 30px;
+            width: 80px; /* Tamaño ajustado para móvil */
+            height: 80px;
+            margin: 0 10px;
             flex-shrink: 0;
             display: flex;
             align-items: center;
@@ -73,14 +73,14 @@
         .header-texto h1 {
             color: var(--color-acento);
             font-family: 'Georgia', serif;
-            font-size: 2.5em;
+            font-size: 1.8em; /* Reducido para móvil */
             margin-bottom: 5px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         
         .header-texto h2 {
-            font-size: 1.5em;
+            font-size: 1.2em; /* Reducido para móvil */
             margin: 0;
             color: var(--color-texto-oscuro);
             font-weight: 400;
@@ -91,22 +91,23 @@
         /* ---------------------------------------------------------- */
         .listas-contenedor {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr; /* Por defecto para escritorio */
             gap: 30px;
         }
         
+        /* MEDIA QUERY: Aplica para pantallas menores a 900px (móvil/tablet vertical) */
         @media (max-width: 900px) {
             .listas-contenedor {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Las listas se apilan (una columna) */
             }
         }
-
+        
         /* ---------------------------------------------------------- */
         /* Estilos de las Tarjetas de Listas */
         /* ---------------------------------------------------------- */
         .lista-tarjeta {
             background-color: white;
-            padding: 0 0 20px 0;
+            padding: 0 0 15px 0; /* Padding ajustado */
             border-radius: 10px;
             border: 2px solid var(--color-acento);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -116,10 +117,10 @@
             text-align: center;
             color: white;
             background-color: var(--color-acento);
-            padding: 15px;
+            padding: 12px;
             margin: 0;
             border-radius: 8px 8px 0 0;
-            font-size: 1.4em;
+            font-size: 1.2em; /* Reducido para móvil */
             letter-spacing: 1px;
             text-transform: uppercase;
         }
@@ -130,10 +131,10 @@
             padding: 10px 0;
         }
         
-        /* Estilo para la cabecera de la tabla interna */
+        /* Estilo para la cabecera de la tabla interna (Escritorio) */
         .candidato-header-fila {
             display: grid;
-            grid-template-columns: 150px 1fr 70px;
+            grid-template-columns: 150px 1fr 70px; /* Distribución de ancho original */
             align-items: center;
             padding: 8px 15px;
             margin-top: 10px;
@@ -144,14 +145,31 @@
             text-transform: uppercase;
         }
 
-        /* Estilo para cada fila de candidato */
+        /* Estilo para cada fila de candidato (Escritorio) */
         .candidato-fila {
             display: grid;
-            grid-template-columns: 150px 1fr 70px;
+            grid-template-columns: 150px 1fr 70px; /* Distribución de ancho original */
             align-items: center;
             padding: 10px 15px;
             border-bottom: 1px dashed var(--color-borde);
             font-size: 0.95em;
+        }
+        
+        /* MEDIA QUERY: Ajustes críticos para móvil */
+        @media (max-width: 600px) {
+            
+            /* Ajusta la distribución de columnas para que quepa en el ancho de un celular */
+            .candidato-header-fila,
+            .candidato-fila {
+                /* Carga: 100px | Nombre: 1fr (lo que quede) | C/G.S: 60px */
+                grid-template-columns: 100px 1fr 60px; 
+                padding: 8px 10px; /* Menos padding lateral */
+                font-size: 0.85em; /* Fuente ligeramente más pequeña */
+            }
+
+            .candidato-fila strong {
+                font-size: 0.9em;
+            }
         }
         
         .candidato-fila:nth-child(odd) {
@@ -171,64 +189,68 @@
         }
         
         .candidato-nombre {
-            padding-left: 15px;
+            padding-left: 10px; /* Reducido para móvil */
         }
 
         /* ---------------------------------------------------------- */
-        /* ICONO DE CUADRILLA/GRUPO (Ajustado para IMG) */
+        /* ICONO DE CUADRILLA/GRUPO (Modificado para ser más grande, con fondo blanco y borde punteado) */
         /* ---------------------------------------------------------- */
         .candidato-grado {
             display: flex;
             justify-content: center;
             align-items: center;
         }
+        
+        .grado-icono {
+            width: 60px; 
+            height: 60px;
+            background-color: white;
+            border-radius: 50%; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border: 3px dotted var(--color-acento); 
+        }
 
-/* ---------------------------------------------------------- */
-/* ICONO DE CUADRILLA/GRUPO (Modificado para ser más grande, con fondo blanco y borde punteado) */
-/* ---------------------------------------------------------- */
-.grado-icono {
-    width: 60px; /* Tamaño del contenedor/círculo del logo (DOBLE de 30px) */
-    height: 60px; /* Tamaño del contenedor/círculo del logo (DOBLE de 30px) */
-    background-color: white; /* Fondo blanco */
-    border-radius: 50%; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    
-    /* Borde punteado (dotted) con el color de acento */
-    border: 3px dotted var(--color-acento); 
-}
+        /* Ajuste de tamaño de icono para móviles (para que quepa en 60px de columna) */
+        @media (max-width: 600px) {
+             .grado-icono {
+                width: 45px; /* Más pequeño para móvil */
+                height: 45px;
+                border: 2px dotted var(--color-acento); /* Borde más fino */
+            }
+        }
 
-.grado-icono img {
-    width: 90%; /* Incrementado ligeramente para aprovechar el espacio */
-    height: 90%;
-    object-fit: contain;
-}
-
-/* Estilo específico para G.S. (Ajustado para mantener la proporción sin círculo) */
-.grado-icono.gs {
-    background-color: #666;
-    width: auto;
-    height: auto;
-    border-radius: 8px; /* Ligeramente más redondeado */
-    padding: 6px 10px; /* Padding doble */
-    border: none; /* Sin borde punteado para el G.S. de texto */
-}
-
-.grado-icono.gs span {
-    color: white;
-    font-size: 0.9em; /* Ligeramente más grande */
-    font-weight: bold;
-}
+        .grado-icono img {
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
+        }
+        
+        /* Estilo específico para G.S. */
+        .grado-icono.gs {
+            background-color: #666;
+            width: auto;
+            height: auto;
+            border-radius: 8px;
+            padding: 4px 8px; /* Padding ajustado */
+            border: none;
+        }
+        
+        .grado-icono.gs span {
+            color: white;
+            font-size: 0.8em; /* Ajustado */
+            font-weight: bold;
+        }
 
         /* ---------------------------------------------------------- */
         /* Pie de Página */
         /* ---------------------------------------------------------- */
         .pie-pagina {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
+            margin-top: 30px;
+            padding-top: 15px;
             border-top: 1px dashed var(--color-borde);
         }
 
