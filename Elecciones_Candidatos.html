@@ -6,6 +6,7 @@
     <title>Elecciones Generales - Hermandad Virgen del Carmen</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Georgia:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
+
 <style>
     /* ========================================================== */
     /* Estilos CSS Integrados para Diseño Profesional (Elecciones) */
@@ -84,7 +85,7 @@
         margin-bottom: 5px !important;
         text-transform: uppercase !important;
         letter-spacing: 1.5px !important;
-        line-height: 1.2 !important; /* Ajuste para mejor lectura */
+        line-height: 1.2 !important; 
     }
     
     .header-texto h2 {
@@ -94,7 +95,6 @@
         font-weight: 500 !important;
     }
     .header-texto p {
-        /* Este estilo asegura que si se agrega un P, no rompa el diseño */
         display: none; 
     }
 
@@ -157,7 +157,6 @@
         padding: 12px 20px;
         border-bottom: 1px dashed var(--color-borde);
         font-size: 0.95em;
-        /* Transición para el efecto suave */
         transition: all 0.2s ease-in-out; 
         position: relative; 
         z-index: 1; 
@@ -239,6 +238,23 @@
         font-size: 0.85em; 
         font-weight: bold;
     }
+    
+    /* ---------------------------------------------------------- */
+    /* PIE DE PÁGINA CENTRADO Y ESPACIADO */
+    /* ---------------------------------------------------------- */
+    .pie-pagina {
+        text-align: center; /* Centra el texto */
+        padding: 15px 0 10px 0; /* Espacio interno arriba y abajo */
+        margin-top: 40px; /* Espacio de separación de las listas */
+        border-top: 1px solid var(--color-borde); /* Línea de separación sutil */
+    }
+
+    .pie-pagina p {
+        font-size: 0.85em;
+        color: var(--color-texto-oscuro); /* Usando la variable de color oscura */
+        margin: 0; /* Elimina márgenes predeterminados del párrafo */
+        font-weight: 500;
+    }
 
     /* ---------------------------------------------------------- */
     /* Responsive Design */
@@ -278,6 +294,9 @@
         }
     }
 </style>
+
+
+    
 </head>
 <body>
 
