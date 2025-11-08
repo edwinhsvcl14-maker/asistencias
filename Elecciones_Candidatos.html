@@ -41,60 +41,60 @@
     }
 
     /* ---------------------------------------------------------- */
-    /* ENCABEZADO PRINCIPAL (IDÉNTICO AL ANTERIOR) */
+    /* ENCABEZADO PRINCIPAL (Estilos forzados con !important) */
     /* ---------------------------------------------------------- */
     .main-header {
-        display: flex;
-        justify-content: space-between; 
-        align-items: center;
-        text-align: center;
-        padding-bottom: 20px;
-        border-bottom: 4px double var(--color-acento);
-        margin-bottom: 30px;
+        display: flex !important;
+        justify-content: space-between !important; 
+        align-items: center !important;
+        text-align: center !important;
+        padding-bottom: 20px !important;
+        border-bottom: 4px double var(--color-acento) !important;
+        margin-bottom: 30px !important;
     }
 
     /* Logotipos */
     .logo-header {
-        width: 100px; 
-        height: 100px;
-        margin: 0 20px;
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        width: 100px !important; 
+        height: 100px !important;
+        margin: 0 20px !important;
+        flex-shrink: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
 
     .logo-header img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        object-fit: contain !important;
     }
 
     /* Contenedor de Texto Central */
     .header-texto {
-        flex-grow: 1; /* Esto asegura que ocupe el espacio central disponible */
-        padding: 0 15px; 
+        flex-grow: 1 !important;
+        padding: 0 15px !important; 
     }
 
     .header-texto h1 {
-        color: var(--color-acento);
-        font-family: 'Georgia', serif;
-        font-size: 2.2em; 
-        margin-bottom: 5px;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
+        color: var(--color-acento) !important;
+        font-family: 'Georgia', serif !important;
+        font-size: 2.2em !important; 
+        margin-bottom: 5px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1.5px !important;
     }
     
     .header-texto h2 {
-        font-size: 1.4em; 
-        margin: 0;
-        color: var(--color-texto-oscuro);
-        font-weight: 500;
+        font-size: 1.4em !important; 
+        margin: 0 !important;
+        color: var(--color-texto-oscuro) !important;
+        font-weight: 500 !important;
     }
     .header-texto p {
-        font-size: 1em;
-        margin-top: 5px;
-        font-style: italic;
+        font-size: 1em !important;
+        margin-top: 5px !important;
+        font-style: italic !important;
     }
 
     /* ---------------------------------------------------------- */
@@ -102,7 +102,7 @@
     /* ---------------------------------------------------------- */
     .listas-contenedor {
         display: grid;
-        grid-template-columns: 1fr 1fr; /* Por defecto para escritorio */
+        grid-template-columns: 1fr 1fr; 
         gap: 30px;
     }
     
@@ -231,9 +231,9 @@
     /* ---------------------------------------------------------- */
     @media (max-width: 900px) {
         /* Encabezado */
-        .header-texto h1 { font-size: 1.8em; }
-        .header-texto h2 { font-size: 1.2em; }
-        .logo-header { width: 80px; height: 80px; margin: 0 10px; }
+        .header-texto h1 { font-size: 1.8em !important; }
+        .header-texto h2 { font-size: 1.2em !important; }
+        .logo-header { width: 80px !important; height: 80px !important; margin: 0 10px !important; }
         
         /* Grid de Listas (Apilamiento) */
         .listas-contenedor {
@@ -249,11 +249,11 @@
         }
 
         /* Encabezado (Asegura el apilamiento en móvil) */
-        .main-header { flex-wrap: wrap; justify-content: space-around; }
-        .header-texto { order: 3; width: 100%; margin-top: 15px; } 
-        .header-texto h1 { font-size: 1.4em; letter-spacing: 1px; }
-        .header-texto h2 { font-size: 1em; }
-        .logo-header { width: 60px; height: 60px; margin: 0 5px; }
+        .main-header { flex-wrap: wrap !important; justify-content: space-around !important; }
+        .header-texto { order: 3 !important; width: 100% !important; margin-top: 15px !important; } 
+        .header-texto h1 { font-size: 1.4em !important; letter-spacing: 1px !important; }
+        .header-texto h2 { font-size: 1em !important; }
+        .logo-header { width: 60px !important; height: 60px !important; margin: 0 5px !important; }
 
         /* Grid de Candidatos (Ajuste para móvil) */
         .candidato-header-fila,
@@ -261,23 +261,6 @@
             grid-template-columns: 80px 1fr 50px; 
             padding: 8px 10px;
             font-size: 0.8em;
-        }
-        
-        .candidato-fila strong {
-            font-size: 0.9em;
-        }
-
-        .grado-icono {
-            width: 40px; 
-            height: 40px;
-            border: 2px dotted var(--color-acento);
-        }
-
-        .candidato-nombre {
-             padding-left: 5px;
-        }
-        .grado-icono.gs span {
-            font-size: 0.75em;
         }
     }
 </style>
