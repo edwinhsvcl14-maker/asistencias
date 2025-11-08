@@ -1,660 +1,741 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elecciones Generales - Hermandad Virgen del Carmen</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Georgia:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elecciones Generales - Hermandad Virgen del Carmen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Georgia:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
 
 <style>
-    /* ========================================================== */
-    /* Estilos CSS Integrados para Diseño Profesional (Elecciones) */
-    /* ========================================================== */
+    /* ========================================================== */
+    /* Estilos CSS Integrados para Diseño Profesional (Elecciones) */
+    /* ========================================================== */
 
-    :root {
-        --color-principal: #F5F5DC; /* Cream (Crema) */
-        --color-secundario: #FAF0E6; /* Linen (Blanco roto) */
-        --color-acento: #A0522D; /* Sienna (Marrón medio) */
-        --color-texto-oscuro: #3E2723; /* Marrón oscuro para texto */
-        --color-borde: #D2B48C; /* Tan (Marrón claro) */
-        --sombra-sutil: 0 4px 6px rgba(0, 0, 0, 0.1);
-        --sombra-profunda: 0 12px 24px rgba(0, 0, 0, 0.2);
-        --color-hover-fondo: rgba(160, 82, 45, 0.08); /* Fondo suave para hover */
-    }
+    :root {
+        --color-principal: #F5F5DC; /* Cream (Crema) */
+        --color-secundario: #FAF0E6; /* Linen (Blanco roto) */
+        --color-acento: #A0522D; /* Sienna (Marrón medio) */
+        --color-texto-oscuro: #3E2723; /* Marrón oscuro para texto */
+        --color-borde: #D2B48C; /* Tan (Marrón claro) */
+        --sombra-sutil: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --sombra-profunda: 0 12px 24px rgba(0, 0, 0, 0.2);
+        --color-hover-fondo: rgba(160, 82, 45, 0.08); /* Fondo suave para hover */
+    }
 
-    body {
-        font-family: 'Poppins', sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: var(--color-secundario);
-        color: var(--color-texto-oscuro);
-    }
-
-    .contenedor {
-        width: 95%;
-        max-width: 1400px;
-        margin: 30px auto; 
-        background-color: var(--color-principal);
-        box-shadow: var(--sombra-profunda);
-        border-radius: 15px;
-        padding: 30px; 
-        transition: all 0.3s ease;
-    }
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--color-secundario);
+        color: var(--color-texto-oscuro);
+        min-height: 100vh; /* Asegura altura para el preloader */
+    }
 
     /* ---------------------------------------------------------- */
-    /* ENCABEZADO PRINCIPAL (Estilos forzados con !important) */
+    /* ESTILOS DE CARGA (PRELOADER) */
     /* ---------------------------------------------------------- */
-    .main-header {
-        display: flex !important;
-        justify-content: space-between !important; 
-        align-items: center !important;
-        text-align: center !important;
-        padding-bottom: 20px !important;
-        border-bottom: 4px double var(--color-acento) !important;
-        margin-bottom: 30px !important;
-    }
-
-    /* Logotipos */
-    .logo-header {
-        width: 100px !important; 
-        height: 100px !important;
-        margin: 0 20px !important;
-        flex-shrink: 0 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-
-    .logo-header img {
-        max-width: 100% !important;
-        max-height: 100% !important;
-        object-fit: contain !important;
-    }
-
-    /* Contenedor de Texto Central */
-    .header-texto {
-        flex-grow: 1 !important;
-        padding: 0 15px !important; 
-    }
-
-    .header-texto h1 {
-        color: var(--color-acento) !important;
-        font-family: 'Georgia', serif !important;
-        font-size: 2.2em !important; 
-        margin-bottom: 5px !important;
-        text-transform: uppercase !important;
-        letter-spacing: 1.5px !important;
-        line-height: 1.2 !important; 
-    }
-    
-    .header-texto h2 {
-        font-size: 1.4em !important; 
-        margin: 0 !important;
-        color: var(--color-texto-oscuro) !important;
-        font-weight: 500 !important;
-    }
-    .header-texto p {
-        display: none; 
-    }
-
-    /* ---------------------------------------------------------- */
-    /* Contenedor de Listas (Grid Comparativo) */
-    /* ---------------------------------------------------------- */
-    .listas-contenedor {
-        display: grid;
-        grid-template-columns: 1fr 1fr; 
-        gap: 30px;
-    }
-    
-    .lista-tarjeta {
-        background-color: white;
-        padding: 0; 
-        border-radius: 10px;
-        border: 2px solid var(--color-acento);
-        box-shadow: var(--sombra-sutil);
-        overflow: hidden; 
-    }
-
-    .lista-tarjeta h3 {
-        text-align: center;
-        color: white;
-        background-color: var(--color-acento);
-        padding: 15px;
-        margin: 0;
-        font-size: 1.4em;
-        letter-spacing: 2px;
-        font-weight: 700;
-        text-transform: uppercase;
-        border-bottom: 3px solid var(--color-texto-oscuro);
-    }
-
-    /* ---------------------------------------------------------- */
-    /* Grid de Candidatos (Tabla) */
-    /* ---------------------------------------------------------- */
-    .candidatos-grid {
-        padding-bottom: 10px;
-    }
-    
-    .candidato-header-fila {
-        display: grid;
-        grid-template-columns: 150px 1fr 80px; 
+    #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-principal); /* Cream base */
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
-        padding: 10px 20px;
-        margin-top: 10px;
-        border-bottom: 3px solid var(--color-acento);
-        background-color: var(--color-secundario);
-        font-weight: 700;
-        font-size: 0.9em;
-        text-transform: uppercase;
+        opacity: 1;
+        visibility: visible;
+        /* DURACIÓN DE TRANSICIÓN DEL PRELOADER A 3 SEGUNDOS */
+        transition: opacity 3s ease-out, visibility 3s ease-out; 
     }
 
-    /* Estilo de Fila (Base) */
-    .candidato-fila {
-        display: grid;
-        grid-template-columns: 150px 1fr 80px; 
-        align-items: center;
-        padding: 12px 20px;
-        border-bottom: 1px dashed var(--color-borde);
-        font-size: 0.95em;
-        transition: all 0.2s ease-in-out; 
-        position: relative; 
-        z-index: 1; 
+    /* Estado de preloader oculto */
+    #preloader.hidden {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* Estilo del GIF/Icono de carga (Spinner) */
+    .loader {
+        width: 120px;
+        height: 120px;
+        border: 10px solid var(--color-secundario);
+        border-top: 10px solid var(--color-acento); /* Color de acento para la animación */
+        border-radius: 50%;
+        animation: spin 1.2s linear infinite;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
     }
     
-    /* 🔥 INTERACTIVIDAD VISTOSA: Efecto Hover 🔥 */
-    .candidato-fila:hover {
-        background-color: var(--color-hover-fondo) !important; 
-        transform: scale(1.02); /* Agrandamiento sutil */
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombra elegante para efecto 3D */
-        border-radius: 5px; 
-        border-color: transparent; 
-        z-index: 10; 
-        cursor: pointer; 
-    }
-
-    .candidato-fila:nth-child(even):hover { 
-         background-color: var(--color-hover-fondo) !important; 
-    }
-
-
-    .candidato-fila:nth-child(even) { 
-        background-color: rgba(255, 255, 255, 0.8);
-    }
-    
-    .candidato-fila:last-child {
-        border-bottom: none;
-    }
-    
-    .candidato-fila strong {
-        font-size: 1em;
+    .loader-text {
         color: var(--color-acento);
+        font-size: 1.2em;
         font-weight: 600;
-        line-height: 1.2;
+        letter-spacing: 1px;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
     
-    .candidato-nombre {
-        padding-left: 15px; 
-    }
-
-    /* ---------------------------------------------------------- */
-    /* ICONO DE CUADRILLA/GRUPO */
-    /* ---------------------------------------------------------- */
-    .candidato-grado {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+    .contenedor {
+        width: 95%;
+        max-width: 1400px;
+        margin: 30px auto; 
+        background-color: var(--color-principal);
+        box-shadow: var(--sombra-profunda);
+        border-radius: 15px;
+        padding: 30px; 
+        
+        /* ESTADO INICIAL OCULTO CON TRANSICIÓN */
+        opacity: 0;
+        transform: translateY(20px);
+        /* RETRASO DE 3 SEGUNDOS PARA QUE EL PRELOADER SE VAYA COMPLETAMENTE */
+        transition: opacity 1s ease-in-out 3s, transform 1s ease-in-out 3s; 
+    }
     
-    .grado-icono {
-        width: 55px; 
-        height: 55px;
-        background-color: white;
-        border-radius: 50%; 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-        border: 3px dotted var(--color-acento); 
+    /* ESTADO FINAL VISIBLE */
+    .contenedor.visible {
+        opacity: 1;
+        transform: translateY(0);
     }
 
-    .grado-icono img {
-        width: 90%;
-        height: 90%;
-        object-fit: contain;
-    }
-    
-    .grado-icono.gs {
-        background-color: var(--color-texto-oscuro);
-        width: auto;
-        height: auto;
-        border-radius: 8px;
-        padding: 4px 8px;
-        border: none;
-    }
-    
-    .grado-icono.gs span {
-        color: white;
-        font-size: 0.85em; 
-        font-weight: bold;
-    }
-    
-    /* ---------------------------------------------------------- */
-    /* PIE DE PÁGINA CENTRADO Y ESPACIADO */
-    /* ---------------------------------------------------------- */
-    .pie-pagina {
-        text-align: center; /* Centra el texto */
-        padding: 15px 0 10px 0; /* Espacio interno arriba y abajo */
-        margin-top: 40px; /* Espacio de separación de las listas */
-        border-top: 1px solid var(--color-borde); /* Línea de separación sutil */
-    }
+    /* ---------------------------------------------------------- */
+    /* ENCABEZADO PRINCIPAL (Estilos forzados con !important) */
+    /* ---------------------------------------------------------- */
+    .main-header {
+        display: flex !important;
+        justify-content: space-between !important; 
+        align-items: center !important;
+        text-align: center !important;
+        padding-bottom: 20px !important;
+        border-bottom: 4px double var(--color-acento) !important;
+        margin-bottom: 30px !important;
+    }
 
-    .pie-pagina p {
-        font-size: 0.85em;
-        color: var(--color-texto-oscuro); /* Usando la variable de color oscura */
-        margin: 0; /* Elimina márgenes predeterminados del párrafo */
-        font-weight: 500;
-    }
+    /* Logotipos */
+    .logo-header {
+        width: 100px !important; 
+        height: 100px !important;
+        margin: 0 20px !important;
+        flex-shrink: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
 
-    /* ---------------------------------------------------------- */
-    /* Responsive Design */
-    /* ---------------------------------------------------------- */
-    @media (max-width: 900px) {
-        /* Encabezado */
-        .header-texto h1 { font-size: 1.8em !important; }
-        .header-texto h2 { font-size: 1.2em !important; }
-        .logo-header { width: 80px !important; height: 80px !important; margin: 0 10px !important; }
-        
-        /* Grid de Listas (Apilamiento) */
-        .listas-contenedor {
-            grid-template-columns: 1fr; 
-            gap: 20px;
-        }
-    }
+    .logo-header img {
+        max-width: 100% !important;
+        max-height: 100% !important;
+        object-fit: contain !important;
+    }
 
-    @media (max-width: 600px) {
-        .contenedor {
-            margin: 15px auto;
-            padding: 15px;
-        }
+    /* Contenedor de Texto Central */
+    .header-texto {
+        flex-grow: 1 !important;
+        padding: 0 15px !important; 
+    }
 
-        /* Encabezado (Asegura el apilamiento en móvil) */
-        .main-header { flex-wrap: wrap !important; justify-content: space-around !important; }
-        .header-texto { order: 3 !important; width: 100% !important; margin-top: 15px !important; } 
-        .header-texto h1 { font-size: 1.4em !important; letter-spacing: 1px !important; }
-        .header-texto h2 { font-size: 1em !important; }
-        .logo-header { width: 60px !important; height: 60px !important; margin: 0 5px !important; }
+    .header-texto h1 {
+        color: var(--color-acento) !important;
+        font-family: 'Georgia', serif !important;
+        font-size: 2.2em !important; 
+        margin-bottom: 5px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1.5px !important;
+        line-height: 1.2 !important; 
+    }
+    
+    .header-texto h2 {
+        font-size: 1.4em !important; 
+        margin: 0 !important;
+        color: var(--color-texto-oscuro) !important;
+        font-weight: 500 !important;
+    }
+    .header-texto p {
+        display: none; 
+    }
 
-        /* Grid de Candidatos (Ajuste para móvil) */
-        .candidato-header-fila,
-        .candidato-fila {
-            grid-template-columns: 80px 1fr 50px; 
-            padding: 8px 10px;
-            font-size: 0.8em;
-        }
-    }
+    /* ---------------------------------------------------------- */
+    /* Contenedor de Listas (Grid Comparativo) */
+    /* ---------------------------------------------------------- */
+    .listas-contenedor {
+        display: grid;
+        grid-template-columns: 1fr 1fr; 
+        gap: 30px;
+    }
+    
+    .lista-tarjeta {
+        background-color: white;
+        padding: 0; 
+        border-radius: 10px;
+        border: 2px solid var(--color-acento);
+        box-shadow: var(--sombra-sutil);
+        overflow: hidden; 
+    }
+
+    .lista-tarjeta h3 {
+        text-align: center;
+        color: white;
+        background-color: var(--color-acento);
+        padding: 15px;
+        margin: 0;
+        font-size: 1.4em;
+        letter-spacing: 2px;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-bottom: 3px solid var(--color-texto-oscuro);
+    }
+
+    /* ---------------------------------------------------------- */
+    /* Grid de Candidatos (Tabla) */
+    /* ---------------------------------------------------------- */
+    .candidatos-grid {
+        padding-bottom: 10px;
+    }
+    
+    .candidato-header-fila {
+        display: grid;
+        grid-template-columns: 150px 1fr 80px; 
+        align-items: center;
+        padding: 10px 20px;
+        margin-top: 10px;
+        border-bottom: 3px solid var(--color-acento);
+        background-color: var(--color-secundario);
+        font-weight: 700;
+        font-size: 0.9em;
+        text-transform: uppercase;
+    }
+
+    /* Estilo de Fila (Base) */
+    .candidato-fila {
+        display: grid;
+        grid-template-columns: 150px 1fr 80px; 
+        align-items: center;
+        padding: 12px 20px;
+        border-bottom: 1px dashed var(--color-borde);
+        font-size: 0.95em;
+        transition: all 0.2s ease-in-out; 
+        position: relative; 
+        z-index: 1; 
+    }
+    
+    /* 🔥 INTERACTIVIDAD VISTOSA: Efecto Hover 🔥 */
+    .candidato-fila:hover {
+        background-color: var(--color-hover-fondo) !important; 
+        transform: scale(1.02); /* Agrandamiento sutil */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombra elegante para efecto 3D */
+        border-radius: 5px; 
+        border-color: transparent; 
+        z-index: 10; 
+        cursor: pointer; 
+    }
+
+    .candidato-fila:nth-child(even):hover { 
+         background-color: var(--color-hover-fondo) !important; 
+    }
+
+
+    .candidato-fila:nth-child(even) { 
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .candidato-fila:last-child {
+        border-bottom: none;
+    }
+    
+    .candidato-fila strong {
+        font-size: 1em;
+        color: var(--color-acento);
+        font-weight: 600;
+        line-height: 1.2;
+    }
+    
+    .candidato-nombre {
+        padding-left: 15px; 
+    }
+
+    /* ---------------------------------------------------------- */
+    /* ICONO DE CUADRILLA/GRUPO */
+    /* ---------------------------------------------------------- */
+    .candidato-grado {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .grado-icono {
+        width: 55px; 
+        height: 55px;
+        background-color: white;
+        border-radius: 50%; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        border: 3px dotted var(--color-acento); 
+    }
+
+    .grado-icono img {
+        width: 90%;
+        height: 90%;
+        object-fit: contain;
+    }
+    
+    .grado-icono.gs {
+        background-color: var(--color-texto-oscuro);
+        width: auto;
+        height: auto;
+        border-radius: 8px;
+        padding: 4px 8px;
+        border: none;
+    }
+    
+    .grado-icono.gs span {
+        color: white;
+        font-size: 0.85em; 
+        font-weight: bold;
+    }
+    
+    /* ---------------------------------------------------------- */
+    /* PIE DE PÁGINA CENTRADO Y ESPACIADO */
+    /* ---------------------------------------------------------- */
+    .pie-pagina {
+        text-align: center; /* Centra el texto */
+        padding: 15px 0 10px 0; /* Espacio interno arriba y abajo */
+        margin-top: 40px; /* Espacio de separación de las listas */
+        border-top: 1px solid var(--color-borde); /* Línea de separación sutil */
+    }
+
+    .pie-pagina p {
+        font-size: 0.85em;
+        color: var(--color-texto-oscuro); /* Usando la variable de color oscura */
+        margin: 0; /* Elimina márgenes predeterminados del párrafo */
+        font-weight: 500;
+    }
+
+    /* ---------------------------------------------------------- */
+    /* Responsive Design */
+    /* ---------------------------------------------------------- */
+    @media (max-width: 900px) {
+        /* Encabezado */
+        .header-texto h1 { font-size: 1.8em !important; }
+        .header-texto h2 { font-size: 1.2em !important; }
+        .logo-header { width: 80px !important; height: 80px !important; margin: 0 10px !important; }
+        
+        /* Grid de Listas (Apilamiento) */
+        .listas-contenedor {
+            grid-template-columns: 1fr; 
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .contenedor {
+            margin: 15px auto;
+            padding: 15px;
+        }
+
+        /* Encabezado (Asegura el apilamiento en móvil) */
+        .main-header { flex-wrap: wrap !important; justify-content: space-around !important; }
+        .header-texto { order: 3 !important; width: 100% !important; margin-top: 15px !important; } 
+        .header-texto h1 { font-size: 1.4em !important; letter-spacing: 1px !important; }
+        .header-texto h2 { font-size: 1em !important; }
+        .logo-header { width: 60px !important; height: 60px !important; margin: 0 5px !important; }
+
+        /* Grid de Candidatos (Ajuste para móvil) */
+        .candidato-header-fila,
+        .candidato-fila {
+            grid-template-columns: 80px 1fr 50px; 
+            padding: 8px 10px;
+            font-size: 0.8em;
+        }
+    }
 </style>
 
 
-    
+    
 </head>
 <body>
 
-    <div class="contenedor fade-in">
-        <div class="main-header">
-            <div class="logo-header">
-                <img src="https://edwinhsvcl14-maker.github.io/asistencias/logo_hermandad.png" alt="Logo de la Hermandad">
-            </div>
-            
-            <div class="header-texto">
-                <h1>Hermandad de la Santísima Virgen del Carmen de Lima</h1>
-                <h2>Elecciones Generales Trienio 2026-2028: Candidatos</h2>
-            </div>
-            
-            <div class="logo-header">
-                <img src="https://edwinhsvcl14-maker.github.io/asistencias/logo_hermandad.png" alt="Logo de la Hermandad">
-            </div>
-        </div>
-        <div class="listas-contenedor">
-            <div class="lista-tarjeta">
-                <h3>Lista N° 01</h3>
-                <div class="candidatos-grid">
-                    
-                    <div class="candidato-header-fila">
-                        <span>Cargo</span>
-                        <span style="padding-left: 15px;">Nombre y Apellido</span>
-                        <span style="text-align: center;">C/G.S</span>
-                    </div>
-
-                    <div class="candidato-fila">
-                        <strong>Presidente</strong>
-                        <span class="candidato-nombre">MONTI BUSTAMANTE Uldarico Alfredo</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/12_.png" alt="Logo C/GS 12">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Vicepresidente</strong>
-                        <span class="candidato-nombre">AMBROSIO PAREJA Fidel Alejandro</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/2_.png" alt="Logo C/GS 2">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Primer Fiscal</strong>
-                        <span class="candidato-nombre">HERRERA SOLANO Edward Carlos</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/17_.png" alt="Logo C/GS 17">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Segundo Fiscal</strong>
-                        <span class="candidato-nombre">PERALTA MURILLO Oswaldo Leopoldo</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/6_.png" alt="Logo C/GS 6">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Secretario General</strong>
-                        <span class="candidato-nombre">PEÑA ANGELES César Augusto</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/5_.png" alt="Logo C/GS 5">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Primer Secretario</strong>
-                        <span class="candidato-nombre">CASAS SALAS Diego Oswaldo</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/19_.png" alt="Logo C/GS 19">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Segundo Secretario</strong>
-                        <span class="candidato-nombre">BAZALAR TATAJE Jhonny Walter</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/11_.png" alt="Logo C/GS 11">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Tesorero General</strong>
-                        <span class="candidato-nombre">MEDINA TORALES Juan Ángel</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/13_.png" alt="Logo C/GS 13">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Tesorero de Ingresos</strong>
-                        <span class="candidato-nombre">GUZMÁN ROMERO Marco Gerardo</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/12_.png" alt="Logo C/GS 12">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Tesorero de Egresos</strong>
-                        <span class="candidato-nombre">VILLALTA ORMEÑO William Gustavo</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/7_.png" alt="Logo C/GS 7">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Sec. Asistencia Social</strong>
-                        <span class="candidato-nombre">MENDOZA DIAZ Mary Ann</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono gs">
-                                <span>G.S.</span>
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Sec. Relaciones Públicas</strong>
-                        <span class="candidato-nombre">CRESPO PIZARRO Ángel Daniel</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/10_.png" alt="Logo C/GS 10">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Sec. Cultura y Deportes</strong>
-                        <span class="candidato-nombre">SOTO SÁNCHEZ Marcos Geissel</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/7_.png" alt="Logo C/GS 7">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Sec. Bibliotecario</strong>
-                        <span class="candidato-nombre">LARA BAQUEDANO Santos Manuel</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/20_.png" alt="Logo C/GS 20">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Pres. Consejo de Disciplina</strong>
-                        <span class="candidato-nombre">LAGRAVERE CABRERA José Carlos</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/1__.png" alt="Logo C/GS 1">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Capataz General</strong>
-                        <span class="candidato-nombre">GUERRERO CAYCHO Carlos Gustavo</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/15_.png" alt="Logo C/GS 15">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Sub Capataz General</strong>
-                        <span class="candidato-nombre">FERNÁNDEZ RUBINA Walter Manuel</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/5_.png" alt="Logo C/GS 5">
-                            </span>
-                        </span>
-                    </div>
-                    
-                </div>
-            </div>
-
-            <div class="lista-tarjeta">
-                <h3>Lista N° 02</h3>
-                <div class="candidatos-grid">
-
-                    <div class="candidato-header-fila">
-                        <span>Cargo</span>
-                        <span style="padding-left: 15px;">Nombre y Apellido</span>
-                        <span style="text-align: center;">C/G.S</span>
-                    </div>
-                    
-                    <div class="candidato-fila">
-                        <strong>Presidente</strong>
-                        <span class="candidato-nombre">FERNÁNDEZ HERRERA Carlos Daniel</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/16_.png" alt="Logo C/GS 16">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Vicepresidente</strong>
-                        <span class="candidato-nombre">LAZARTE PICÓN Gerardo</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/7_.png" alt="Logo C/GS 7">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Primer Fiscal</strong>
-                        <span class="candidato-nombre">YOUNG BUTRÓN Leandro Antonio</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/16_.png" alt="Logo C/GS 16">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Segundo Fiscal</strong>
-                        <span class="candidato-nombre">ARNEZ DEL SOLAR Rafael Oscar</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/4_.png" alt="Logo C/GS 4">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Secretario General</strong>
-                        <span class="candidato-nombre">LA HOZ MENDIZABAL Ernesto Bernardino</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/16_.png" alt="Logo C/GS 16">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Primer Secretario</strong>
-                        <span class="candidato-nombre">GÓMEZ ROMÁN Luis Giovani</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/20_.png" alt="Logo C/GS 20">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Segundo Secretario</strong>
-                        <span class="candidato-nombre">AREVALO ESTRADA José Gilberto</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/4_.png" alt="Logo C/GS 4">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Tesorero General</strong>
-                        <span class="candidato-nombre">LLERENA MARCELO Marco Enrique</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/2_.png" alt="Logo C/GS 2">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Tesorero de Ingresos</strong>
-                        <span class="candidato-nombre">APAZA ALEJOS Julio César</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/9_.png" alt="Logo C/GS 9">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Tesorero de Egresos</strong>
-                        <span class="candidato-nombre">LOZADA BAUTISTA Juan Ernesto</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/10_.png" alt="Logo C/GS 10">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Sec. Asistencia Social</strong>
-                        <span class="candidato-nombre">PAIVA MUCHA Teresa Margarita</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono gs">
-                                <span>G.S.</span>
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Sec. Relaciones Públicas</strong>
-                        <span class="candidato-nombre">CORBELLA ZANABRIA Enrique Damián</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/18_.png" alt="Logo C/GS 18">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Sec. Cultura y Deportes</strong>
-                        <span class="candidato-nombre">PARDO FIGUEROA ANCUA Alberto David</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/5_.png" alt="Logo C/GS 5">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Sec. Bibliotecario</strong>
-                        <span class="candidato-nombre">MACHICADO WALKER Flavio Wilfredo</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/12_.png" alt="Logo C/GS 12">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Pres. Consejo de Disciplina</strong>
-                        <span class="candidato-nombre">OJEDA COSSIO Félix Elías</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/9_.png" alt="Logo C/GS 9">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Capataz General</strong>
-                        <span class="candidato-nombre">HENRIQUEZ ARELLANO Juan Antonio</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/14_.png" alt="Logo C/GS 14">
-                            </span>
-                        </span>
-                    </div>
-                    <div class="candidato-fila">
-                        <strong>Sub Capataz General</strong>
-                        <span class="candidato-nombre">VILLAVICENCIO SALAS Jesús Fernando</span>
-                        <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/18_.png" alt="Logo C/GS 18">
-                            </span>
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        
-      <div class="pie-pagina">
-    <p>Comité Electoral General Trienio 2026-2028 | Hermandad de la Santísima Virgen del Carmen de Lima (HSVCL)</p>
-</div>
+    <div id="preloader">
+        <div class="loader"></div>
+        <div class="loader-text">Cargando Listas de Candidatos...</div>
     </div>
+        <div class="contenedor" id="mainContainer"> 
+        <div class="main-header">
+            <div class="logo-header">
+                <img src="https://edwinhsvcl14-maker.github.io/asistencias/logo_hermandad.png" alt="Logo de la Hermandad">
+            </div>
+            
+            <div class="header-texto">
+                <h1>Hermandad de la Santísima Virgen del Carmen de Lima</h1>
+                <h2>Elecciones Generales Trienio 2026-2028: Candidatos</h2>
+            </div>
+            
+            <div class="logo-header">
+                <img src="https://edwinhsvcl14-maker.github.io/asistencias/logo_hermandad.png" alt="Logo de la Hermandad">
+            </div>
+        </div>
+        <div class="listas-contenedor">
+            <div class="lista-tarjeta">
+                <h3>Lista N° 01</h3>
+                <div class="candidatos-grid">
+                    
+                    <div class="candidato-header-fila">
+                        <span>Cargo</span>
+                        <span style="padding-left: 15px;">Nombre y Apellido</span>
+                        <span style="text-align: center;">C/G.S</span>
+                    </div>
 
+                    <div class="candidato-fila">
+                        <strong>Presidente</strong>
+                        <span class="candidato-nombre">MONTI BUSTAMANTE Uldarico Alfredo</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/12_.png" alt="Logo C/GS 12">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Vicepresidente</strong>
+                        <span class="candidato-nombre">AMBROSIO PAREJA Fidel Alejandro</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/2_.png" alt="Logo C/GS 2">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Primer Fiscal</strong>
+                        <span class="candidato-nombre">HERRERA SOLANO Edward Carlos</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/17_.png" alt="Logo C/GS 17">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Segundo Fiscal</strong>
+                        <span class="candidato-nombre">PERALTA MURILLO Oswaldo Leopoldo</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/6_.png" alt="Logo C/GS 6">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Secretario General</strong>
+                        <span class="candidato-nombre">PEÑA ANGELES César Augusto</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/5_.png" alt="Logo C/GS 5">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Primer Secretario</strong>
+                        <span class="candidato-nombre">CASAS SALAS Diego Oswaldo</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/19_.png" alt="Logo C/GS 19">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Segundo Secretario</strong>
+                        <span class="candidato-nombre">BAZALAR TATAJE Jhonny Walter</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/11_.png" alt="Logo C/GS 11">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Tesorero General</strong>
+                        <span class="candidato-nombre">MEDINA TORALES Juan Ángel</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/13_.png" alt="Logo C/GS 13">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Tesorero de Ingresos</strong>
+                        <span class="candidato-nombre">GUZMÁN ROMERO Marco Gerardo</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/12_.png" alt="Logo C/GS 12">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Tesorero de Egresos</strong>
+                        <span class="candidato-nombre">VILLALTA ORMEÑO William Gustavo</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/7_.png" alt="Logo C/GS 7">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Asistencia Social</strong>
+                        <span class="candidato-nombre">MENDOZA DIAZ Mary Ann</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono gs">
+                                <span>G.S.</span>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Relaciones Públicas</strong>
+                        <span class="candidato-nombre">CRESPO PIZARRO Ángel Daniel</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/10_.png" alt="Logo C/GS 10">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Cultura y Deportes</strong>
+                        <span class="candidato-nombre">SOTO SÁNCHEZ Marcos Geissel</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/7_.png" alt="Logo C/GS 7">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Bibliotecario</strong>
+                        <span class="candidato-nombre">LARA BAQUEDANO Santos Manuel</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/20_.png" alt="Logo C/GS 20">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Pres. Consejo de Disciplina</strong>
+                        <span class="candidato-nombre">LAGRAVERE CABRERA José Carlos</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/1__.png" alt="Logo C/GS 1">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Capataz General</strong>
+                        <span class="candidato-nombre">GUERRERO CAYCHO Carlos Gustavo</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/15_.png" alt="Logo C/GS 15">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sub Capataz General</strong>
+                        <span class="candidato-nombre">FERNÁNDEZ RUBINA Walter Manuel</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/5_.png" alt="Logo C/GS 5">
+                            </span>
+                        </span>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="lista-tarjeta">
+                <h3>Lista N° 02</h3>
+                <div class="candidatos-grid">
+
+                    <div class="candidato-header-fila">
+                        <span>Cargo</span>
+                        <span style="padding-left: 15px;">Nombre y Apellido</span>
+                        <span style="text-align: center;">C/G.S</span>
+                    </div>
+                    
+                    <div class="candidato-fila">
+                        <strong>Presidente</strong>
+                        <span class="candidato-nombre">FERNÁNDEZ HERRERA Carlos Daniel</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/16_.png" alt="Logo C/GS 16">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Vicepresidente</strong>
+                        <span class="candidato-nombre">LAZARTE PICÓN Gerardo</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/7_.png" alt="Logo C/GS 7">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Primer Fiscal</strong>
+                        <span class="candidato-nombre">YOUNG BUTRÓN Leandro Antonio</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/16_.png" alt="Logo C/GS 16">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Segundo Fiscal</strong>
+                        <span class="candidato-nombre">ARNEZ DEL SOLAR Rafael Oscar</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/4_.png" alt="Logo C/GS 4">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Secretario General</strong>
+                        <span class="candidato-nombre">LA HOZ MENDIZABAL Ernesto Bernardino</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/16_.png" alt="Logo C/GS 16">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Primer Secretario</strong>
+                        <span class="candidato-nombre">GÓMEZ ROMÁN Luis Giovani</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/20_.png" alt="Logo C/GS 20">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Segundo Secretario</strong>
+                        <span class="candidato-nombre">AREVALO ESTRADA José Gilberto</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/4_.png" alt="Logo C/GS 4">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Tesorero General</strong>
+                        <span class="candidato-nombre">LLERENA MARCELO Marco Enrique</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/2_.png" alt="Logo C/GS 2">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Tesorero de Ingresos</strong>
+                        <span class="candidato-nombre">APAZA ALEJOS Julio César</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/9_.png" alt="Logo C/GS 9">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Tesorero de Egresos</strong>
+                        <span class="candidato-nombre">LOZADA BAUTISTA Juan Ernesto</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/10_.png" alt="Logo C/GS 10">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Asistencia Social</strong>
+                        <span class="candidato-nombre">PAIVA MUCHA Teresa Margarita</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono gs">
+                                <span>G.S.</span>
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Relaciones Públicas</strong>
+                        <span class="candidato-nombre">CORBELLA ZANABRIA Enrique Damián</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/18_.png" alt="Logo C/GS 18">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Cultura y Deportes</strong>
+                        <span class="candidato-nombre">PARDO FIGUEROA ANCUA Alberto David</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/5_.png" alt="Logo C/GS 5">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sec. Bibliotecario</strong>
+                        <span class="candidato-nombre">MACHICADO WALKER Flavio Wilfredo</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/12_.png" alt="Logo C/GS 12">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Pres. Consejo de Disciplina</strong>
+                        <span class="candidato-nombre">OJEDA COSSIO Félix Elías</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/9_.png" alt="Logo C/GS 9">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Capataz General</strong>
+                        <span class="candidato-nombre">HENRIQUEZ ARELLANO Juan Antonio</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/14_.png" alt="Logo C/GS 14">
+                            </span>
+                        </span>
+                    </div>
+                    <div class="candidato-fila">
+                        <strong>Sub Capataz General</strong>
+                        <span class="candidato-nombre">VILLAVICENCIO SALAS Jesús Fernando</span>
+                        <span class="candidato-grado">
+                            <span class="grado-icono">
+                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/18_.png" alt="Logo C/GS 18">
+                            </span>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        
+      <div class="pie-pagina">
+    <p>Comité Electoral General Trienio 2026-2028 | Hermandad de la Santísima Virgen del Carmen de Lima (HSVCL)</p>
+</div>
+    </div>
+<script>
+    window.addEventListener('load', () => {
+        const preloader = document.getElementById('preloader');
+        const mainContainer = document.getElementById('mainContainer');
+        
+        // 1. Ocultar el preloader con transición de 3 segundos
+        preloader.classList.add('hidden');
+        
+        // 2. Mostrar el contenido con efecto fade-in después de que el preloader haya desaparecido
+        // Usamos setTimeout para que coincida con el tiempo de transición de CSS del preloader (3 segundos)
+        setTimeout(() => {
+            mainContainer.classList.add('visible');
+        }, 3000); // 3000 milisegundos = 3 segundos
+    });
+</script>
 </body>
 </html>
