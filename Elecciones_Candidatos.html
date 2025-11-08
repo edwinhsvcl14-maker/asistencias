@@ -33,7 +33,7 @@
     }
 
     /* ---------------------------------------------------------- */
-    /* ESTILOS DE CARGA (PRELOADER) - TRANSICIÓN REDUCIDA A 0.5S */
+    /* ESTILOS DE CARGA (PRELOADER) - TRANSICIÓN VUELVE A 3S */
     /* ---------------------------------------------------------- */
     #preloader {
         position: fixed;
@@ -49,8 +49,8 @@
         align-items: center;
         opacity: 1;
         visibility: visible;
-        /* CORREGIDO: DURACIÓN DE TRANSICIÓN DEL PRELOADER A 0.5 SEGUNDOS */
-        transition: opacity 0.5s ease-out, visibility 0.5s ease-out; 
+        /* CORREGIDO: DURACIÓN DE TRANSICIÓN DEL PRELOADER VUELVE A 3 SEGUNDOS */
+        transition: opacity 3s ease-out, visibility 3s ease-out; 
     }
 
     /* Estado de preloader oculto */
@@ -83,6 +83,9 @@
         100% { transform: rotate(360deg); }
     }
     
+    /* ---------------------------------------------------------- */
+    /* ESTILOS DE CONTENEDOR PRINCIPAL - VUELVEN A OCULTARSE INICIALMENTE */
+    /* ---------------------------------------------------------- */
     .contenedor {
         width: 95%;
         max-width: 1400px;
@@ -92,13 +95,13 @@
         border-radius: 15px;
         padding: 30px; 
         
-        /* CORREGIDO: ELIMINAMOS ESTADOS INICIALES DE OPACIDAD Y TRANSICIÓN RETRASADA */
-        opacity: 1;
-        transform: translateY(0);
-        transition: none; /* Desactivar transiciones que causan retrasos */
+        /* CORREGIDO: VUELVE A ESTAR OCULTO INICIALMENTE */
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1s ease-in, transform 1s ease-in; /* Transición suave de aparición */
     }
     
-    /* CORREGIDO: HACEMOS LA CLASE VISIBLE REDUNDANTE (o para futuros usos) */
+    /* Estado visible después de la carga (3 segundos) */
     .contenedor.visible {
         opacity: 1;
         transform: translateY(0);
@@ -726,12 +729,15 @@
         const preloader = document.getElementById('preloader');
         const mainContainer = document.getElementById('mainContainer');
         
-        // 1. Ocultar el preloader con transición rápida de 0.5s
-        preloader.classList.add('hidden');
-        
-        // 2. Mostrar el contenido principal inmediatamente
-        // No se necesita setTimeout ni retraso aquí
-        mainContainer.classList.add('visible');
+        // CORREGIDO: Establece el retraso de 3000 milisegundos (3 segundos)
+        setTimeout(() => {
+            // 1. Ocultar el preloader (la transición CSS de 3s se encargará del fade-out)
+            preloader.classList.add('hidden');
+            
+            // 2. Mostrar el contenido principal al mismo tiempo que el preloader empieza a desaparecer
+            // La transición CSS del contenedor hará que aparezca suavemente
+            mainContainer.classList.add('visible');
+        }, 3000); // 3000 milisegundos = 3 segundos
     });
 </script>
 </body>
