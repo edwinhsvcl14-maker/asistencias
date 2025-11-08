@@ -21,6 +21,7 @@
         --sombra-sutil: 0 4px 6px rgba(0, 0, 0, 0.1);
         --sombra-profunda: 0 12px 24px rgba(0, 0, 0, 0.2);
         --color-hover-fondo: rgba(160, 82, 45, 0.08); /* Fondo suave para hover */
+        --color-btn-plan: #708090; /* Slate Gray para los botones de plan */
     }
 
     body {
@@ -194,6 +195,39 @@
         border-bottom: 3px solid var(--color-texto-oscuro);
     }
 
+    /* ========================================================== */
+    /* ESTILOS AÑADIDOS PARA LOS BOTONES DE PLAN */
+    /* ========================================================== */
+    .contenedor-planes {
+        display: flex;
+        justify-content: center; /* Centrar el botón dentro de la tarjeta */
+        padding: 10px 0 20px;
+        background-color: var(--color-principal); /* Color de fondo sutil para el área del botón */
+        border-bottom: 2px dashed var(--color-borde);
+    }
+    
+    .btn-plan {
+        background-color: var(--color-btn-plan);
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-weight: 600;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: var(--sombra-sutil);
+        transition: background-color 0.2s, transform 0.2s;
+        width: 80%; /* Ancho que ocupa la mayor parte del espacio */
+        max-width: 250px;
+    }
+    
+    .btn-plan:hover {
+        background-color: var(--color-acento);
+        transform: translateY(-2px);
+        box-shadow: var(--sombra-profunda);
+    }
+
     /* ---------------------------------------------------------- */
     /* Grid de Candidatos (Tabla) */
     /* ---------------------------------------------------------- */
@@ -206,7 +240,7 @@
         grid-template-columns: 150px 1fr 80px; 
         align-items: center;
         padding: 10px 20px;
-        margin-top: 10px;
+        /* NOTA: El margin-top fue removido para pegar el encabezado al botón */
         border-bottom: 3px solid var(--color-acento);
         background-color: var(--color-secundario);
         font-weight: 700;
@@ -360,7 +394,6 @@
     }
 </style>
 
-
     
 </head>
 <body>
@@ -387,6 +420,10 @@
         <div class="listas-contenedor">
             <div class="lista-tarjeta">
                 <h3>Lista N° 01</h3>
+                
+                <div class="contenedor-planes">
+                    <button class="btn-plan" onclick="window.location.href='ruta-del-plan-lista-1.html';">Ver Plan Lista 1</button>
+                </div>
                 <div class="candidatos-grid">
                     
                     <div class="candidato-header-fila">
@@ -554,6 +591,10 @@
 
             <div class="lista-tarjeta">
                 <h3>Lista N° 02</h3>
+
+                <div class="contenedor-planes">
+                    <button class="btn-plan" onclick="window.location.href='ruta-del-plan-lista-2.html';">Ver Plan Lista 2</button>
+                </div>
                 <div class="candidatos-grid">
 
                     <div class="candidato-header-fila">
