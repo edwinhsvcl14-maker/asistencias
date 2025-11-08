@@ -41,22 +41,88 @@
         line-height: 1.6;
         min-height: 100vh;
     }
+    
+    /* ---------------------------------------------------------- */
+    /* NUEVO: ESTILOS DE CARGA (PRELOADER) */
+    /* ---------------------------------------------------------- */
+    #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-primario-fondo); /* Cream base */
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 1s ease-out, visibility 1s ease-out; /* Transición suave de desaparición */
+    }
 
-    /* Contenedor principal con degradado y sombra */
+    /* Estado de preloader oculto */
+    #preloader.hidden {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* Estilo del GIF/Icono de carga */
+    .loader {
+        width: 120px;
+        height: 120px;
+        border: 10px solid var(--color-secundario-fondo);
+        border-top: 10px solid var(--color-acento-base); /* Color de acento para la animación */
+        border-radius: 50%;
+        animation: spin 1.2s linear infinite;
+        margin-bottom: 20px;
+        box-shadow: var(--sombra-elegante);
+    }
+    
+    .loader-text {
+        color: var(--color-acento-oscuro);
+        font-size: 1.2em;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    /* Efecto de aparición del Contenido */
     .contenedor {
         width: 95%;
         max-width: 1100px;
         margin: 30px auto;
-        background: linear-gradient(to right, #FFF8E1 0%, #FEFBEA 100%); /* Contraste sutil de izquierda a derecha */
+        background: linear-gradient(to right, #FFF8E1 0%, #FEFBEA 100%);
         box-shadow: var(--sombra-elegante);
         border-radius: 20px;
         padding: 30px;
         transition: all 0.3s ease;
+        
+        /* ESTADO INICIAL OCULTO CON TRANSICIÓN */
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1s ease-in-out 1s, transform 1s ease-in-out 1s; /* Retraso de 1s para que el preloader se vaya */
+    }
+
+    /* ESTADO FINAL VISIBLE */
+    .contenedor.visible {
+        opacity: 1;
+        transform: translateY(0);
     }
 
     /* ---------------------------------------------------------- */
-    /* Encabezado Principal */
+    /* Resto de Estilos (Mantenidos) */
     /* ---------------------------------------------------------- */
+    
+    /* Contenedor principal con degradado y sombra */
+    /* .contenedor está redefinido arriba para el efecto de carga */
+
+    /* Encabezado Principal */
     .main-header {
         text-align: center;
         padding-bottom: 25px;
@@ -105,9 +171,7 @@
     }
 
 
-    /* ---------------------------------------------------------- */
     /* Secciones de Contenido */
-    /* ---------------------------------------------------------- */
     .seccion {
         margin-bottom: 35px;
         padding: 20px;
@@ -176,9 +240,7 @@
         color: #666;
     }
 
-    /* ---------------------------------------------------------- */
     /* Barra de Progreso - Estilos y Animaciones */
-    /* ---------------------------------------------------------- */
     .progress-title {
         color: var(--color-acento-oscuro);
         font-size: 1.4em;
@@ -333,9 +395,7 @@
     .legend-color.pending { background-color: var(--color-pendiente); }
 
 
-    /* ---------------------------------------------------------- */
     /* Botón de Acción Principal y Pie de Página */
-    /* ---------------------------------------------------------- */
     .btn-container {
         text-align: center;
         margin-top: 40px;
@@ -459,8 +519,12 @@
 </style>
 </head>
 <body>
-
-    <div class="contenedor">
+    
+    <div id="preloader">
+        <div class="loader"></div>
+        <div class="loader-text">Cargando Proceso Electoral...</div>
+    </div>
+    <div class="contenedor" id="mainContainer">
         <div class="main-header">
             <div class="header-logo-container">
                 <div class="logo-header">
@@ -661,18 +725,40 @@
         
         if (window.innerWidth <= 768) {
             // Móvil (Vertical)
-            const totalVerticalHeight = document.querySelector('.timeline').offsetHeight;
-            const progressHeight = (progressValue / 100) * totalVerticalHeight;
-            PROGRESS_BAR.style.height = `${progressHeight}px`; 
+            const timelineElement = document.querySelector('.timeline');
+            // Nota: Se debe calcular la altura del contenedor principal de la línea para evitar errores.
+            if(timelineElement) {
+                const totalVerticalHeight = timelineElement.offsetHeight;
+                const progressHeight = (progressValue / 100) * totalVerticalHeight;
+                PROGRESS_BAR.style.height = `${progressHeight}px`; 
+            }
         } else {
             // Escritorio (Horizontal)
             PROGRESS_BAR.style.width = `${progressValue}%`; 
         }
     }
 
-    // Ejecutar al cargar la página y al redimensionar
-    updateTimeline();
-    window.addEventListener('resize', updateTimeline);
+    // ==========================================================
+    // NUEVA LÓGICA: Control de Preloader y Carga del Contenido
+    // ==========================================================
+    
+    window.addEventListener('load', () => {
+        const preloader = document.getElementById('preloader');
+        const mainContainer = document.getElementById('mainContainer');
+        
+        // Ejecutar la lógica del cronograma primero
+        updateTimeline();
+        window.addEventListener('resize', updateTimeline);
+        
+        // 1. Ocultar el preloader con transición de 1 segundo
+        preloader.classList.add('hidden');
+        
+        // 2. Mostrar el contenido con efecto fade-in después de que el preloader haya desaparecido
+        // Usamos setTimeout para que coincida con el tiempo de transición de CSS del preloader (1 segundo)
+        setTimeout(() => {
+            mainContainer.classList.add('visible');
+        }, 1000); 
+    });
     
 </script>
 
