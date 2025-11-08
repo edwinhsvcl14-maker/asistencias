@@ -207,7 +207,8 @@
     }
     
     .btn-plan {
-        background-color: var(--color-btn-plan);
+        /* background-color: var(--color-btn-plan); ANTES: Removido para usar degradado */
+        background: linear-gradient(to bottom, #8B4513, #A0522D); /* Degradado de marrón oscuro a sienna */
         color: white;
         padding: 10px 20px;
         border: none;
@@ -217,13 +218,13 @@
         text-transform: uppercase;
         letter-spacing: 1px;
         box-shadow: var(--sombra-sutil);
-        transition: background-color 0.2s, transform 0.2s;
+        transition: background 0.2s, transform 0.2s; /* Cambia 'background-color' a 'background' */
         width: 80%; /* Ancho que ocupa la mayor parte del espacio */
         max-width: 250px;
     }
     
     .btn-plan:hover {
-        background-color: var(--color-acento);
+        background: linear-gradient(to bottom, #A0522D, #8B4513); /* Invierte el degradado al pasar el ratón */
         transform: translateY(-2px);
         box-shadow: var(--sombra-profunda);
     }
