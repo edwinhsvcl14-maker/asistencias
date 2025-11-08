@@ -183,37 +183,44 @@
             align-items: center;
         }
 
-        .grado-icono {
-            width: 30px; /* Tamaño del contenedor/círculo del logo */
-            height: 30px;
-            background-color: var(--color-acento); 
-            border-radius: 50%; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden; /* CRÍTICO: Recorta la imagen si sobresale del círculo */
-        }
-        
-        .grado-icono img {
-            width: 80%; /* La imagen será 80% del círculo */
-            height: 80%;
-            object-fit: contain; /* Asegura que la imagen completa se vea sin distorsionarse */
-        }
-        
-        /* Estilo específico para G.S. (si no tiene logo numérico, solo texto) */
-        .grado-icono.gs {
-            background-color: #666;
-            width: auto;
-            height: auto;
-            border-radius: 4px;
-            padding: 3px 6px;
-        }
-        
-        .grado-icono.gs span {
-            color: white;
-            font-size: 0.7em;
-            font-weight: bold;
-        }
+/* ---------------------------------------------------------- */
+/* ICONO DE CUADRILLA/GRUPO (Modificado para ser más grande, con fondo blanco y borde punteado) */
+/* ---------------------------------------------------------- */
+.grado-icono {
+    width: 60px; /* Tamaño del contenedor/círculo del logo (DOBLE de 30px) */
+    height: 60px; /* Tamaño del contenedor/círculo del logo (DOBLE de 30px) */
+    background-color: white; /* Fondo blanco */
+    border-radius: 50%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    
+    /* Borde punteado (dotted) con el color de acento */
+    border: 3px dotted var(--color-acento); 
+}
+
+.grado-icono img {
+    width: 90%; /* Incrementado ligeramente para aprovechar el espacio */
+    height: 90%;
+    object-fit: contain;
+}
+
+/* Estilo específico para G.S. (Ajustado para mantener la proporción sin círculo) */
+.grado-icono.gs {
+    background-color: #666;
+    width: auto;
+    height: auto;
+    border-radius: 8px; /* Ligeramente más redondeado */
+    padding: 6px 10px; /* Padding doble */
+    border: none; /* Sin borde punteado para el G.S. de texto */
+}
+
+.grado-icono.gs span {
+    color: white;
+    font-size: 0.9em; /* Ligeramente más grande */
+    font-weight: bold;
+}
 
         /* ---------------------------------------------------------- */
         /* Pie de Página */
