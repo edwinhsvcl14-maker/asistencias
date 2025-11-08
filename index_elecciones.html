@@ -3,34 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elecciones Generales - Introducción Dinámica</title>
+    <title>Elecciones Generales - Hermandad HSVCL</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Georgia:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
 <style>
     /* ========================================================== */
-    /* Estilos CSS Dinámicos y Profesionales (Ajustes) */
+    /* Estilos CSS Dinámicos y Profesionales (FINAL) */
     /* ========================================================== */
 
     /* Variables de Color Actualizadas con un Toque más Suave/Degradado */
     :root {
-        --color-primario-fondo: #FFF8E1; 
-        --color-secundario-fondo: #FEFBEA; 
+        --color-primario-fondo: #FFF8E1; /* Light Yellowish Cream (Base clara) */
+        --color-secundario-fondo: #FEFBEA; /* Off-White/Very Light Cream (Fondo de secciones) */
         --color-acento-base: #A0522D; /* Sienna (Marrón medio) */
-        --color-acento-oscuro: #5D4037; 
-        --color-texto-oscuro: #3E2723; 
+        --color-acento-oscuro: #5D4037; /* Marrón más oscuro (Texto principal/Degradado) */
+        --color-texto-oscuro: #3E2723; /* Marrón oscuro para texto */
         
-        /* Nuevos colores de estado para la barra */
+        /* Colores de estado para la barra */
         --color-completo: #7CB342; /* Verde Oliva suave (Completado) */
         --color-activo-claro: #A0522D; /* Sienna (Activo) - Punto parpadeante */
         --color-activo-oscuro: #6D4C41; 
         --color-pendiente: #D2B48C; /* Tan (Pendiente) */
 
-        /* Degradados mejorados */
+        /* Degradados y Sombras */
         --sombra-elegante: 0 10px 20px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
         --degradado-acento: linear-gradient(135deg, var(--color-activo-claro) 0%, var(--color-activo-oscuro) 100%); 
-        --degradado-fondo-pagina: linear-gradient(180deg, #FAF0E6 0%, #FFFDE7 100%); 
+        --degradado-fondo-pagina: linear-gradient(180deg, #FAF0E6 0%, #FFFDE7 100%); /* Degradado suave de fondo */
     }
 
+    /* Fondo de la página con degradado bidireccional */
     body {
         font-family: 'Poppins', sans-serif;
         margin: 0;
@@ -40,12 +41,13 @@
         line-height: 1.6;
         min-height: 100vh;
     }
-    
+
+    /* Contenedor principal con degradado y sombra */
     .contenedor {
         width: 95%;
         max-width: 1100px;
         margin: 30px auto;
-        background: linear-gradient(to right, #FFF8E1 0%, #FEFBEA 100%); 
+        background: linear-gradient(to right, #FFF8E1 0%, #FEFBEA 100%); /* Contraste sutil de izquierda a derecha */
         box-shadow: var(--sombra-elegante);
         border-radius: 20px;
         padding: 30px;
@@ -69,6 +71,7 @@
         margin-bottom: 15px;
     }
 
+    /* Logos más grandes */
     .logo-header {
         width: 200px; 
         height: 200px;
@@ -93,7 +96,7 @@
         letter-spacing: 1.5px;
         text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     }
-    
+
     .header-texto h2 {
         font-size: 1.4em;
         margin: 0;
@@ -103,7 +106,7 @@
 
 
     /* ---------------------------------------------------------- */
-    /* Secciones y Comité Electoral */
+    /* Secciones de Contenido */
     /* ---------------------------------------------------------- */
     .seccion {
         margin-bottom: 35px;
@@ -122,74 +125,56 @@
         margin-top: 0;
         font-weight: 600;
     }
-    
+
+    /* Estilos del Comité Electoral (Centrado y Compactado) */
     .comite-electoral-container {
         display: flex;
         justify-content: center; 
     }
-    
+
     .comite-grid {
-        width: 100%; 
-        max-width: 800px;
+        width: 100%;
+        max-width: 700px; /* Ancho más compacto */
         display: grid;
-        grid-template-columns: 0.8fr 2fr 1fr;
-        gap: 15px 10px;
+        grid-template-columns: 1fr 2.5fr 1fr; /* Ajuste de columnas */
+        gap: 10px 15px; 
         margin-top: 15px;
-        padding: 15px;
+        padding: 15px 20px;
         border: 1px dashed var(--color-acento-base);
         border-radius: 8px;
         background-color: rgba(160, 82, 45, 0.05);
     }
+
     .comite-header {
         font-weight: 700;
         color: var(--color-acento-oscuro);
         padding-bottom: 5px;
-        border-bottom: 1px solid var(--color-acento-base);
+        border-bottom: 2px solid var(--color-acento-base);
         text-transform: uppercase;
-        font-size: 0.9em;
+        font-size: 0.85em;
+        text-align: center; /* Centrado de títulos de columna */
     }
+    .comite-header.comite-cuadrilla {
+        text-align: center !important;
+    }
+
     .comite-cargo {
         font-weight: 600;
         color: var(--color-acento-base);
+        font-size: 0.9em;
+        text-align: center; /* Centrado del cargo */
     }
     .comite-hermano {
-        font-weight: 400;
-        font-size: 0.95em;
+        font-weight: 500;
+        font-size: 0.9em;
+        text-align: left; /* Alineación del nombre */
     }
     .comite-cuadrilla {
-        text-align: right;
-        font-size: 0.9em;
+        text-align: center; /* Centrado de la pertenencia */
+        font-size: 0.85em;
         font-style: italic;
         color: #666;
     }
-    
-    @media (max-width: 900px) {
-        .logo-header {
-            width: 150px;
-            height: 150px;
-        }
-    }
-    
-    @media (max-width: 600px) {
-        .logo-header {
-            width: 80px;
-            height: 80px;
-            margin: 0 5px;
-        }
-        .comite-grid {
-            grid-template-columns: 1fr;
-            gap: 5px;
-            padding: 10px;
-        }
-        .comite-header, .comite-cuadrilla {
-            display: none;
-        }
-        .comite-cargo, .comite-hermano {
-            padding-bottom: 5px;
-            border-bottom: 1px dashed #DDD;
-        }
-    }
-
 
     /* ---------------------------------------------------------- */
     /* Barra de Progreso - Estilos y Animaciones */
@@ -202,7 +187,7 @@
         text-transform: uppercase;
         text-align: center;
     }
-    
+
     .progress-bar-container {
         display: flex;
         flex-direction: column;
@@ -229,7 +214,7 @@
         z-index: 1;
         border-radius: 2px;
     }
-    
+
     .timeline-progress {
         position: absolute;
         top: 25px; 
@@ -253,15 +238,15 @@
         margin: 0 5px;
         transition: background-color 0.5s ease;
     }
-    
+
+    /* Fondo para etapas (separación visual) */
     .timeline-item.completed {
-        background-color: rgba(124, 179, 66, 0.05);
-    }
-    
-    .timeline-item.active {
-        background-color: rgba(160, 82, 45, 0.1);
+        background-color: rgba(124, 179, 66, 0.05); /* Verde suave */
     }
 
+    .timeline-item.active {
+        background-color: rgba(160, 82, 45, 0.1); /* Marrón suave */
+    }
 
     .timeline-point {
         width: 20px;
@@ -276,31 +261,28 @@
         border: 4px solid var(--color-secundario-fondo); 
         box-shadow: 0 0 0 2px var(--color-pendiente);
     }
-    
+
     /* ESTADO 1: Completado */
     .timeline-item.completed .timeline-point {
         background: var(--color-completo); 
         box-shadow: 0 0 0 2px var(--color-completo);
     }
-    
+
     /* ESTADO 2: Activo (Activo con efecto de pulso) */
     .timeline-item.active .timeline-point {
         background: var(--color-activo-claro); 
-        /* Sombra grande y color acentuado */
         box-shadow: 0 0 0 4px var(--color-activo-claro), 0 0 15px var(--color-activo-claro);
-        transform: translateX(-50%) scale(1.3); /* Ligeramente más grande */
+        transform: translateX(-50%) scale(1.3);
         
-        /* Animación de Parpadeo/Pulso RESTAURADA */
+        /* Animación de Parpadeo/Pulso */
         animation: pulse 1.5s infinite alternate;
     }
 
     @keyframes pulse {
         from {
-            /* Pulso inicial: 4px de sombra sólida + 10px de resplandor suave */
             box-shadow: 0 0 0 4px var(--color-activo-claro), 0 0 10px rgba(160, 82, 45, 0.5);
         }
         to {
-            /* Pulso final: 8px de sombra más transparente + 20px de resplandor */
             box-shadow: 0 0 0 8px rgba(160, 82, 45, 0.3), 0 0 20px var(--color-activo-claro);
         }
     }
@@ -320,49 +302,6 @@
         line-height: 1.2;
     }
 
-    /* Responsive (sin cambios importantes en el JS/CSS del pulso) */
-    @media (max-width: 768px) {
-        .timeline {
-            flex-direction: column;
-            align-items: flex-start;
-            padding-left: 30px; 
-            width: 90%;
-            margin: 20px auto;
-        }
-
-        .timeline-line, .timeline-progress {
-            top: 0;
-            bottom: 0;
-            left: 10px;
-            width: 5px;
-            height: 100%; 
-            right: auto;
-        }
-
-        .timeline-progress {
-            height: 0%; 
-            width: 5px;
-        }
-
-        .timeline-item {
-            padding: 15px 0 15px 25px; 
-            width: 100%;
-            margin: 5px 0;
-            text-align: left;
-        }
-
-        .timeline-point {
-            top: 25px; 
-            left: -20px; 
-            transform: none; 
-        }
-        
-        .timeline-item.active .timeline-point {
-             /* Solo la escala, no la traslación X, ya que la traslación X se usa para centrar en horizontal */
-             transform: scale(1.3);
-        }
-    }
-    
     /* Leyenda de Estados */
     .legend {
         display: flex;
@@ -395,7 +334,7 @@
 
 
     /* ---------------------------------------------------------- */
-    /* Botón y Pie de Página */
+    /* Botón de Acción Principal y Pie de Página */
     /* ---------------------------------------------------------- */
     .btn-container {
         text-align: center;
@@ -423,7 +362,7 @@
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
         transform: translateY(-3px) scale(1.02);
     }
-    
+
     .pie-pagina {
         text-align: center;
         margin-top: 30px;
@@ -431,222 +370,14 @@
         border-top: 1px dashed var(--color-acento-base);
     }
 
-</style>
-</head>
-<body>
-
-    <div class="contenedor">
-        <div class="main-header">
-            <div class="header-logo-container">
-                <div class="logo-header">
-                    <img src="https://edwinhsvcl14-maker.github.io/asistencias/logo_hermandad.png" alt="Logo de la Hermandad">
-                </div>
-                <div class="header-texto">
-                    <h1>Hermandad de la Santísima Virgen del Carmen de Lima</h1>
-                    <h2>Elecciones Generales Trienio 2026-2028: Proceso en Curso</h2>
-                </div>
-                <div class="logo-header">
-                    <img src="https://edwinhsvcl14-maker.github.io/asistencias/logo_hermandad.png" alt="Logo de la Hermandad">
-                </div>
-            </div>
-        </div>
-
-        <div class="seccion">
-            <h3>🤝 Bienvenida y Llamado a la Participación</h3>
-            <p>La Hermandad y el Comité Electoral General 2026-2028 se complacen en dar la más cordial bienvenida a nuestros hermanos y hermanas al trascendental <strong>Proceso de Elecciones Generales</strong>. Este ejercicio de transparencia y participación es fundamental para asegurar una gestión comprometida con la fe, la tradición y el servicio a nuestra Santísima Patrona, la Virgen del Carmen. Exhortamos a todos los miembros hábiles a informarse, participar activamente y ejercer su derecho al voto con discernimiento.</p>
-        </div>
-        
-        <div class="seccion">
-            <h3>⚖️ Jurado de Elecciones Generales (2026-2028)</h3>
-            <p style="font-style: italic; font-size: 0.95em; color: var(--color-acento-oscuro); text-align: center;">Conforme al Decreto N° 027–2025-P-VDS-HSVCL, se ha designado a los hermanos que integran este comité para la conducción transparente del proceso:</p>
-            
-            <div class="comite-electoral-container">
-                <div class="comite-grid">
-                    <span class="comite-header">Cargo</span>
-                    <span class="comite-header">Hermano</span>
-                    <span class="comite-header comite-cuadrilla" style="text-align: right;">Pertenencia</span>
-                    
-                    <span class="comite-cargo">Presidente</span>
-                    <span class="comite-hermano">Hno. Alberto Martín De la Cruz Risco</span>
-                    <span class="comite-cuadrilla">Capataz de la Décimo Quinta Cuadrilla</span>
-                    
-                    <span class="comite-cargo">Secretario</span>
-                    <span class="comite-hermano">Hno. Richard Alex Paco Jerí</span>
-                    <span class="comite-cuadrilla">Secretario de la Quinta Cuadrilla</span>
-                    
-                    <span class="comite-cargo">Vocal</span>
-                    <span class="comite-hermano">Hno. Juan Daniel Urbina Yarupetán</span>
-                    <span class="comite-cuadrilla">Sub-Capataz de la Décima Sexta Cuadrilla</span>
-                    
-                    <span class="comite-cargo">Vocal</span>
-                    <span class="comite-hermano">Hno. Luis Alberto Suárez Sandoval</span>
-                    <span class="comite-cuadrilla">Secretario de la Décima Segunda Cuadrilla</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="seccion">
-            <h3>✨ Listas de Candidatos y Propuestas</h3>
-            <p>Se han presentado oficialmente la **Lista N° 01** y la **Lista N° 02**. Ambas planchas han cumplido con los requisitos iniciales y presentan visiones sólidas para el futuro de nuestra Hermandad. A continuación, le ofrecemos una visualización clara del cronograma electoral y un acceso directo a los planes de gobierno y perfiles de cada candidato.</p>
-        </div>
-
-        <div class="seccion progress-section">
-            <div class="progress-title">🗓️ Cronograma del Proceso Electoral 2025</div>
-            
-            <div class="legend">
-                <div class="legend-item">
-                    <span class="legend-color completed"></span>
-                    <span>Etapa Completada</span>
-                </div>
-                <div class="legend-item">
-                    <span class="legend-color active"></span>
-                    <span>Etapa **Activa** (En Curso)</span>
-                </div>
-                <div class="legend-item">
-                    <span class="legend-color pending"></span>
-                    <span>Etapa Pendiente</span>
-                </div>
-            </div>
-            <div class="progress-bar-container">
-                <div class="timeline">
-                    <div class="timeline-line"></div>
-                    <div class="timeline-progress" id="timelineProgress"></div>
-
-                    <div class="timeline-item" data-index="0" data-date="2025-10-27">
-                        <span class="timeline-point"></span>
-                        <span class="timeline-date">Oct 23 - 27</span>
-                        <span class="timeline-label">Inscripción de Listas</span>
-                    </div>
-                    <div class="timeline-item" data-index="1" data-date="2025-11-03">
-                        <span class="timeline-point"></span>
-                        <span class="timeline-date">Oct 29 - Nov 03</span>
-                        <span class="timeline-label">Revisión de Documentos</span>
-                    </div>
-                    <div class="timeline-item" data-index="2" data-date="2025-11-10">
-                        <span class="timeline-point"></span>
-                        <span class="timeline-date">Nov 05 - 10</span>
-                        <span class="timeline-label">Presentación de Tachas / Impugnaciones</span>
-                    </div>
-                    <div class="timeline-item" data-index="3" data-date="2025-11-17">
-                        <span class="timeline-point"></span>
-                        <span class="timeline-date">Nov 12 - 17</span>
-                        <span class="timeline-label">Subsanación de Postulantes</span>
-                    </div>
-                    <div class="timeline-item" data-index="4" data-date="2025-11-19">
-                        <span class="timeline-point"></span>
-                        <span class="timeline-date">Nov 18 - 19</span>
-                        <span class="timeline-label">Confirmación de Listas Aptas</span>
-                    </div>
-                    <div class="timeline-item" data-index="5" data-date="2025-11-23">
-                        <span class="timeline-point"></span>
-                        <span class="timeline-date">Nov 23</span>
-                        <span class="timeline-label">Elección del Directorio General</span>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-        <div class="btn-container">
-            <a href="listas_candidatos.html" class="btn-main">Ver Listas, Planes de Gobierno y Perfiles</a>
-        </div>
-
-        <div class="pie-pagina">
-            <p style="font-size: 0.85em; color: var(--color-acento-oscuro);">Comité Electoral General Trienio 2026-2028 | Hermandad de la Santísima Virgen del Carmen de Lima (HSVCL)</p>
-        </div>
-    </div>
-
-<script>
-    // ==========================================================
-    // Lógica para la Barra de Progreso del Cronograma (Arreglada)
-    // ==========================================================
-    
-    // La fecha actual para testing sigue siendo: Sábado, 8 de noviembre de 2025 
-    const TODAY = new Date('November 8, 2025 11:00:00'); 
-    
-    // Fechas de inicio/fin de cada hito
-    const milestones = [
-        { start: new Date('October 23, 2025 00:00:00'), end: new Date('October 27, 2025 23:59:59') }, // 0: Inscripción
-        { start: new Date('October 29, 2025 00:00:00'), end: new Date('November 3, 2025 23:59:59') },  // 1: Revisión
-        { start: new Date('November 5, 2025 00:00:00'), end: new Date('November 10, 2025 23:59:59') }, // 2: Tachas (ACTIVO)
-        { start: new Date('November 12, 2025 00:00:00'), end: new Date('November 17, 2025 23:59:59') },// 3: Subsanación
-        { start: new Date('November 18, 2025 00:00:00'), end: new Date('November 19, 2025 23:59:59') },// 4: Confirmación
-        { start: new Date('November 23, 2025 00:00:00'), end: new Date('November 23, 2025 23:59:59') }  // 5: Elección 
-    ];
-
-    const PROGRESS_BAR = document.getElementById('timelineProgress');
-    const TIMELINE_ITEMS = document.querySelectorAll('.timeline-item');
-    const totalItems = milestones.length;
-
-    function updateTimeline() {
-        let activeIndex = -1;
-        
-        // 1. Determinar estados (Completed, Active, Pending)
-        TIMELINE_ITEMS.forEach((item, i) => {
-            const milestone = milestones[i];
-            item.classList.remove('completed', 'active');
-            
-            if (TODAY > milestone.end) {
-                // Etapa Completada
-                item.classList.add('completed');
-            } else if (TODAY >= milestone.start && TODAY <= milestone.end) {
-                // Etapa Activa (ESTO ENCIENDE EL PULSO)
-                item.classList.add('active');
-                activeIndex = i;
-            } 
-        });
-        
-        // 2. Calcular y actualizar el progreso de la barra
-        let totalProgress = 0;
-        const segmentShare = 100 / totalItems; // Cada hito representa un 1/6 (16.66%) del total
-        
-        if (activeIndex !== -1) {
-            // Caso: Hay una etapa activa (Hito 2: Tachas)
-            const activeMilestone = milestones[activeIndex];
-            
-            // Queremos que la barra de progreso vaya hasta el CENTRO del punto activo.
-            // El centro del hito 'i' está en (i * segmentShare) + (segmentShare / 2)
-            
-            // Progreso del 0 al 100% hasta el centro del punto activo
-            totalProgress = (activeIndex * segmentShare) + (segmentShare / 2);
-
-            // Ajuste fino: Si queremos un efecto de crecimiento mientras el hito está activo,
-            // se puede modificar, pero para que sea "más interactivo" lo dejamos en el punto
-            // central y el pulso hace el resto del trabajo visual.
-            // Si el progreso de la etapa activa es mayor al 50%, podemos hacerlo avanzar un poco más:
-            const totalDuration = activeMilestone.end.getTime() - activeMilestone.start.getTime();
-            const elapsedDuration = TODAY.getTime() - activeMilestone.start.getTime();
-            let currentSegmentProgress = Math.min(1, Math.max(0, elapsedDuration / totalDuration));
-            
-            // Si el progreso es mayor al 50%, movemos la barra un poco más allá del centro del punto activo
-            if (currentSegmentProgress > 0.5) {
-                const extraProgress = (currentSegmentProgress - 0.5) * segmentShare * 0.5; // Avanza el 50% de la mitad del segmento
-                totalProgress += extraProgress;
-            }
-        
-        } else {
-            // Caso: No hay hito activo (ej. si ya terminó la elección)
-            totalProgress = TIMELINE_ITEMS.length * segmentShare; // 100% si ya terminó
-        }
-
-        // 3. Aplicar progreso y color a la barra
-        const progressValue = Math.min(100, totalProgress); 
-        
-        if (window.innerWidth <= 768) {
-            // Móvil (Vertical) - Mantenemos la lógica de altura para el responsive
-            const totalVerticalHeight = document.querySelector('.timeline').offsetHeight;
-            const progressHeight = (progressValue / 100) * totalVerticalHeight;
-            PROGRESS_BAR.style.height = `${progressHeight}px`; 
-        } else {
-            // Escritorio (Horizontal)
-            PROGRESS_BAR.style.width = `${progressValue}%`; 
+    /* ---------------------------------------------------------- */
+    /* Responsive Design (Media Queries) */
+    /* ---------------------------------------------------------- */
+    @media (max-width: 900px) {
+        .logo-header {
+            width: 150px;
+            height: 150px;
         }
     }
 
-    // Ejecutar al cargar la página y al redimensionar
-    updateTimeline();
-    window.addEventListener('resize', updateTimeline);
-    
-</script>
-
-</body>
-</html>
+    @media (max-width: 768px) {
