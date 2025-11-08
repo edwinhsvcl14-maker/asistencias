@@ -3,39 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elecciones Generales - Introducción</title>
+    <title>Elecciones Generales - Introducción Dinámica</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Georgia:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
 <style>
     /* ========================================================== */
-    /* Estilos CSS Integrados para Diseño Profesional (Introducción) */
+    /* Estilos CSS Dinámicos y Profesionales (Introducción) */
     /* ========================================================== */
 
     /* Variables de Color Actualizadas con un Toque más Suave/Degradado */
     :root {
-        --color-primario-fondo: #FFF8E1; /* Light Yellowish Cream (Más suave) */
-        --color-secundario-fondo: #FEFBEA; /* Off-White/Very Light Cream */
+        --color-primario-fondo: #FFF8E1; /* Light Yellowish Cream (Base clara) */
+        --color-secundario-fondo: #FEFBEA; /* Off-White/Very Light Cream (Fondo de secciones) */
         --color-acento-base: #A0522D; /* Sienna (Marrón medio) */
         --color-acento-oscuro: #5D4037; /* Marrón más oscuro (Texto principal/Degradado) */
         --color-texto-oscuro: #3E2723; /* Marrón oscuro para texto */
-        --sombra-elegante: 0 8px 16px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
-        --degradado-acento: linear-gradient(135deg, #A0522D 0%, #8D4E2D 100%); /* Suave degradado marrón */
+        
+        /* Nuevos colores de estado para la barra */
+        --color-completo: #7CB342; /* Verde Oliva suave (Completado) */
+        --color-activo-claro: #A0522D; /* Sienna (Activo) */
+        --color-activo-oscuro: #6D4C41; /* Marrón para el pulso */
+        --color-pendiente: #D2B48C; /* Tan (Pendiente) */
+
+        /* Degradados mejorados */
+        --sombra-elegante: 0 10px 20px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
+        --degradado-acento: linear-gradient(135deg, var(--color-activo-claro) 0%, var(--color-activo-oscuro) 100%); 
+        --degradado-fondo-pagina: linear-gradient(180deg, #FAF0E6 0%, #FFFDE7 100%); /* Degradado suave de fondo */
     }
 
+    /* Fondo de la página con degradado bidireccional */
     body {
         font-family: 'Poppins', sans-serif;
         margin: 0;
         padding: 0;
-        background-color: var(--color-secundario-fondo);
+        background: var(--degradado-fondo-pagina);
         color: var(--color-texto-oscuro);
         line-height: 1.6;
+        min-height: 100vh; /* Para que el degradado cubra toda la vista */
     }
-
+    
+    /* Contenedor principal con degradado y sombra */
     .contenedor {
         width: 95%;
         max-width: 1100px;
         margin: 30px auto;
-        background-color: var(--color-primario-fondo);
+        background: linear-gradient(to right, #FFF8E1 0%, #FEFBEA 100%); /* Contraste sutil de izquierda a derecha */
         box-shadow: var(--sombra-elegante);
         border-radius: 20px;
         padding: 30px;
@@ -48,7 +60,7 @@
     .main-header {
         text-align: center;
         padding-bottom: 25px;
-        border-bottom: 3px solid var(--color-acento-base);
+        border-bottom: 3px double var(--color-acento-base);
         margin-bottom: 30px;
     }
 
@@ -59,6 +71,7 @@
         margin-bottom: 15px;
     }
 
+    /* ... Estilos de Logo y Texto ... */
     .logo-header {
         width: 100px; 
         height: 100px;
@@ -88,6 +101,7 @@
         font-weight: 500;
     }
 
+
     /* ---------------------------------------------------------- */
     /* Secciones de Contenido */
     /* ---------------------------------------------------------- */
@@ -97,6 +111,7 @@
         background-color: var(--color-secundario-fondo);
         border-radius: 12px;
         border: 1px solid #E0E0E0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sombra interna sutil */
     }
 
     .seccion h3 {
@@ -107,30 +122,59 @@
         margin-top: 0;
         font-weight: 600;
     }
-
-    .seccion p {
-        font-size: 1em;
-        text-align: justify;
+    
+    /* Estilos del Comité Electoral */
+    .comite-grid {
+        display: grid;
+        grid-template-columns: 0.8fr 2fr 1fr; /* Cargo | Nombre | Cuadrilla */
+        gap: 15px 10px;
+        margin-top: 15px;
+        padding: 10px;
+        border: 1px dashed var(--color-acento-base);
+        border-radius: 8px;
+        background-color: rgba(160, 82, 45, 0.05); /* Fondo muy claro */
     }
+    .comite-header {
+        font-weight: 700;
+        color: var(--color-acento-oscuro);
+        padding-bottom: 5px;
+        border-bottom: 1px solid var(--color-acento-base);
+        text-transform: uppercase;
+        font-size: 0.9em;
+    }
+    .comite-cargo {
+        font-weight: 600;
+        color: var(--color-acento-base);
+    }
+    .comite-hermano {
+        font-weight: 400;
+        font-size: 0.95em;
+    }
+    .comite-cuadrilla {
+        text-align: right;
+        font-size: 0.9em;
+        font-style: italic;
+        color: #666;
+    }
+    
+    @media (max-width: 600px) {
+        .comite-grid {
+            grid-template-columns: 1fr; /* Apilado en móvil */
+            gap: 5px;
+        }
+        .comite-header, .comite-cuadrilla {
+            display: none; /* Ocultar encabezados y cuadrilla para mayor simplicidad en móvil */
+        }
+        .comite-cargo, .comite-hermano {
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #DDD;
+        }
+    }
+
 
     /* ---------------------------------------------------------- */
-    /* Barra de Progreso del Proceso Electoral */
+    /* Barra de Progreso - Estilos y Animaciones */
     /* ---------------------------------------------------------- */
-    .progress-section {
-        margin-top: 40px;
-    }
-
-    .progress-bar-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px 10px;
-        background: linear-gradient(180deg, #F5F5DC 0%, #FAF0E6 100%);
-        border-radius: 15px;
-        box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
-        border: 1px solid #D2B48C;
-    }
-
     .progress-title {
         color: var(--color-acento-oscuro);
         font-size: 1.4em;
@@ -140,7 +184,7 @@
         text-align: center;
     }
 
-    /* Diseño del Timeline Horizontal (Para Escritorio) */
+    /* Diseño del Timeline Horizontal (Escritorio) */
     .timeline {
         display: flex;
         justify-content: space-between;
@@ -155,8 +199,8 @@
         top: 25px; 
         left: 5%;
         right: 5%;
-        height: 4px;
-        background: #D2B48C; /* Color base */
+        height: 5px; /* Más grueso */
+        background: var(--color-pendiente); 
         z-index: 1;
         border-radius: 2px;
     }
@@ -165,9 +209,9 @@
         position: absolute;
         top: 25px; 
         left: 5%;
-        width: 0%; /* Se calcula dinámicamente */
-        height: 4px;
-        background: var(--degradado-acento); /* Color de progreso */
+        width: 0%; 
+        height: 5px;
+        background: var(--color-completo); /* Color de progreso (Completado) */
         z-index: 2;
         border-radius: 2px;
         transition: width 1s ease-out;
@@ -178,36 +222,49 @@
         text-align: center;
         position: relative;
         z-index: 3;
-        padding-top: 50px; /* Espacio para el punto y el texto */
+        padding-top: 50px; 
     }
 
     .timeline-point {
-        width: 18px;
-        height: 18px;
-        background: #D2B48C;
+        width: 20px; /* Más grande */
+        height: 20px;
+        background: var(--color-pendiente);
         border-radius: 50%;
         position: absolute;
-        top: 18px;
+        top: 17px; /* Ajuste para el nuevo tamaño */
         left: 50%;
         transform: translateX(-50%);
-        transition: all 0.3s ease;
-        border: 3px solid var(--color-primario-fondo);
-        box-shadow: 0 0 0 2px #D2B48C;
-    }
-
-    .timeline-item.active .timeline-point {
-        background: var(--color-acento-base);
-        box-shadow: 0 0 0 3px #A0522D, 0 0 10px rgba(160, 82, 45, 0.7);
-        transform: translateX(-50%) scale(1.2);
+        transition: all 0.5s ease;
+        border: 4px solid var(--color-secundario-fondo); /* Anillo interior más grueso */
+        box-shadow: 0 0 0 2px var(--color-pendiente);
     }
     
+    /* ESTADO 1: Completado */
     .timeline-item.completed .timeline-point {
-        background: var(--color-acento-base);
-        box-shadow: 0 0 0 3px var(--color-acento-oscuro);
+        background: var(--color-completo); /* Verde */
+        box-shadow: 0 0 0 2px var(--color-completo);
+    }
+    
+    /* ESTADO 2: Activo (En curso) */
+    .timeline-item.active .timeline-point {
+        background: var(--color-activo-claro); /* Marrón */
+        box-shadow: 0 0 0 4px var(--color-activo-claro), 0 0 15px var(--color-activo-claro);
+        transform: translateX(-50%) scale(1.3);
+        /* Animación de Parpadeo/Pulso */
+        animation: pulse 1.5s infinite alternate;
+    }
+
+    @keyframes pulse {
+        from {
+            box-shadow: 0 0 0 4px var(--color-activo-claro), 0 0 10px rgba(160, 82, 45, 0.5);
+        }
+        to {
+            box-shadow: 0 0 0 8px rgba(160, 82, 45, 0.3), 0 0 20px var(--color-activo-claro);
+        }
     }
 
     .timeline-date {
-        font-size: 0.85em;
+        font-size: 0.9em;
         font-weight: 700;
         color: var(--color-acento-base);
         display: block;
@@ -215,45 +272,47 @@
     }
 
     .timeline-label {
-        font-size: 0.9em;
+        font-size: 0.95em;
         font-weight: 500;
         color: var(--color-texto-oscuro);
         line-height: 1.2;
     }
-    
+
     /* Responsive: Apilar en Móviles */
     @media (max-width: 768px) {
         .timeline {
             flex-direction: column;
             align-items: flex-start;
-            margin: 0;
-            padding-left: 30px; /* Espacio para la línea vertical */
+            padding-left: 30px; 
         }
 
         .timeline-line, .timeline-progress {
             top: 0;
             bottom: 0;
             left: 10px;
-            width: 4px; /* Ahora vertical */
-            height: 100%; /* Ocupa todo el alto */
+            width: 5px; /* Vertical */
+            height: 100%; 
             right: auto;
         }
 
         .timeline-progress {
-            height: 0%; /* Se calcula dinámicamente */
-            width: 4px;
-            transition: height 1s ease-out;
+            height: 0%; 
+            width: 5px;
         }
 
         .timeline-item {
-            padding: 15px 0 15px 25px; /* Ajuste para el texto */
+            padding: 15px 0 15px 25px; 
             width: 100%;
         }
 
         .timeline-point {
-            top: 25px; /* Ajuste vertical */
-            left: -20px; /* Alineado a la izquierda */
-            transform: none; /* No necesita translateX */
+            top: 25px; 
+            left: -20px; 
+            transform: none; 
+        }
+        
+        .timeline-item.active .timeline-point {
+             transform: scale(1.3); /* Solo la escala, no translateX */
         }
     }
 
@@ -269,23 +328,23 @@
     .btn-main {
         background: var(--degradado-acento);
         color: white;
-        padding: 15px 30px;
+        padding: 15px 35px;
         text-decoration: none;
-        border-radius: 30px;
-        font-size: 1.1em;
-        font-weight: 600;
-        letter-spacing: 0.5px;
+        border-radius: 50px; /* Más redondeado */
+        font-size: 1.2em;
+        font-weight: 700;
+        letter-spacing: 1px;
         transition: all 0.3s ease;
-        border: 2px solid var(--color-acento-base);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border: none;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         display: inline-block;
         text-transform: uppercase;
     }
 
     .btn-main:hover {
-        background: linear-gradient(135deg, #8D4E2D 0%, #A0522D 100%);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-        transform: translateY(-2px);
+        background: linear-gradient(135deg, var(--color-activo-oscuro) 0%, var(--color-activo-claro) 100%);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        transform: translateY(-3px) scale(1.02);
     }
     
     /* ---------------------------------------------------------- */
@@ -310,7 +369,7 @@
                 </div>
                 <div class="header-texto">
                     <h1>Hermandad de la Santísima Virgen del Carmen de Lima</h1>
-                    <h2>Elecciones Generales Trienio 2026-2028</h2>
+                    <h2>Elecciones Generales Trienio 2026-2028: Proceso en Curso</h2>
                 </div>
                 <div class="logo-header">
                     <img src="https://edwinhsvcl14-maker.github.io/asistencias/logo_hermandad.png" alt="Logo de la Hermandad">
@@ -319,19 +378,38 @@
         </div>
 
         <div class="seccion">
-            <h3>🤝 Bienvenida y Llamado Electoral</h3>
-            <p>La Hermandad y el Comité Electoral General 2026-2028 se complacen en dar la más cordial bienvenida a nuestros hermanos y hermanas al inicio del trascendental <strong>Proceso de Elecciones Generales</strong>. Este ejercicio de transparencia y participación es fundamental para el futuro de nuestra institución, asegurando una gestión comprometida con la fe, la tradición y el servicio a nuestra Santísima Patrona, la Virgen del Carmen.</p>
-            <p>Exhortamos a todos los miembros hábiles a informarse, participar activamente y ejercer su derecho al voto con discernimiento en este camino de renovación y compromiso.</p>
+            <h3>🤝 Bienvenida y Llamado a la Participación</h3>
+            <p>La Hermandad y el Comité Electoral General 2026-2028 se complacen en dar la más cordial bienvenida a nuestros hermanos y hermanas al trascendental <strong>Proceso de Elecciones Generales</strong>. Este ejercicio de transparencia y participación es fundamental para asegurar una gestión comprometida con la fe, la tradición y el servicio a nuestra Santísima Patrona, la Virgen del Carmen. Exhortamos a todos los miembros hábiles a informarse, participar activamente y ejercer su derecho al voto con discernimiento.</p>
         </div>
-
+        
+        <div class="seccion">
+            <h3>⚖️ Jurado de Elecciones Generales (2026-2028)</h3>
+            <p style="font-style: italic; font-size: 0.95em; color: var(--color-acento-oscuro);">Conforme al Decreto N° 027–2025-P-VDS-HSVCL, se ha designado a los hermanos que integran este comité para la conducción transparente del proceso:</p>
+            <div class="comite-grid">
+                <span class="comite-header">Cargo</span>
+                <span class="comite-header">Hermano</span>
+                <span class="comite-header comite-cuadrilla" style="text-align: right;">Pertenencia</span>
+                
+                <span class="comite-cargo">Presidente</span>
+                <span class="comite-hermano">Hno. Alberto Martín De la Cruz Risco</span>
+                <span class="comite-cuadrilla">Capataz de la Décimo Quinta Cuadrilla</span>
+                
+                <span class="comite-cargo">Secretario</span>
+                <span class="comite-hermano">Hno. Richard Alex Paco Jerí</span>
+                <span class="comite-cuadrilla">Secretario de la Quinta Cuadrilla</span>
+                
+                <span class="comite-cargo">Vocal</span>
+                <span class="comite-hermano">Hno. Juan Daniel Urbina Yarupetán</span>
+                <span class="comite-cuadrilla">Sub-Capataz de la Décima Sexta Cuadrilla</span>
+                
+                <span class="comite-cargo">Vocal</span>
+                <span class="comite-hermano">Hno. Luis Alberto Suárez Sandoval</span>
+                <span class="comite-cuadrilla">Secretario de la Décima Segunda Cuadrilla</span>
+            </div>
+        </div>
         <div class="seccion">
             <h3>✨ Listas de Candidatos y Propuestas</h3>
-            <p>Se han presentado dos honorables planchas de candidatos para conformar el Directorio General durante el próximo trienio:</p>
-            <ul>
-                <li><strong>Lista N° 01:</strong> Encabezada por una visión de unidad y tradición renovada.</li>
-                <li><strong>Lista N° 02:</strong> Presenta una plataforma enfocada en la modernización y la expansión de la labor social.</li>
-            </ul>
-            <p>Ambas listas han presentado sus respectivos <strong>Planes de Trabajo</strong> y equipos directivos. La Hermandad garantiza la igualdad de oportunidades para que cada plan de gobierno sea debidamente conocido por todos. Lo invitamos a revisar los perfiles y las propuestas detalladas haciendo clic en el botón de abajo.</p>
+            <p>Se han presentado oficialmente la **Lista N° 01** y la **Lista N° 02**. Ambas planchas han cumplido con los requisitos iniciales y presentan visiones sólidas para el futuro de nuestra Hermandad. A continuación, le ofrecemos una visualización clara del cronograma electoral y un acceso directo a los planes de gobierno y perfiles de cada candidato.</p>
         </div>
 
         <div class="seccion progress-section">
@@ -341,32 +419,32 @@
                     <div class="timeline-line"></div>
                     <div class="timeline-progress" id="timelineProgress"></div>
 
-                    <div class="timeline-item completed" data-date="2025-10-27">
+                    <div class="timeline-item" data-index="0" data-date="2025-10-27">
                         <span class="timeline-point"></span>
                         <span class="timeline-date">Oct 23 - 27</span>
                         <span class="timeline-label">Inscripción de Listas</span>
                     </div>
-                    <div class="timeline-item completed" data-date="2025-11-03">
+                    <div class="timeline-item" data-index="1" data-date="2025-11-03">
                         <span class="timeline-point"></span>
                         <span class="timeline-date">Oct 29 - Nov 03</span>
                         <span class="timeline-label">Revisión de Documentos</span>
                     </div>
-                    <div class="timeline-item active" data-date="2025-11-10">
+                    <div class="timeline-item" data-index="2" data-date="2025-11-10">
                         <span class="timeline-point"></span>
                         <span class="timeline-date">Nov 05 - 10</span>
                         <span class="timeline-label">Presentación de Tachas / Impugnaciones</span>
                     </div>
-                    <div class="timeline-item" data-date="2025-11-17">
+                    <div class="timeline-item" data-index="3" data-date="2025-11-17">
                         <span class="timeline-point"></span>
                         <span class="timeline-date">Nov 12 - 17</span>
                         <span class="timeline-label">Subsanación de Postulantes</span>
                     </div>
-                    <div class="timeline-item" data-date="2025-11-19">
+                    <div class="timeline-item" data-index="4" data-date="2025-11-19">
                         <span class="timeline-point"></span>
                         <span class="timeline-date">Nov 18 - 19</span>
                         <span class="timeline-label">Confirmación de Listas Aptas</span>
                     </div>
-                    <div class="timeline-item" data-date="2025-11-23">
+                    <div class="timeline-item" data-index="5" data-date="2025-11-23">
                         <span class="timeline-point"></span>
                         <span class="timeline-date">Nov 23</span>
                         <span class="timeline-label">Elección del Directorio General</span>
@@ -376,107 +454,95 @@
             </div>
         </div>
         <div class="btn-container">
-            <a href="listas_candidatos.html" class="btn-main">Conoce a los Candidatos y sus Planes de Gobierno</a>
+            <a href="listas_candidatos.html" class="btn-main">Ver Listas, Planes de Gobierno y Perfiles</a>
         </div>
 
         <div class="pie-pagina">
-            <p style="font-size: 0.85em; color: #5D4037;">Comité Electoral General Trienio 2026-2028 | Hermandad de la Santísima Virgen del Carmen de Lima (HSVCL)</p>
+            <p style="font-size: 0.85em; color: var(--color-acento-oscuro);">Comité Electoral General Trienio 2026-2028 | Hermandad de la Santísima Virgen del Carmen de Lima (HSVCL)</p>
         </div>
     </div>
 
 <script>
     // ==========================================================
-    // Lógica para la Barra de Progreso del Cronograma
+    // Lógica para la Barra de Progreso del Cronograma (Mejorada)
     // ==========================================================
     
-    // 1. Definir la fecha actual y la lista de hitos
-    const TODAY = new Date('November 8, 2025'); // Usamos la fecha actual de la solicitud
+    // La fecha actual de la solicitud es Sábado, 8 de noviembre de 2025 (dentro del periodo de Tachas)
+    const TODAY = new Date('November 8, 2025 10:45:46'); 
     
-    // Fechas de finalización de cada hito (extraídas de la tabla)
+    // Fechas de finalización de cada hito
     const milestones = [
-        { date: new Date('October 27, 2025 22:00:00'), element: document.querySelector('.timeline-item:nth-child(2)') }, // Inscripción
-        { date: new Date('November 3, 2025 22:00:00'), element: document.querySelector('.timeline-item:nth-child(3)') }, // Revisión
-        { date: new Date('November 10, 2025 22:00:00'), element: document.querySelector('.timeline-item:nth-child(4)') }, // Tachas
-        { date: new Date('November 17, 2025 22:00:00'), element: document.querySelector('.timeline-item:nth-child(5)') }, // Subsanación
-        { date: new Date('November 19, 2025 22:00:00'), element: document.querySelector('.timeline-item:nth-child(6)') }, // Confirmación
-        { date: new Date('November 23, 2025 16:00:00'), element: document.querySelector('.timeline-item:nth-child(7)') }  // Elección
+        { start: new Date('October 23, 2025 20:00:00'), end: new Date('October 27, 2025 22:00:00') }, // 0: Inscripción
+        { start: new Date('October 29, 2025 20:00:00'), end: new Date('November 3, 2025 22:00:00') },  // 1: Revisión
+        { start: new Date('November 5, 2025 20:00:00'), end: new Date('November 10, 2025 22:00:00') }, // 2: Tachas (ACTIVO)
+        { start: new Date('November 12, 2025 20:00:00'), end: new Date('November 17, 2025 22:00:00') },// 3: Subsanación
+        { start: new Date('November 18, 2025 20:00:00'), end: new Date('November 19, 2025 22:00:00') },// 4: Confirmación
+        { start: new Date('November 23, 2025 09:00:00'), end: new Date('November 23, 2025 16:00:00') }  // 5: Elección (Fecha única)
     ];
 
     const PROGRESS_BAR = document.getElementById('timelineProgress');
+    const TIMELINE_ITEMS = document.querySelectorAll('.timeline-item');
+    const totalItems = milestones.length;
 
-    // Función para actualizar el estado y la barra de progreso
     function updateTimeline() {
+        let activeIndex = -1;
         let completedCount = 0;
-        let totalItems = milestones.length;
 
-        // Limpiar clases de activo (por si acaso)
-        document.querySelectorAll('.timeline-item').forEach(item => {
-            item.classList.remove('active', 'completed');
-        });
-
-        // 2. Iterar sobre los hitos para establecer el estado
-        for (let i = 0; i < totalItems; i++) {
+        // 1. Determinar estados (Completed, Active, Pending)
+        TIMELINE_ITEMS.forEach((item, i) => {
             const milestone = milestones[i];
-
-            if (TODAY >= milestone.date) {
-                // Hito completado
-                milestone.element.classList.add('completed');
+            item.classList.remove('completed', 'active');
+            
+            if (TODAY > milestone.end) {
+                // Estado: Completado (verde)
+                item.classList.add('completed');
                 completedCount++;
-            } else if (i > 0 && TODAY >= milestones[i-1].date && TODAY < milestone.date) {
-                // Hito actual/activo (entre la fecha final del anterior y la fecha final del actual)
-                milestone.element.classList.add('active');
-                break; // El primer 'active' encontrado es el actual
-            } else if (i === 0 && TODAY < milestone.date) {
-                // Caso si el proceso aún no empieza (aunque nuestra fecha de inicio ya pasó)
-                 milestone.element.classList.add('active');
-                 break;
-            }
-        }
+            } else if (TODAY >= milestone.start && TODAY <= milestone.end) {
+                // Estado: Activo (marrón parpadeante)
+                item.classList.add('active');
+                activeIndex = i;
+            } 
+            // Estado: Pendiente (queda sin clase, color por defecto)
+        });
         
-        // 3. Determinar el progreso de la barra (en porcentaje)
-        // Se determina el progreso basado en el número de hitos COMPLETADOS
-        const progressPercentage = (completedCount / totalItems) * 100;
+        // 2. Calcular y actualizar el progreso de la barra
+        let totalProgress = 0;
+        const segmentShare = 100 / totalItems; 
         
-        // El hito 'Tachas' (Nov 05 - 10) es el actual (Nov 8 es dentro de ese rango)
-        // Usamos una aproximación visual para que el punto activo sea el tercero
-        if (completedCount === 2 && milestones[2].element.classList.contains('active')) {
-            // Si 2 están completos y el 3ro es activo, el progreso está entre el 33% y el 50%
-            // Le damos una posición intermedia visual para la fecha actual (Nov 8 es a 3 días del final del periodo de tachas - Nov 10)
-            const activeMilestoneIndex = 2; // Índice de Tachas/Impugnaciones
-            const startActive = new Date('November 5, 2025 20:00:00');
-            const endActive = milestones[activeMilestoneIndex].date;
-            
-            const totalDuration = endActive.getTime() - startActive.getTime();
-            const elapsedDuration = TODAY.getTime() - startActive.getTime();
-            
-            let currentSegmentProgress = elapsedDuration / totalDuration; // Progreso dentro del segmento activo (0 a 1)
-            
-            // Calculamos el progreso total: (Segmentos completados) + (Progreso dentro del segmento actual)
-            // Cada segmento representa 1/6 (16.67%)
-            const segmentShare = 100 / totalItems; 
-            const totalProgress = (completedCount * segmentShare) + (currentSegmentProgress * segmentShare);
-            
-            // Establecemos el progreso dinámico
-            if (window.innerWidth <= 768) {
-                 PROGRESS_BAR.style.height = `${totalProgress}%`; // Móvil (Vertical)
-            } else {
-                 PROGRESS_BAR.style.width = `${totalProgress}%`; // Escritorio (Horizontal)
-            }
-            
+        if (activeIndex === -1) {
+            // Caso: Todos completados o Ninguno activo (ej. fuera de los rangos definidos)
+            totalProgress = completedCount * segmentShare; 
         } else {
-            // Para hitos ya completados (muestra el final del segmento) o futuro
-             if (window.innerWidth <= 768) {
-                 PROGRESS_BAR.style.height = `${progressPercentage}%`;
-            } else {
-                 PROGRESS_BAR.style.width = `${progressPercentage}%`;
-            }
+            // Caso: Hay un segmento activo
+            const activeMilestone = milestones[activeIndex];
+            
+            // a) Progreso dentro del segmento activo (0 a 1)
+            const totalDuration = activeMilestone.end.getTime() - activeMilestone.start.getTime();
+            const elapsedDuration = TODAY.getTime() - activeMilestone.start.getTime();
+            let currentSegmentProgress = Math.min(1, Math.max(0, elapsedDuration / totalDuration)); // Clamp entre 0 y 1
+            
+            // b) Progreso total: Segmentos completados + progreso dentro del segmento actual
+            totalProgress = (activeIndex * segmentShare) + (currentSegmentProgress * segmentShare);
+            
+            // La barra debe llegar justo al centro del punto activo
+            totalProgress -= (segmentShare / 2) * (1 - currentSegmentProgress);
+        }
+
+        // 3. Aplicar progreso y color a la barra
+        // Usamos el color verde de 'completed' para la barra de progreso
+        const progressValue = Math.min(100, totalProgress); // Asegurar que no exceda 100%
+        
+        if (window.innerWidth <= 768) {
+            PROGRESS_BAR.style.height = `${progressValue}%`; // Móvil (Vertical)
+        } else {
+            PROGRESS_BAR.style.width = `${progressValue}%`; // Escritorio (Horizontal)
         }
     }
 
     // Ejecutar al cargar la página y al redimensionar (para el responsive)
     updateTimeline();
     window.addEventListener('resize', updateTimeline);
-
+    
 </script>
 
 </body>
