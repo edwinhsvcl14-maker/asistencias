@@ -7,254 +7,281 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Georgia:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     
 <style>
-        /* ========================================================== */
-        /* Estilos CSS Integrados para Diseño Profesional (Elecciones) */
-        /* ========================================================== */
+    /* ========================================================== */
+    /* Estilos CSS Integrados para Diseño Profesional (Elecciones) */
+    /* ========================================================== */
 
-        :root {
-            --color-principal: #F5F5DC; /* Cream (Crema) */
-            --color-secundario: #FAF0E6; /* Linen (Blanco roto) */
-            --color-acento: #A0522D; /* Sienna (Marrón medio) */
-            --color-texto-oscuro: #3E2723; /* Marrón oscuro para texto */
-            --color-borde: #D2B48C; /* Tan (Marrón claro) */
-        }
+    :root {
+        --color-principal: #F5F5DC; /* Cream (Crema) */
+        --color-secundario: #FAF0E6; /* Linen (Blanco roto) */
+        --color-acento: #A0522D; /* Sienna (Marrón medio) */
+        --color-texto-oscuro: #3E2723; /* Marrón oscuro para texto */
+        --color-borde: #D2B48C; /* Tan (Marrón claro) */
+        --sombra-sutil: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --sombra-profunda: 0 12px 24px rgba(0, 0, 0, 0.2);
+    }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--color-secundario);
-            color: var(--color-texto-oscuro);
-        }
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--color-secundario);
+        color: var(--color-texto-oscuro);
+    }
 
-        .contenedor {
-            width: 95%;
-            max-width: 1400px;
-            margin: 20px auto; /* Menos margen en móvil */
-            background-color: var(--color-principal);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            padding: 20px; /* Menos padding en móvil */
-        }
+    .contenedor {
+        width: 95%;
+        max-width: 1400px;
+        margin: 30px auto; /* Aumento ligero del margen para escritorio */
+        background-color: var(--color-principal);
+        box-shadow: var(--sombra-profunda);
+        border-radius: 15px;
+        padding: 30px; /* Aumento ligero del padding para escritorio */
+        transition: all 0.3s ease;
+    }
 
-        /* ---------------------------------------------------------- */
-        /* Encabezado Principal */
-        /* ---------------------------------------------------------- */
-        .main-header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding-bottom: 20px;
-            border-bottom: 4px double var(--color-acento);
-            margin-bottom: 30px;
-        }
+    /* ---------------------------------------------------------- */
+    /* Encabezado Principal (Uniformidad y Centrado) */
+    /* ---------------------------------------------------------- */
+    .main-header {
+        display: flex;
+        justify-content: space-between; /* Distribuye espacio entre elementos */
+        align-items: center;
+        text-align: center;
+        padding-bottom: 20px;
+        border-bottom: 4px double var(--color-acento);
+        margin-bottom: 30px;
+    }
 
-        .logo-header {
-            width: 80px; /* Tamaño ajustado para móvil */
-            height: 80px;
-            margin: 0 10px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    /* Logotipo Uniforme (Ajustado) */
+    .logo-header {
+        width: 100px; /* Tamaño un poco más grande para uniformizar en desktop */
+        height: 100px;
+        margin: 0 20px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        .logo-header img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
+    .logo-header img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
 
-        .header-texto {
-            flex-grow: 1;
-        }
+    /* Contenedor de Texto Central */
+    .header-texto {
+        flex-grow: 1;
+        padding: 0 15px; /* Pequeño padding para separación */
+    }
 
-        .header-texto h1 {
-            color: var(--color-acento);
-            font-family: 'Georgia', serif;
-            font-size: 1.8em; /* Reducido para móvil */
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+    .header-texto h1 {
+        color: var(--color-acento);
+        font-family: 'Georgia', serif;
+        font-size: 2.2em; /* Tamaño estándar de escritorio */
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+    
+    .header-texto h2 {
+        font-size: 1.4em; /* Tamaño estándar de escritorio */
+        margin: 0;
+        color: var(--color-texto-oscuro);
+        font-weight: 500;
+    }
+    .header-texto p {
+        font-size: 1em;
+        margin-top: 5px;
+        font-style: italic;
+    }
+
+    /* ---------------------------------------------------------- */
+    /* Contenedor de Listas (Grid Comparativo) */
+    /* ---------------------------------------------------------- */
+    .listas-contenedor {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Por defecto para escritorio */
+        gap: 30px;
+    }
+    
+    .lista-tarjeta {
+        background-color: white;
+        padding: 0; 
+        border-radius: 10px;
+        border: 2px solid var(--color-acento);
+        box-shadow: var(--sombra-sutil);
+        overflow: hidden; /* Asegura que el borde superior de h3 se ajuste al borde */
+    }
+
+    .lista-tarjeta h3 {
+        text-align: center;
+        color: white;
+        background-color: var(--color-acento);
+        padding: 15px;
+        margin: 0;
+        font-size: 1.4em;
+        letter-spacing: 2px;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-bottom: 3px solid var(--color-texto-oscuro);
+    }
+
+    /* ---------------------------------------------------------- */
+    /* Grid de Candidatos (Tabla) */
+    /* ---------------------------------------------------------- */
+    .candidatos-grid {
+        padding-bottom: 10px;
+    }
+    
+    .candidato-header-fila {
+        display: grid;
+        grid-template-columns: 150px 1fr 80px; /* Ajuste de ancho de columna para escritorio */
+        align-items: center;
+        padding: 10px 20px;
+        margin-top: 10px;
+        border-bottom: 3px solid var(--color-acento);
+        background-color: var(--color-secundario);
+        font-weight: 700;
+        font-size: 0.9em;
+        text-transform: uppercase;
+    }
+
+    /* Estilo de Fila (Base) */
+    .candidato-fila {
+        display: grid;
+        grid-template-columns: 150px 1fr 80px; /* Mismo que el header */
+        align-items: center;
+        padding: 12px 20px;
+        border-bottom: 1px dashed var(--color-borde);
+        font-size: 0.95em;
+        transition: background-color 0.3s ease; /* Transición para interactividad */
+    }
+    
+    /* INTERACTIVIDAD: Efecto Hover (resaltado al pasar el ratón) */
+    .candidato-fila:hover {
+        background-color: rgba(160, 82, 45, 0.08); /* Fondo marrón muy suave */
+        cursor: default; /* Indica que la fila es interactiva/relevante */
+    }
+
+    .candidato-fila:nth-child(even) { /* Filas impares con fondo más claro */
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .candidato-fila:last-child {
+        border-bottom: none;
+    }
+    
+    .candidato-fila strong {
+        font-size: 1em;
+        color: var(--color-acento);
+        font-weight: 600;
+        line-height: 1.2;
+    }
+    
+    .candidato-nombre {
+        padding-left: 15px; 
+    }
+
+    /* ---------------------------------------------------------- */
+    /* ICONO DE CUADRILLA/GRUPO */
+    /* ---------------------------------------------------------- */
+    .candidato-grado {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .grado-icono {
+        width: 55px; /* Tamaño ajustado para escritorio */
+        height: 55px;
+        background-color: white;
+        border-radius: 50%; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        border: 3px dotted var(--color-acento); 
+    }
+
+    .grado-icono img {
+        width: 90%;
+        height: 90%;
+        object-fit: contain;
+    }
+    
+    .grado-icono.gs {
+        background-color: var(--color-texto-oscuro);
+        width: auto;
+        height: auto;
+        border-radius: 8px;
+        padding: 4px 8px;
+        border: none;
+    }
+    
+    .grado-icono.gs span {
+        color: white;
+        font-size: 0.85em; 
+        font-weight: bold;
+    }
+
+    /* ---------------------------------------------------------- */
+    /* Responsive Design */
+    /* ---------------------------------------------------------- */
+    @media (max-width: 900px) {
+        /* Encabezado */
+        .header-texto h1 { font-size: 1.8em; }
+        .header-texto h2 { font-size: 1.2em; }
+        .logo-header { width: 80px; height: 80px; margin: 0 10px; }
         
-        .header-texto h2 {
-            font-size: 1.2em; /* Reducido para móvil */
-            margin: 0;
-            color: var(--color-texto-oscuro);
-            font-weight: 400;
-        }
-
-        /* ---------------------------------------------------------- */
-        /* Contenedor de Listas (Grid Comparativo) */
-        /* ---------------------------------------------------------- */
+        /* Grid de Listas (Apilamiento) */
         .listas-contenedor {
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* Por defecto para escritorio */
-            gap: 30px;
+            grid-template-columns: 1fr; 
+            gap: 20px;
         }
-        
-        /* MEDIA QUERY: Aplica para pantallas menores a 900px (móvil/tablet vertical) */
-        @media (max-width: 900px) {
-            .listas-contenedor {
-                grid-template-columns: 1fr; /* Las listas se apilan (una columna) */
-            }
-        }
-        
-        /* ---------------------------------------------------------- */
-        /* Estilos de las Tarjetas de Listas */
-        /* ---------------------------------------------------------- */
-        .lista-tarjeta {
-            background-color: white;
-            padding: 0 0 15px 0; /* Padding ajustado */
-            border-radius: 10px;
-            border: 2px solid var(--color-acento);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (max-width: 600px) {
+        .contenedor {
+            margin: 15px auto;
+            padding: 15px;
         }
 
-        .lista-tarjeta h3 {
-            text-align: center;
-            color: white;
-            background-color: var(--color-acento);
-            padding: 12px;
-            margin: 0;
-            border-radius: 8px 8px 0 0;
-            font-size: 1.2em; /* Reducido para móvil */
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+        /* Encabezado */
+        .main-header { flex-wrap: wrap; justify-content: space-around; }
+        .header-texto { order: 3; width: 100%; margin-top: 15px; } /* Mueve el texto debajo de los logos */
+        .header-texto h1 { font-size: 1.4em; letter-spacing: 1px; }
+        .header-texto h2 { font-size: 1em; }
+        .logo-header { width: 60px; height: 60px; margin: 0 5px; }
 
-        .candidatos-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            padding: 10px 0;
-        }
-        
-        /* Estilo para la cabecera de la tabla interna (Escritorio) */
-        .candidato-header-fila {
-            display: grid;
-            grid-template-columns: 150px 1fr 70px; /* Distribución de ancho original */
-            align-items: center;
-            padding: 8px 15px;
-            margin-top: 10px;
-            border-bottom: 2px solid var(--color-acento);
-            background-color: var(--color-secundario);
-            font-weight: 600;
-            font-size: 0.85em;
-            text-transform: uppercase;
-        }
-
-        /* Estilo para cada fila de candidato (Escritorio) */
+        /* Grid de Candidatos (Ajuste para móvil) */
+        .candidato-header-fila,
         .candidato-fila {
-            display: grid;
-            grid-template-columns: 150px 1fr 70px; /* Distribución de ancho original */
-            align-items: center;
-            padding: 10px 15px;
-            border-bottom: 1px dashed var(--color-borde);
-            font-size: 0.95em;
-        }
-        
-        /* MEDIA QUERY: Ajustes críticos para móvil */
-        @media (max-width: 600px) {
-            
-            /* Ajusta la distribución de columnas para que quepa en el ancho de un celular */
-            .candidato-header-fila,
-            .candidato-fila {
-                /* Carga: 100px | Nombre: 1fr (lo que quede) | C/G.S: 60px */
-                grid-template-columns: 100px 1fr 60px; 
-                padding: 8px 10px; /* Menos padding lateral */
-                font-size: 0.85em; /* Fuente ligeramente más pequeña */
-            }
-
-            .candidato-fila strong {
-                font-size: 0.9em;
-            }
-        }
-        
-        .candidato-fila:nth-child(odd) {
-            background-color: var(--color-principal);
-        }
-        
-        .candidato-fila:last-child {
-            border-bottom: none;
+            /* Cargo: 80px | Nombre: 1fr | C/G.S: 50px */
+            grid-template-columns: 80px 1fr 50px; 
+            padding: 8px 10px;
+            font-size: 0.8em;
         }
         
         .candidato-fila strong {
-            font-size: 1em;
-            color: var(--color-acento);
-            font-weight: 600;
-            text-transform: none;
-            line-height: 1.2;
-        }
-        
-        .candidato-nombre {
-            padding-left: 10px; /* Reducido para móvil */
+            font-size: 0.9em;
         }
 
-        /* ---------------------------------------------------------- */
-        /* ICONO DE CUADRILLA/GRUPO (Modificado para ser más grande, con fondo blanco y borde punteado) */
-        /* ---------------------------------------------------------- */
-        .candidato-grado {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
         .grado-icono {
-            width: 60px; 
-            height: 60px;
-            background-color: white;
-            border-radius: 50%; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            border: 3px dotted var(--color-acento); 
+            width: 40px; 
+            height: 40px;
+            border: 2px dotted var(--color-acento);
         }
 
-        /* Ajuste de tamaño de icono para móviles (para que quepa en 60px de columna) */
-        @media (max-width: 600px) {
-             .grado-icono {
-                width: 45px; /* Más pequeño para móvil */
-                height: 45px;
-                border: 2px dotted var(--color-acento); /* Borde más fino */
-            }
+        .candidato-nombre {
+             padding-left: 5px;
         }
-
-        .grado-icono img {
-            width: 90%;
-            height: 90%;
-            object-fit: contain;
-        }
-        
-        /* Estilo específico para G.S. */
-        .grado-icono.gs {
-            background-color: #666;
-            width: auto;
-            height: auto;
-            border-radius: 8px;
-            padding: 4px 8px; /* Padding ajustado */
-            border: none;
-        }
-        
         .grado-icono.gs span {
-            color: white;
-            font-size: 0.8em; /* Ajustado */
-            font-weight: bold;
+            font-size: 0.75em;
         }
-
-        /* ---------------------------------------------------------- */
-        /* Pie de Página */
-        /* ---------------------------------------------------------- */
-        .pie-pagina {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px dashed var(--color-borde);
-        }
-
-    </style>
+    }
+</style>
 </head>
 <body>
 
@@ -269,9 +296,10 @@
                 <h2>Elecciones Generales Trienio 2026-2028: Candidatos</h2>
                 <p>Comparecencia de las Listas N° 01 y N° 02.</p>
             </div>
-             <div class="logo-header">
+            
+            <div class="logo-header">
                 <img src="https://edwinhsvcl14-maker.github.io/asistencias/logo_hermandad.png" alt="Logo de la Hermandad">
-             </div>
+            </div>
         </div>
 
         <div class="listas-contenedor">
@@ -379,8 +407,8 @@
                         <strong>Sec. Asistencia Social</strong>
                         <span class="candidato-nombre">MENDOZA DIAZ Mary Ann</span>
                         <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/gs_.png" alt="Logo C/GS 10">
+                            <span class="grado-icono gs">
+                                <span>G.S.</span>
                             </span>
                         </span>
                     </div>
@@ -546,8 +574,8 @@
                         <strong>Sec. Asistencia Social</strong>
                         <span class="candidato-nombre">PAIVA MUCHA Teresa Margarita</span>
                         <span class="candidato-grado">
-                            <span class="grado-icono">
-                                <img src="https://edwinhsvcl14-maker.github.io/asistencias/gs_.png" alt="Logo C/GS 18">
+                            <span class="grado-icono gs">
+                                <span>G.S.</span>
                             </span>
                         </span>
                     </div>
