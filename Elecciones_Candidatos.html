@@ -357,41 +357,46 @@
     }
 
     /* ---------------------------------------------------------- */
-    /* Responsive Design */
-    /* ---------------------------------------------------------- */
-    @media (max-width: 900px) {
-        /* Encabezado */
-        .header-texto h1 { font-size: 1.8em !important; }
-        .header-texto h2 { font-size: 1.2em !important; }
-        .logo-header { width: 80px !important; height: 80px !important; margin: 0 10px !important; }
-        
-        /* Grid de Listas (Apilamiento) */
-        .listas-contenedor {
-            grid-template-columns: 1fr; 
-            gap: 20px;
-        }
+/* Responsive Design */
+/* ---------------------------------------------------------- */
+@media (max-width: 900px) {
+    /* Encabezado */
+    .header-texto h1 { font-size: 1.8em !important; }
+    .header-texto h2 { font-size: 1.2em !important; }
+    .logo-header { width: 80px !important; height: 80px !important; margin: 0 10px !important; }
+    
+    /* Grid de Listas (Apilamiento) */
+    .listas-contenedor {
+        grid-template-columns: 1fr; 
+        gap: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .contenedor {
+        margin: 15px auto;
+        padding: 15px;
     }
 
-    @media (max-width: 600px) {
-        .contenedor {
-            margin: 15px auto;
-            padding: 15px;
-        }
+    /* Encabezado (Asegura el apilamiento en móvil) */
+    .main-header { flex-wrap: wrap !important; justify-content: space-around !important; }
+    .header-texto { order: 3 !important; width: 100% !important; margin-top: 15px !important; } 
+    .header-texto h1 { font-size: 1.4em !important; letter-spacing: 1px !important; }
+    .header-texto h2 { font-size: 1em !important; }
+    
+    /* OCULTAR EL LOGO EN MÓVILES */
+    .logo-header { 
+        display: none !important; /* <--- MODIFICACIÓN APLICADA */
+    }
 
-        /* Encabezado (Asegura el apilamiento en móvil) */
-        .main-header { flex-wrap: wrap !important; justify-content: space-around !important; }
-        .header-texto { order: 3 !important; width: 100% !important; margin-top: 15px !important; } 
-        .header-texto h1 { font-size: 1.4em !important; letter-spacing: 1px !important; }
-        .header-texto h2 { font-size: 1em !important; }
-        .logo-header { width: 60px !important; height: 60px !important; margin: 0 5px !important; }
-
-        /* Grid de Candidatos (Ajuste para móvil) */
-        .candidato-header-fila,
-        .candidato-fila {
-            grid-template-columns: 80px 1fr 50px; 
-            padding: 8px 10px;
-            font-size: 0.8em;
-        }
+    /* Grid de Candidatos (Ajuste para móvil) */
+    .candidato-header-fila,
+    .candidato-fila {
+        grid-template-columns: 80px 1fr 50px; 
+        padding: 8px 10px;
+        font-size: 0.8em;
+    }
+}
     }
 </style>
 
@@ -779,7 +784,7 @@
             // 2. Mostrar el contenido principal al mismo tiempo que el preloader empieza a desaparecer
             // La transición CSS del contenedor hará que aparezca suavemente
             mainContainer.classList.add('visible');
-        }, 3000); // 3000 milisegundos = 3 segundos
+        }, 1000); // 3000 milisegundos = 3 segundos
     });
 </script>
 </body>
