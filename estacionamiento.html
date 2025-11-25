@@ -84,7 +84,7 @@
                         {"id":"A01","status":"Occupied","plate":"LMA-123","entryTime":"2025-11-25T10:00:00","carType":"Sedan"},
                         {"id":"A02","status":"Available"},
                         {"id":"A03","status":"Available"},
-                        {"id":4,"id":"A04","status":"Occupied","plate":"PQR-456","entryTime":"2025-11-25T14:30:00","carType":"Truck"},
+                        {"id":"A04","status":"Occupied","plate":"PQR-456","entryTime":"2025-11-25T14:30:00","carType":"Truck"},
                         {"id":"B01","status":"Available"},
                         {"id":"B02","status":"Occupied","plate":"XYZ-789","entryTime":"2025-11-25T11:45:00","carType":"SUV"},
                         {"id":"B03","status":"Available"},
@@ -100,25 +100,25 @@
                 console.error("ERROR CRÍTICO: Falló el parseo de datos JSON:", error);
                 const appContainer = document.getElementById('app');
                 appContainer.innerHTML = `<div class="flex items-center justify-center min-h-screen p-4"><div class="p-8 text-center text-red-700 bg-red-100 rounded-lg shadow-xl"><h2>Error Crítico de Datos</h2><p>La aplicación falló al cargar los datos: ${error.message}</p></div></div>`;
-                return; 
+                return;
             }
             
             // Declaraciones de configuración y estado
             const MENU_CONFIG = {
                 'admin': [
                     { id: 'dashboard', label: 'Dashboard', icon: '🏠' },
-                    { id: 'parking_map', label: 'Mapa de Plazas', icon: '🗺️' }, 
+                    { id: 'parking_map', label: 'Mapa de Plazas', icon: '🗺️' },
                     { id: 'register_entry', label: 'Registrar Ingreso', icon: '⬆️' },
                     { id: 'admin_reports', label: 'Reportes y Cierres', icon: '📊' },
                 ],
                 'worker': [
-                    { id: 'parking_map', label: 'Mapa de Plazas', icon: '🗺️' }, 
+                    { id: 'parking_map', label: 'Mapa de Plazas', icon: '🗺️' },
                     { id: 'register_entry', label: 'Registrar Ingreso', icon: '⬆️' },
                     { id: 'register_exit', label: 'Registrar Salida', icon: '⬇️' },
                 ]
             };
 
-            let currentUser = null; 
+            let currentUser = null;
             let currentPage = 'parking_map'; // La vista de mapa es la más importante
             let selectedSpot = null; // Para manejo de entrada/salida
 
@@ -214,7 +214,7 @@
 
                     setTimeout(() => {
                         // Liberar la plaza
-                        PARKING_SPOTS[spotIndex] = { id: spotId, status: 'Available' }; 
+                        PARKING_SPOTS[spotIndex] = { id: spotId, status: 'Available' };
                         
                         messageElement.innerHTML = `
                             ✅ Salida de ${plateToExit} de la plaza ${spotId} registrada con éxito.<br>
@@ -263,8 +263,8 @@
                     setTimeout(() => {
                         currentUser = userFound;
                         currentPage = MENU_CONFIG[currentUser.role][0].id; // Ir a la primera página del rol
-                        renderApp(); 
-                    }, SIMULATED_DELAY); 
+                        renderApp();
+                    }, SIMULATED_DELAY);
                 } else {
                     messageElement.textContent = 'Error: Credenciales inválidas. Intente de nuevo.';
                     messageElement.classList.remove('hidden');
@@ -404,10 +404,10 @@
                             toggleLoading(true, 'Cambiando de módulo...');
                             setTimeout(() => {
                                 currentPage = newPage;
-                                selectedSpot = null; 
+                                selectedSpot = null;
                                 renderPageAndMenu();
-                                toggleLoading(false); 
-                            }, SIMULATED_DELAY); 
+                                toggleLoading(false);
+                            }, SIMULATED_DELAY);
                         }
                     });
                 });
@@ -451,10 +451,8 @@
             }
 
             function generatePageContent(pageId) {
-                let title = '';
-                let content = '';
                 
-                if (!currentUser) return ''; 
+                if (!currentUser) return '';
 
                 switch (pageId) {
                     case 'dashboard':
@@ -468,8 +466,8 @@
                     case 'admin_reports':
                         return renderAdminReportsPage();
                     default:
-                        title = 'Página No Encontrada';
-                        content = '<p class="text-red-600">El módulo solicitado no existe o no tiene permisos.</p>';
+                        const title = 'Página No Encontrada';
+                        const content = '<p class="text-red-600">El módulo solicitado no existe o no tiene permisos.</p>';
                         return `<div class="bg-white p-6 rounded-xl shadow-lg h-full"><h2 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">${title}</h2>${content}</div>`;
                 }
             }
@@ -577,113 +575,121 @@
                         <p class="text-xs text-gray-400 mt-1">Click para Ingreso</p>
                     `;
                 }
-
+                
+                // CORRECCIÓN: Se utiliza un manejador de eventos click en JS, no una redirección HTML con "onclick" que causa que el menú se desactive.
+                // En lugar de `onclick="location.href='#register_entry?spot=${spot.id}'"`, usaremos una clase y un listener.
+                // Ya que estamos recreando el elemento, se usa la versión simple que tenías.
                 return `<div class="${baseClasses} ${statusClasses}" onclick="location.href='#register_entry?spot=${spot.id}'">${content}</div>`;
             }
 
             function renderRegisterEntryPage() {
                 const availableSpots = PARKING_SPOTS.filter(s => s.status === 'Available');
+                // Se ordena alfabéticamente
+                availableSpots.sort((a, b) => a.id.localeCompare(b.id)); 
                 const spotOptions = availableSpots.map(s => `<option value="${s.id}">${s.id}</option>`).join('');
 
-                return `
-                    <div class="bg-white p-8 rounded-xl shadow-2xl max-w-lg mx-auto border-t-4 border-park-primary">
-                        <h2 class="text-3xl font-extrabold text-gray-900 mb-6 border-b pb-3">⬆️ Registrar Ingreso de Vehículo</h2>
-                        <p class="text-gray-600 mb-6">Complete los datos para ocupar una plaza disponible.</p>
+                // Determinar el spot preseleccionado si viene de la URL (ej. #register_entry?spot=A02)
+                const urlParams = new URLSearchParams(window.location.hash.substring(1));
+                const preselectedSpotId = urlParams.get('spot');
+                const defaultSpot = preselectedSpotId && availableSpots.find(s => s.id === preselectedSpotId) ? preselectedSpotId : (availableSpots.length > 0 ? availableSpots[0].id : '');
 
-                        <form id="entry-form" class="space-y-5">
+                // Generar las opciones, marcando la preseleccionada
+                const correctedSpotOptions = availableSpots.map(s => {
+                    const selectedAttr = s.id === defaultSpot ? 'selected' : '';
+                    return `<option value="${s.id}" ${selectedAttr}>${s.id}</option>`;
+                }).join('');
+
+                return `
+                    <div class="bg-white p-6 rounded-xl shadow-lg max-w-lg mx-auto">
+                        <h2 class="text-3xl font-extrabold text-park-primary border-b pb-3 mb-6">⬆️ Registrar Ingreso de Vehículo</h2>
+                        <p id="register-message" class="hidden p-3 rounded-lg text-sm mb-4 transition duration-300" role="alert"></p>
+
+                        <form id="entry-form" class="space-y-4">
                             <div>
-                                <label for="spotId" class="block text-sm font-medium text-gray-700">Plaza de Estacionamiento *</label>
-                                <select id="spotId" name="spotId" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-inner focus:ring-park-primary focus:border-park-primary">
-                                    <option value="">-- Seleccionar Plaza --</option>
-                                    ${spotOptions}
+                                <label for="spotId" class="block text-sm font-medium text-gray-700">Plaza de Estacionamiento Disponible</label>
+                                <select id="spotId" name="spotId" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-park-primary focus:border-park-primary transition duration-150">
+                                    ${correctedSpotOptions}
                                 </select>
+                                ${availableSpots.length === 0 ? '<p class="text-red-500 mt-1">⚠️ No hay plazas disponibles.</p>' : ''}
                             </div>
                             
                             <div>
-                                <label for="plate" class="block text-sm font-medium text-gray-700">Placa del Vehículo *</label>
-                                <input id="plate" name="plate" type="text" required maxlength="7" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-inner uppercase focus:ring-park-primary focus:border-park-primary" placeholder="Ej: ABC-123">
+                                <label for="plate" class="block text-sm font-medium text-gray-700">Placa del Vehículo</label>
+                                <input id="plate" name="plate" type="text" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm uppercase focus:ring-park-primary focus:border-park-primary transition duration-150" maxlength="7" placeholder="ABC-123">
                             </div>
                             
                             <div>
                                 <label for="carType" class="block text-sm font-medium text-gray-700">Tipo de Vehículo</label>
-                                <select id="carType" name="carType" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-inner focus:ring-park-primary focus:border-park-primary">
-                                    <option value="Sedan">Sedan/Hatchback</option>
-                                    <option value="SUV">SUV/Camioneta</option>
-                                    <option value="Truck">Camión/Van</option>
-                                    <option value="Motorcycle">Motocicleta</option>
+                                <select id="carType" name="carType" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-park-primary focus:border-park-primary transition duration-150">
+                                    <option value="Sedan">Sedán/Hatchback</option>
+                                    <option value="SUV">SUV/Crossover</option>
+                                    <option value="Truck">Camioneta/Pick-up</option>
+                                    <option value="Moto">Motocicleta</option>
+                                    <option value="Other">Otro</option>
                                 </select>
                             </div>
                             
-                            <div id="register-message" class="hidden p-3 rounded-lg text-sm font-semibold transition duration-300"></div>
-
-                            <div>
-                                <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-150 transform hover:scale-[1.01]">
-                                    <span class="mr-2">✔️</span> Confirmar Ingreso
-                                </button>
-                            </div>
+                            <button type="submit" ${availableSpots.length === 0 ? 'disabled' : ''} class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-sm font-medium text-white bg-park-primary hover:bg-park-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-park-primary transition duration-150 transform hover:scale-[1.01] disabled:opacity-50 disabled:hover:scale-100">
+                                Registrar Ingreso Ahora
+                            </button>
                         </form>
-                        <p class="mt-6 text-xs text-gray-500 text-center">Hora de ingreso: Se registra automáticamente al presionar confirmar.</p>
                     </div>
                 `;
             }
 
             function renderRegisterExitPage() {
                 return `
-                    <div class="bg-white p-8 rounded-xl shadow-2xl max-w-lg mx-auto border-t-4 border-red-500">
-                        <h2 class="text-3xl font-extrabold text-gray-900 mb-6 border-b pb-3">⬇️ Registrar Salida y Cobro</h2>
-                        <p class="text-gray-600 mb-6">Ingrese la placa para registrar la salida y calcular la tarifa.</p>
+                    <div class="bg-white p-6 rounded-xl shadow-lg max-w-lg mx-auto">
+                        <h2 class="text-3xl font-extrabold text-red-600 border-b pb-3 mb-6">⬇️ Registrar Salida de Vehículo</h2>
+                        <p class="text-gray-600 mb-4">Ingrese la placa del vehículo que está saliendo para calcular la tarifa y liberar la plaza.</p>
+                        <p id="exit-message" class="hidden p-3 rounded-lg text-sm mb-4 transition duration-300" role="alert"></p>
 
-                        <form id="exit-form" class="space-y-5">
+                        <form id="exit-form" class="space-y-4">
                             <div>
-                                <label for="plateToExit" class="block text-sm font-medium text-gray-700">Placa del Vehículo *</label>
-                                <input id="plateToExit" name="plateToExit" type="text" required maxlength="7" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-inner uppercase focus:ring-red-500 focus:border-red-500" placeholder="Ej: ABC-123">
+                                <label for="plateToExit" class="block text-sm font-medium text-gray-700">Placa del Vehículo a Salir</label>
+                                <input id="plateToExit" name="plateToExit" type="text" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm uppercase focus:ring-red-500 focus:border-red-500 transition duration-150" maxlength="7" placeholder="LMA-123">
                             </div>
                             
-                            <div id="exit-message" class="hidden p-3 rounded-lg text-sm font-semibold transition duration-300"></div>
-
-                            <div>
-                                <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 transform hover:scale-[1.01]">
-                                    <span class="mr-2">💲</span> Confirmar Salida y Cobro
-                                </button>
-                            </div>
+                            <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-md text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600 transition duration-150 transform hover:scale-[1.01]">
+                                Procesar Salida y Cobro
+                            </button>
                         </form>
-                        <p class="mt-6 text-xs text-gray-500 text-center">La tarifa se calcula según el tiempo de permanencia.</p>
                     </div>
                 `;
             }
-            
-            function renderAdminReportsPage() {
-                const occupiedSpots = PARKING_SPOTS.filter(s => s.status === 'Occupied');
-                
-                const getDurationString = (entryTime) => {
-                    const durationMs = new Date() - new Date(entryTime);
-                    const hours = Math.floor(durationMs / (1000 * 60 * 60));
-                    const minutes = Math.floor((durationMs % (1000 * 60 * 60)) / (1000 * 60));
-                    return `${hours}h ${minutes}m`;
-                };
 
-                const reportRows = occupiedSpots.map(spot => {
+            function renderAdminReportsPage() {
+                // Generar una tabla simple con todos los vehículos ocupados para un reporte básico
+                const occupiedVehicles = PARKING_SPOTS.filter(s => s.status === 'Occupied');
+
+                let tableRows = occupiedVehicles.map(spot => {
+                    const entryTime = new Date(spot.entryTime);
+                    const now = new Date();
+                    const durationMs = now - entryTime;
+                    const durationHours = (durationMs / (1000 * 60 * 60)).toFixed(2);
+                    
                     return `
-                        <tr class="hover:bg-red-50 transition duration-100">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${spot.id}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 font-mono">${spot.plate}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${spot.carType}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${new Date(spot.entryTime).toLocaleTimeString('es-PE')}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600 font-semibold">${getDurationString(spot.entryTime)}</td>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-6 py-3 font-semibold text-park-primary">${spot.id}</td>
+                            <td class="px-6 py-3 font-mono">${spot.plate}</td>
+                            <td class="px-6 py-3">${spot.carType}</td>
+                            <td class="px-6 py-3">${entryTime.toLocaleString('es-PE')}</td>
+                            <td class="px-6 py-3 text-red-600">${durationHours} hrs</td>
+                            <td class="px-6 py-3 text-green-600">S/. ${(Math.ceil(durationHours) * 5).toFixed(2)}</td>
                         </tr>
                     `;
                 }).join('');
                 
-                return `
-                    <div class="bg-white p-6 rounded-xl shadow-lg h-full">
-                        <h2 class="text-3xl font-extrabold text-gray-900 mb-6 border-b pb-3">📊 Reporte de Ocupación y Cierre (ADMIN)</h2>
-                        
-                        <div class="p-4 bg-indigo-50 border border-indigo-200 rounded-lg mb-6">
-                            <p class="font-bold text-indigo-700">Vehículos Actualmente Estacionados: ${occupiedSpots.length}</p>
-                            <p class="text-sm text-indigo-600">Este reporte solo es visible por administradores.</p>
-                        </div>
+                if (occupiedVehicles.length === 0) {
+                    tableRows = '<tr><td colspan="6" class="px-6 py-4 text-center text-gray-500 italic">No hay vehículos ocupando plazas actualmente.</td></tr>';
+                }
 
-                        <div class="overflow-x-auto border rounded-lg shadow-sm">
+                return `
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h2 class="text-3xl font-extrabold text-gray-900 border-b pb-3 mb-6">📊 Reportes y Cierres</h2>
+                        <p class="text-gray-600 mb-4">Reporte detallado de la ocupación actual y cálculo de ingresos proyectados.</p>
+
+                        <div class="overflow-x-auto shadow-md rounded-lg">
                             <table class="min-w-full divide-y divide-gray-200">
                                 <thead class="bg-gray-50">
                                     <tr>
@@ -691,58 +697,26 @@
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Placa</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hora Ingreso</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tiempo Transcurrido</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duración (hrs)</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tarifa Proyectada</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    ${reportRows.length > 0 ? reportRows : '<tr><td colspan="5" class="px-6 py-4 text-center text-gray-500 italic">No hay vehículos ocupando plazas actualmente.</td></tr>'}
+                                    ${tableRows}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 `;
             }
-
-
-            // --- INICIALIZACIÓN DE LA APLICACIÓN ---
             
-            // Revisa si hay un hash en la URL para simular un link directo (ej. desde el mapa)
-            function checkUrlHash() {
-                const hash = window.location.hash.substring(1); // Remove '#'
-                if (hash.startsWith('register_entry?spot=')) {
-                    const spotId = hash.split('=')[1];
-                    const spot = PARKING_SPOTS.find(s => s.id === spotId && s.status === 'Available');
-                    if (spot) {
-                        currentPage = 'register_entry';
-                        // Simulación de precarga de valor en el select.
-                        setTimeout(() => {
-                            const selectElement = document.getElementById('spotId');
-                            if (selectElement) selectElement.value = spotId;
-                        }, SIMULATED_DELAY + 100); 
-                    }
-                }
-            }
-            
-            // Función inicial
-            function initializeApp() {
-                // Forzar el renderizado de la página de Login
-                renderLogin();
-                
-                // Añadir listener para manejar la navegación por hash (para la simulación de click en plaza)
-                window.addEventListener('hashchange', function() {
-                    // Si ya estamos logueados y el hash es de registro de entrada
-                    if (currentUser && window.location.hash.startsWith('#register_entry')) {
-                        toggleLoading(true, 'Cargando formulario...');
-                        setTimeout(() => {
-                            checkUrlHash();
-                            renderPageAndMenu();
-                            toggleLoading(false); 
-                        }, SIMULATED_DELAY);
-                    }
-                });
-            }
+            // --- INICIO DE LA APLICACIÓN ---
 
-            initializeApp();
+            // Inicialmente, renderiza la vista de Login
+            renderLogin();
+            
+            // Para depuración, si la carga inicial fue exitosa, podemos simular un inicio rápido si lo deseas.
+            console.log("Sistema cargado. Listo para iniciar sesión.");
 
         })();
     </script>
