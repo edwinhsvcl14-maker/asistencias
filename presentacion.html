@@ -7,22 +7,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* ========================================================== */
-        /* Variables y Estilos Base Inspirados en la Hermandad */
+        /* Variables y Estilos Base con Paleta Tierra/Crema/Oro */
         /* ========================================================== */
 
         :root {
-            /* Colores más ricos y solemnes */
-            --color-principal: #FDFEFE; /* Blanco suave */
-            --color-secundario: #EAECEE; /* Gris muy claro */
-            --color-acento: #4A235A; /* Púrpura/Morado (dignidad, solemnidad) */
-            --color-acento-claro: #A569BD; /* Púrpura más claro */
-            --color-texto-oscuro: #17202A; /* Azul oscuro casi negro */
-            --color-borde: #D5DBDB; 
-            --sombra-suave: 0 5px 15px rgba(0, 0, 0, 0.1);
+            /* Colores solicitados: Marrón, Crema, Blanco, Amarillo Tenue */
+            --color-principal: #FFFFF0; /* Ivory (Blanco/Crema muy claro, base) */
+            --color-secundario: #F5EFE0; /* Beige Claro/Crema (Fondo de sección) */
+            --color-acento: #8B4513; /* Saddle Brown (Marrón Oscuro Principal) */
+            --color-acento-claro: #CDA458; /* Dorado/Amarillo Tenue (Acento de nobleza) */
+            --color-texto-oscuro: #3E2723; /* Marrón Sepia (Texto oscuro) */
+            --color-borde: #D2B48C; /* Tan (Marrón claro para bordes) */
+            --sombra-suave: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
         body {
-            font-family: 'Merriweather', serif; /* Fuente elegante */
+            font-family: 'Garamond', serif;
             margin: 0;
             padding: 0;
             background-color: var(--color-secundario);
@@ -31,7 +31,7 @@
         }
 
         /* ---------------------------------------------------------- */
-        /* PRELOADER (Innovación) */
+        /* PRELOADER */
         /* ---------------------------------------------------------- */
         #preloader {
             position: fixed;
@@ -39,17 +39,35 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--color-acento); /* Fondo del color principal de la Hermandad */
+            background: var(--color-acento);
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.7s ease;
+        }
+
+        .loader-icon {
+            font-size: 4em;
+            color: var(--color-acento-claro);
+            margin-bottom: 20px;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        .loader-text {
+            color: var(--color-principal);
+            font-size: 1.8em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeInText 1s ease-out 0.3s forwards;
         }
 
         .loader {
             border: 4px solid var(--color-acento-claro);
-            border-top: 4px solid white;
+            border-top: 4px solid var(--color-principal);
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -59,6 +77,16 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         /* ---------------------------------------------------------- */
@@ -71,7 +99,7 @@
             background-color: var(--color-principal);
             box-shadow: var(--sombra-suave);
             border-radius: 15px;
-            overflow: hidden; /* Para contener la sombra del header */
+            overflow: hidden;
             opacity: 0;
             transition: opacity 1s ease;
             margin-top: 40px;
@@ -83,7 +111,7 @@
         }
 
         /* ---------------------------------------------------------- */
-        /* Encabezado y Título (Similar al anterior, pero más limpio) */
+        /* Encabezado */
         /* ---------------------------------------------------------- */
         header {
             display: flex;
@@ -91,7 +119,7 @@
             align-items: center;
             padding: 20px 40px;
             background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-bottom: 5px solid var(--color-acento-claro);
         }
 
         .logo-espacio {
@@ -121,7 +149,7 @@
             color: var(--color-acento);
             font-size: 2.5em;
             margin: 0;
-            font-family: 'Playfair Display', serif; /* Fuente de encabezado */
+            font-family: 'Trajan Pro', serif;
         }
 
         .header-titulo p {
@@ -131,9 +159,7 @@
             font-style: italic;
         }
 
-        /* ========================================================== */
         /* 1. Sección de Bienvenida e Importancia */
-        /* ========================================================== */
         .seccion-bienvenida {
             padding: 50px 80px;
             background-color: var(--color-secundario);
@@ -144,7 +170,7 @@
             color: var(--color-acento);
             font-size: 2.2em;
             margin-bottom: 20px;
-            border-bottom: 2px solid var(--color-acento-claro);
+            border-bottom: 3px solid var(--color-acento-claro);
             display: inline-block;
             padding-bottom: 5px;
         }
@@ -159,70 +185,69 @@
         .importancia {
             margin-top: 30px;
             padding: 20px;
-            background-color: var(--color-acento-claro);
-            color: white;
+            background-color: #F8F3D7;
+            color: var(--color-acento);
+            border-left: 5px solid var(--color-acento-claro);
             border-radius: 8px;
             font-style: italic;
             font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        /* ========================================================== */
         /* 2. Panel Interactivo de Cuadrillas */
-        /* ========================================================== */
         .seccion-cuadrillas {
             padding: 50px 40px;
             text-align: center;
         }
 
         .seccion-cuadrillas h2 {
-            color: var(--color-texto-oscuro);
+            color: var(--color-acento);
             font-size: 2em;
             margin-bottom: 40px;
         }
 
         .panel-cuadrillas {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Hace que sea responsive y en filas de 5 */
-            gap: 20px;
-            max-width: 900px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 25px;
+            max-width: 1000px;
             margin: 0 auto;
         }
-
-        @media (min-width: 950px) {
+        
+        @media (min-width: 1024px) {
             .panel-cuadrillas {
-                grid-template-columns: repeat(5, 1fr); /* Fila de 5 en pantallas grandes */
+                grid-template-columns: repeat(5, 1fr); /* 5 por fila en desktop */
             }
         }
-        
+
+        /* Estilos de Insignia y Interacción (sin cambios) */
         .insignia-cuadrilla {
             display: flex;
             flex-direction: column;
             align-items: center;
             cursor: pointer;
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             background-color: var(--color-principal);
-            border: 1px solid var(--color-borde);
-            transition: all 0.3s ease;
+            border: 2px solid var(--color-borde);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             position: relative;
-            transform: scale(1); /* Base para la interacción */
+            transform: scale(1);
         }
 
-        /* Efecto Hover (Innovación) */
         .insignia-cuadrilla:hover {
-            background-color: var(--color-acento-claro);
+            background-color: var(--color-acento);
             color: white;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-            transform: scale(1.05) translateY(-5px); /* Se levanta un poco */
-            border-color: var(--color-acento);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            transform: scale(1.08) translateY(-7px);
+            border-color: var(--color-acento-claro);
         }
 
         .insignia-cuadrilla:hover .numero-cuadrilla,
         .insignia-cuadrilla:hover .nombre-cuadrilla {
-            color: white; /* Cambia el color del texto al pasar el cursor */
+            color: white; 
         }
 
-        /* Imagen/Ícono de la Insignia */
         .icono-cuadrilla {
             width: 80px;
             height: 80px;
@@ -232,108 +257,192 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 2.5em;
-            color: var(--color-acento);
-            border: 2px solid var(--color-acento-claro);
+            font-size: 2.8em;
+            color: var(--color-acento-claro);
+            border: 3px solid var(--color-acento-claro);
             transition: all 0.3s ease;
         }
         
         .insignia-cuadrilla:hover .icono-cuadrilla {
-            background-color: white; /* Invierte colores al pasar el cursor */
+            background-color: var(--color-acento-claro);
             color: var(--color-acento);
+            transform: rotate(10deg);
         }
 
-        /* Número y Nombre */
         .numero-cuadrilla {
-            font-size: 1.5em;
+            font-size: 1.6em;
             font-weight: bold;
             color: var(--color-acento);
             margin-bottom: 5px;
             transition: color 0.3s ease;
         }
 
-        .nombre-cuadrilla {
-            font-size: 0.9em;
-            text-transform: uppercase;
-            color: var(--color-texto-oscuro);
-            transition: color 0.3s ease;
-            text-align: center;
-        }
-
-        /* Texto de Interacción al Hacer Clic (Oculto por defecto) */
         .interaccion-popup {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(74, 35, 90, 0.95); /* Color de acento con opacidad */
+            background-color: rgba(139, 69, 19, 0.95);
             color: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 10px;
-            font-size: 0.9em;
+            border-radius: 12px;
+            font-size: 1em;
             font-weight: bold;
             text-align: center;
             padding: 5px;
             box-sizing: border-box;
             opacity: 0;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-            pointer-events: none; /* No interfiere con el clic inicial */
-            transform: scale(0.9);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+            transform: scale(0.8);
+            border: 3px solid var(--color-acento-claro);
         }
         
         .insignia-cuadrilla.clicked .interaccion-popup {
             opacity: 1;
             transform: scale(1);
-            pointer-events: auto; /* Reactiva puntero para el siguiente clic */
+            pointer-events: auto;
         }
 
 
-        /* ========================================================== */
-        /* 3. Pie de Página y Contacto (Elegante) */
-        /* ========================================================== */
+        /* 3. Pie de Página y Contacto */
         footer {
             background-color: var(--color-texto-oscuro);
             color: white;
-            padding: 30px 40px;
+            padding: 40px 40px;
             text-align: center;
             border-radius: 0 0 15px 15px;
+            border-top: 5px solid var(--color-acento-claro);
         }
 
         footer h3 {
             margin-top: 0;
             color: var(--color-acento-claro);
-            font-family: 'Playfair Display', serif;
+            font-family: 'Trajan Pro', serif;
             font-size: 1.8em;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .redes-sociales a {
             color: white;
-            font-size: 2em;
-            margin: 0 15px;
+            font-size: 2.2em;
+            margin: 0 18px;
             transition: color 0.3s ease, transform 0.2s ease;
             display: inline-block;
         }
 
         .redes-sociales a:hover {
-            color: var(--color-acento-claro); /* Iconos de color acento al pasar el cursor */
-            transform: scale(1.2);
+            color: var(--color-acento-claro);
+            transform: scale(1.3);
         }
 
         .creditos {
-            margin-top: 20px;
+            margin-top: 25px;
             font-size: 0.9em;
             color: rgba(255, 255, 255, 0.7);
         }
 
+        /* ========================================================== */
+        /* MEDIA QUERIES (RESPONSIVE DESIGN) */
+        /* ========================================================== */
+
+        /* Tabletas y Pantallas Medianas (max-width: 950px) */
+        @media (max-width: 950px) {
+            .contenedor {
+                margin: 20px auto;
+                border-radius: 0; /* Elimina radio en móvil para full-width */
+            }
+
+            /* Encabezado: Se centra y se reduce el padding */
+            header {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+
+            .header-titulo {
+                margin: 10px 0;
+            }
+
+            .header-titulo h1 {
+                font-size: 2em; /* Título más pequeño */
+            }
+
+            .logo-espacio {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo-espacio[style="visibility: hidden;"] {
+                display: none; /* Oculta el espacio vacío */
+            }
+
+            /* Secciones: Reducir padding */
+            .seccion-bienvenida {
+                padding: 30px 20px;
+            }
+
+            .seccion-bienvenida p {
+                font-size: 1.1em;
+            }
+
+            /* Panel de Cuadrillas: Ajuste a 3 columnas */
+            .panel-cuadrillas {
+                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+                gap: 15px;
+            }
+
+            /* Footer: Reducir tamaño de íconos */
+            footer {
+                padding: 30px 20px;
+            }
+
+            .redes-sociales a {
+                font-size: 1.8em;
+                margin: 0 10px;
+            }
+        }
+
+        /* Móviles Pequeños (max-width: 600px) */
+        @media (max-width: 600px) {
+            
+            .header-titulo h1 {
+                font-size: 1.5em; 
+            }
+
+            .loader-text {
+                font-size: 1.4em;
+                letter-spacing: 1px;
+            }
+
+            /* Panel de Cuadrillas: Ajuste a 2 columnas */
+            .panel-cuadrillas {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .seccion-cuadrillas {
+                padding: 30px 15px;
+            }
+            
+            .insignia-cuadrilla {
+                padding: 10px;
+            }
+            
+            .icono-cuadrilla {
+                width: 60px;
+                height: 60px;
+                font-size: 2em;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div id="preloader">
+        <i class="fa-solid fa-handshake loader-icon"></i> <div class="loader-text">BIENVENIDOS HERMANOS</div>
         <div class="loader"></div>
     </div>
 
@@ -344,25 +453,25 @@
             </div>
             <div class="header-titulo">
                 <h1>Hermandad de la Primera Cuadrilla</h1>
-                <p>Unidos por la Fe, Comprometidos con el Servicio</p>
+                <p>Fe, Tradición y Compromiso en cada Hermanos</p>
             </div>
             <div class="logo-espacio" style="visibility: hidden;"></div>
         </header>
 
         <section class="seccion-bienvenida">
-            <h2>¡Bienvenidos, Hermanos! 🙏</h2>
+            <h2>¡Bienvenidos, Hermanos! Unidos por la Tradición</h2>
             <p>
-                Este espacio es el punto de encuentro digital para la **Primera Cuadrilla**. Aquí no solo compartimos nuestra fe, sino que administramos con **transparencia y eficiencia** uno de los pilares de nuestra vida en la Hermandad: **La Asistencia**.
+                Este portal ha sido creado para fortalecer los lazos de nuestra fe. Es la herramienta principal para gestionar la **asistencia** y el compromiso de cada Hermano con nuestras actividades y deberes.
             </p>
             <p class="importancia">
-                Su participación y asistencia son la manifestación de nuestro compromiso y lealtad. Es **computable** para el desempeño de funciones y es reflejo directo de la **vitalidad** de nuestra Cuadrilla. ¡Asistir es servir!
+                La **asistencia es vital** en nuestra Hermandad. Cada participación demuestra su espíritu de servicio y es **computable** para el cumplimiento de los estatutos y la asignación de responsabilidades. La devoción se demuestra en la presencia.
             </p>
         </section>
 
         <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), var(--color-acento), rgba(0, 0, 0, 0)); margin: 20px 0;">
 
         <section class="seccion-cuadrillas">
-            <h2>Nuestra Familia de 22 Cuadrillas</h2>
+            <h2>Nuestras Honorables 22 Cuadrillas</h2>
             <div class="panel-cuadrillas" id="panelCuadrillas">
                 </div>
         </section>
@@ -370,13 +479,13 @@
         <footer>
             <h3>Contáctenos y Síganos</h3>
             <div class="redes-sociales">
-                <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-                <a href="#" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
+                <a href="#" target="_blank" title="Facebook Oficial"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank" title="Canal de YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="#" target="_blank" title="TikTok Oficial"><i class="fab fa-tiktok"></i></a>
+                <a href="#" target="_blank" title="Instagram de la Hermandad"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" title="Sitio Web de la Hermandad"><i class="fa-solid fa-globe"></i></a>
             </div>
-            <p class="creditos">© 2025 Primera Cuadrilla de la Hermandad. Todos los derechos reservados.</p>
+            <p class="creditos">© 2025 Primera Cuadrilla de la Hermandad. Tradición y Fe desde siempre.</p>
         </footer>
     </div>
 
@@ -393,16 +502,14 @@
         const preloader = document.getElementById('preloader');
         const mainContent = document.getElementById('mainContent');
 
-        // Función para crear la insignia de la cuadrilla
         function crearInsignia(numero, nombre) {
             const insignia = document.createElement('div');
             insignia.className = 'insignia-cuadrilla';
             insignia.setAttribute('data-cuadrilla', numero);
 
-            // Icono/Imagen (Simulado con el número en un círculo)
             const icono = document.createElement('div');
             icono.className = 'icono-cuadrilla';
-            icono.innerHTML = `<i class="fa-solid fa-cross"></i>`; // Ícono de Cruz
+            icono.innerHTML = `<i class="fa-solid fa-cross"></i>`; 
 
             const num = document.createElement('div');
             num.className = 'numero-cuadrilla';
@@ -412,41 +519,29 @@
             nom.className = 'nombre-cuadrilla';
             nom.textContent = nombre;
 
-            // Popup de interacción al hacer clic
             const popup = document.createElement('div');
             popup.className = 'interaccion-popup';
-            popup.textContent = `Accediendo a Reporte de ${nombre} Cuadrilla...`;
+            popup.textContent = `Cargando detalles de la ${nombre} Cuadrilla...`;
 
             insignia.appendChild(icono);
             insignia.appendChild(num);
             insignia.appendChild(nom);
             insignia.appendChild(popup);
 
-            // -------------------------------------------------------------------
-            // Lógica de Interacción (Innovación - Al hacer clic)
-            // -------------------------------------------------------------------
             insignia.addEventListener('click', function() {
-                // 1. Efecto Visual de "Clickeado"
-                this.classList.toggle('clicked'); 
+                const isClicked = this.classList.toggle('clicked'); 
 
-                // 2. Simulación de Acción (Acceso a la página de asistencia)
-                if (this.classList.contains('clicked')) {
-                    
+                if (isClicked) {
                     setTimeout(() => {
-                        // En un sistema real: window.location.href = `/asistencia/${numero}`;
-                        alert(`¡Has accedido al panel de la ${nombre} Cuadrilla! (Simulación de redirección)`);
-                        this.classList.remove('clicked'); // Quita el efecto después de la alerta
-                    }, 500); // Muestra el mensaje por medio segundo antes de la acción simulada
-                } else {
-                    // Si se vuelve a hacer clic antes de la acción (por si acaso)
-                    this.classList.remove('clicked'); 
+                        alert(`Redirigiendo a Asistencia: ${nombre} Cuadrilla (ID: ${numero}).`);
+                        this.classList.remove('clicked'); 
+                    }, 800); 
                 }
             });
 
             return insignia;
         }
 
-        // Llenar el panel de cuadrillas
         function renderizarCuadrillas() {
             nombresCuadrillas.forEach((nombre, index) => {
                 const numero = index + 1;
@@ -455,21 +550,17 @@
             });
         }
 
-        // -------------------------------------------------------------------
         // Lógica del Preloader
-        // -------------------------------------------------------------------
         window.addEventListener('load', () => {
-            // Simula un tiempo mínimo de carga para que el efecto se vea
             setTimeout(() => {
-                preloader.style.opacity = '0'; // Desvanece el preloader
-                mainContent.classList.add('loaded'); // Muestra el contenido principal
+                preloader.style.opacity = '0'; 
+                mainContent.classList.add('loaded'); 
                 setTimeout(() => {
-                    preloader.style.display = 'none'; // Quita el preloader del flujo
-                }, 500);
-            }, 1000); // Espera 1 segundo
+                    preloader.style.display = 'none'; 
+                }, 700);
+            }, 1000); 
         });
 
-        // Inicializar
         document.addEventListener('DOMContentLoaded', renderizarCuadrillas);
     </script>
 
