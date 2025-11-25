@@ -73,7 +73,7 @@
                 const USERS_JSON = '[{"user":"admin","pass":"admin123","name":"Administrador General","role":"admin"},{"user":"worker1","pass":"parker1","name":"Operario Turno Mañana","role":"worker"},{"user":"worker2","pass":"parker2","name":"Operario Turno Tarde","role":"worker"}]';
                 
                 // Datos de estacionamiento (Plazas - 'Spots')
-                const PARKING_SPOTS_JSON = '[
+                const PARKING_SPOTS_JSON = `[
                         {"id":"A01","status":"Occupied","plate":"LMA-123","entryTime":"2025-11-25T10:00:00","carType":"Sedan"},
                         {"id":"A02","status":"Available"},
                         {"id":"A03","status":"Available"},
@@ -82,7 +82,7 @@
                         {"id":"B02","status":"Occupied","plate":"XYZ-789","entryTime":"2025-11-25T11:45:00","carType":"SUV"},
                         {"id":"B03","status":"Available"},
                         {"id":"B04","status":"Available"} 
-                ]';
+                ]`;
 
                 USERS = JSON.parse(USERS_JSON);
                 PARKING_SPOTS = JSON.parse(PARKING_SPOTS_JSON);
