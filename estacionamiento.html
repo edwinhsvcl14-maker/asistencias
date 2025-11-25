@@ -69,7 +69,7 @@
             `;
 
             try {
-                // Datos de prueba (JSON simulado)
+                // Datos de prueba (JSON simulado) - REVISIÓN CRÍTICA DE COMAS Y LLAVES AQUÍ
                 const USERS_JSON = `
                     [
                         {"user":"admin","pass":"admin123","name":"Administrador General","role":"admin"},
@@ -576,18 +576,15 @@
                     `;
                 }
                 
-                // CORRECCIÓN: Se utiliza un manejador de eventos click en JS, no una redirección HTML con "onclick" que causa que el menú se desactive.
-                // En lugar de `onclick="location.href='#register_entry?spot=${spot.id}'"`, usaremos una clase y un listener.
-                // Ya que estamos recreando el elemento, se usa la versión simple que tenías.
-                return `<div class="${baseClasses} ${statusClasses}" onclick="location.href='#register_entry?spot=${spot.id}'">${content}</div>`;
+                // Uso de un controlador de URL hash para activar la función de entrada con el spot preseleccionado.
+                return `<div class="${baseClasses} ${statusClasses}" onclick="window.location.hash='#register_entry?spot=${spot.id}'">${content}</div>`;
             }
 
             function renderRegisterEntryPage() {
                 const availableSpots = PARKING_SPOTS.filter(s => s.status === 'Available');
                 // Se ordena alfabéticamente
                 availableSpots.sort((a, b) => a.id.localeCompare(b.id)); 
-                const spotOptions = availableSpots.map(s => `<option value="${s.id}">${s.id}</option>`).join('');
-
+                
                 // Determinar el spot preseleccionado si viene de la URL (ej. #register_entry?spot=A02)
                 const urlParams = new URLSearchParams(window.location.hash.substring(1));
                 const preselectedSpotId = urlParams.get('spot');
