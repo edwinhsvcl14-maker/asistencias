@@ -56,6 +56,7 @@
             const SIMULATED_DELAY = 500; // 500ms de retraso para simular la carga de datos.
 
             // SVG del Coche (Logo) - Usado para Login y Loading
+            // *** ESTE BLOQUE USA BACKTICKS (` `) PARA PERMITIR SALTOS DE LÍNEA EN EL SVG ***
             const CAR_LOGO_SVG = `
                 <svg class="car-logo text-park-primary logo-loader" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <rect x="25" y="10" width="50" height="80" rx="10" ry="10" fill="none" stroke="currentColor" stroke-width="5"/>
@@ -69,19 +70,19 @@
             `;
 
             try {
-                // Datos de prueba (JSON simulado) - REVISIÓN CRÍTICA DE COMAS Y LLAVES AQUÍ
+                // Datos de prueba (JSON simulado) - USAMOS COMILLAS SIMPLES Y UNA LÍNEA PARA EVITAR SINTAX ERROR
                 const USERS_JSON = '[{"user":"admin","pass":"admin123","name":"Administrador General","role":"admin"},{"user":"worker1","pass":"parker1","name":"Operario Turno Mañana","role":"worker"},{"user":"worker2","pass":"parker2","name":"Operario Turno Tarde","role":"worker"}]';
                 
                 // Datos de estacionamiento (Plazas - 'Spots')
                 const PARKING_SPOTS_JSON = `[
-                        {"id":"A01","status":"Occupied","plate":"LMA-123","entryTime":"2025-11-25T10:00:00","carType":"Sedan"},
-                        {"id":"A02","status":"Available"},
-                        {"id":"A03","status":"Available"},
-                        {"id":"A04","status":"Occupied","plate":"PQR-456","entryTime":"2025-11-25T14:30:00","carType":"Truck"},
-                        {"id":"B01","status":"Available"},
-                        {"id":"B02","status":"Occupied","plate":"XYZ-789","entryTime":"2025-11-25T11:45:00","carType":"SUV"},
-                        {"id":"B03","status":"Available"},
-                        {"id":"B04","status":"Available"} 
+                    {"id":"A01","status":"Occupied","plate":"LMA-123","entryTime":"2025-11-25T10:00:00","carType":"Sedan"},
+                    {"id":"A02","status":"Available"},
+                    {"id":"A03","status":"Available"},
+                    {"id":"A04","status":"Occupied","plate":"PQR-456","entryTime":"2025-11-25T14:30:00","carType":"Truck"},
+                    {"id":"B01","status":"Available"},
+                    {"id":"B02","status":"Occupied","plate":"XYZ-789","entryTime":"2025-11-25T11:45:00","carType":"SUV"},
+                    {"id":"B03","status":"Available"},
+                    {"id":"B04","status":"Available"}
                 ]`;
 
                 USERS = JSON.parse(USERS_JSON);
@@ -126,7 +127,7 @@
                     if (show) {
                         overlay.classList.remove('hidden');
                         if (msgElement) {
-                            msgElement.innerHTML =`
+                            msgElement.innerHTML = `
                                 <div class="flex flex-col items-center space-y-4">
                                     ${CAR_LOGO_SVG.replace('logo-loader', 'logo-loader')}
                                     <p class="text-lg font-semibold text-park-primary">${message}</p>
@@ -351,7 +352,12 @@
                                 <div class="h-6 w-6 text-park-primary">${CAR_LOGO_SVG.replace('logo-loader', '').replace(/80/g, '24').replace(/viewBox="0 0 100 100"/, 'viewBox="0 0 24 24"')}</div>
                                 <h1 class="text-xl font-extrabold text-park-primary">PARKING PRO</h1>
                             </div>
-                            <div class="flex items-center space-x-4">
+                            
+                            <button id="menu-toggle" class="md:hidden p-2 text-gray-600 hover:text-park-primary focus:outline-none">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                            </button>
+
+                            <div class="flex items-center space-x-4 hidden md:flex">
                                 <span class="text-sm text-gray-600 hidden sm:block">¡Hola, ${currentUser.name}! (${currentUser.role.toUpperCase()})</span>
                                 <button id="logout-button" class="flex items-center bg-red-600 hover:bg-red-700 text-white text-sm py-1 px-3 rounded-full shadow-md transition duration-150">
                                     <span class="mr-1">🚪</span> Salir
@@ -359,15 +365,21 @@
                             </div>
                         </header>
 
-                        <div class="flex flex-1 overflow-hidden">
+                        <div class="flex flex-1 overflow-hidden relative">
                             
-                            <nav id="sidebar" class="bg-indigo-800 w-64 p-4 space-y-2 hidden md:block">
-                                <div class="pb-4 mb-4 border-b border-indigo-700">
+                            <nav id="main-sidebar" class="bg-indigo-800 w-64 p-4 space-y-2 fixed inset-y-0 left-0 z-40 md:relative md:block transform -translate-x-full md:translate-x-0 transition-transform duration-300">
+                                <div class="pb-4 mb-4 border-b border-indigo-700 relative">
+                                    <button id="close-menu" class="absolute top-0 right-0 p-2 text-white md:hidden">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                    </button>
                                     <p class="text-white font-bold text-lg">${currentUser.name}</p>
                                     <p class="text-indigo-300 text-sm">${currentUser.role.toUpperCase()}</p>
                                 </div>
                                 ${navHtml}
                             </nav>
+
+                            <div id="mobile-overlay" class="fixed inset-0 bg-black opacity-0 pointer-events-none transition-opacity duration-300 z-30 md:hidden"></div>
+
 
                             <main class="flex-1 p-6 overflow-y-auto bg-gray-100">
                                 <div id="page-content" class="h-full">
@@ -386,10 +398,42 @@
                 
                 document.getElementById('logout-button').addEventListener('click', handleLogout);
 
+                // *** LÓGICA DEL MENÚ MÓVIL (AJUSTADA) ***
+                const sidebar = document.getElementById('main-sidebar');
+                const menuToggle = document.getElementById('menu-toggle');
+                const closeMenu = document.getElementById('close-menu');
+                const mobileOverlay = document.getElementById('mobile-overlay');
+
+                const toggleSidebar = (show) => {
+                    const shouldShow = show !== undefined ? show : sidebar.classList.contains('-translate-x-full');
+
+                    if (shouldShow) {
+                        sidebar.classList.remove('-translate-x-full');
+                        sidebar.classList.add('translate-x-0');
+                        mobileOverlay.classList.remove('opacity-0', 'pointer-events-none');
+                        mobileOverlay.classList.add('opacity-50');
+                    } else {
+                        sidebar.classList.add('-translate-x-full');
+                        sidebar.classList.remove('translate-x-0');
+                        mobileOverlay.classList.remove('opacity-50');
+                        mobileOverlay.classList.add('opacity-0', 'pointer-events-none');
+                    }
+                };
+
+                // Asignar listeners
+                if (menuToggle) menuToggle.addEventListener('click', () => toggleSidebar(true));
+                if (closeMenu) closeMenu.addEventListener('click', () => toggleSidebar(false));
+                if (mobileOverlay) mobileOverlay.addEventListener('click', () => toggleSidebar(false));
+
                 document.querySelectorAll('.nav-link').forEach(link => {
                     link.addEventListener('click', function(e) {
                         e.preventDefault();
                         const newPage = this.getAttribute('data-page');
+                        
+                        // Si estamos en móvil, cerramos el menú después de seleccionar la opción
+                        if (window.innerWidth < 768) {
+                            toggleSidebar(false);
+                        }
                         
                         const allowedPages = allowedMenuItems.map(item => item.id);
                         if (allowedPages.includes(newPage) && newPage !== currentPage) {
@@ -704,7 +748,6 @@
             // Inicialmente, renderiza la vista de Login
             renderLogin();
             
-            // Para depuración, si la carga inicial fue exitosa, podemos simular un inicio rápido si lo deseas.
             console.log("Sistema cargado. Listo para iniciar sesión.");
 
         })();
