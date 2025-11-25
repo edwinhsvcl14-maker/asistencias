@@ -7,33 +7,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* ========================================================== */
-        /* Variables y Estilos Base - PALETA ALTO CONTRASTE MODERNA */
+        /* Variables y Estilos Base - PALETA VIRGEN MARRÓN / CÁLIDA */
         /* ========================================================== */
 
         :root {
-            /* Marrones Profundos, Crema, Oro Tenuis */
-            --color-fondo-principal: #1A1A1A; /* Negro/Carbón Profundo (Fondo Estilo Netflix) */
-            --color-fondo-secundario: #2C2C2C; /* Gris Oscuro/Marrón Oscuro (Fondo de Secciones) */
-            --color-principal: #F8F8F8; /* Blanco Suave (Texto Principal) */
-            --color-acento: #CDA458; /* Dorado Envejecido (Acento Principal) */
-            --color-acento-tenue: #D2B48C; /* Tan (Bordes y Detalles) */
-            --color-texto-claro: #EDEDED; /* Gris Muy Claro (Texto Secundario) */
-            --sombra-moderna: 0 10px 30px rgba(0, 0, 0, 0.5); /* Sombra Profunda */
-            --sombra-glow: 0 0 10px rgba(205, 164, 88, 0.4); /* Efecto Glow Dorado */
+            /* Colores: Marrones, Cremas, Blanco, Amarillo Tenue (inspiración Virgen Marrón) */
+            --color-fondo-principal: #FDFCEF; /* Crema muy claro, casi blanco (Base) */
+            --color-fondo-secundario: #F5ECCB; /* Beige cálido, suave (Fondo de secciones) */
+            --color-principal: #4A2C1B; /* Marrón Chocolate Oscuro (Texto Principal) */
+            --color-acento: #A0522D; /* Sienna (Marrón Rojizo, Acento Fuerte) */
+            --color-acento-claro: #D4AF37; /* Oro Antiguo (Acento de Nobleza/Divinidad) */
+            --color-texto-secundario: #6F4A3E; /* Marrón más claro (Texto Secundario) */
+            --sombra-suave: 0 8px 25px rgba(0, 0, 0, 0.1); /* Sombra elegante */
+            --sombra-halo-dorado: 0 0 20px rgba(212, 175, 55, 0.6); /* Efecto halo dorado */
         }
 
         body {
-            font-family: 'Open Sans', sans-serif; /* Fuente moderna y legible */
+            font-family: 'Georgia', serif; /* Fuente clásica y elegante */
             margin: 0;
             padding: 0;
             background-color: var(--color-fondo-principal);
             color: var(--color-principal);
             line-height: 1.6;
-            overflow-x: hidden; /* Previene barras de desplazamiento horizontales */
+            overflow-x: hidden;
         }
 
         /* ---------------------------------------------------------- */
-        /* PRELOADER */
+        /* PRELOADER (con efecto de escritura y vibración) */
         /* ---------------------------------------------------------- */
         #preloader {
             position: fixed;
@@ -41,35 +41,41 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--color-fondo-principal); /* Fondo oscuro */
+            background: var(--color-acento); /* Fondo marrón acento */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.7s ease;
+            transition: opacity 0.8s ease-out;
+            color: var(--color-fondo-principal); /* Texto crema */
         }
 
         .loader-icon {
-            font-size: 4em;
-            color: var(--color-acento);
-            margin-bottom: 20px;
-            animation: bounce 2s infinite ease-in-out;
+            font-size: 4.5em;
+            color: var(--color-acento-claro); /* Oro */
+            margin-bottom: 25px;
+            animation: vibrate 0.8s infinite alternate ease-in-out; /* Nuevo efecto */
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.8); /* Pequeño brillo */
         }
 
         .loader-text {
-            color: var(--color-principal);
-            font-size: 1.8em;
-            font-weight: 600;
-            letter-spacing: 2px;
+            font-family: 'Old Standard TT', serif; /* Fuente elegante para el texto */
+            font-size: 2.2em;
+            font-weight: 700;
+            letter-spacing: 3px;
+            overflow: hidden; /* Necesario para el efecto de escritura */
+            white-space: nowrap; /* Mantiene el texto en una sola línea */
             margin-bottom: 30px;
-            opacity: 0;
-            animation: fadeInText 1s ease-out 0.3s forwards;
+            border-right: 3px solid var(--color-fondo-principal); /* Cursor de escritura */
+            animation: typing 2.5s steps(22, end) forwards,
+                       blink-caret .75s step-end infinite;
+            width: 0; /* Empieza oculto */
         }
 
         .loader {
-            border: 4px solid var(--color-fondo-secundario);
-            border-top: 4px solid var(--color-acento); /* Spinner Dorado */
+            border: 4px solid var(--color-fondo-principal);
+            border-top: 4px solid var(--color-acento-claro); /* Spinner Oro */
             border-radius: 50%;
             width: 50px;
             height: 50px;
@@ -80,20 +86,27 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        @keyframes fadeInText {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Efecto de escritura */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
         }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        /* Efecto de cursor parpadeante */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--color-fondo-principal); }
+        }
+        /* Efecto de vibración (sutil) */
+        @keyframes vibrate {
+            0% { transform: rotate(-1deg); }
+            100% { transform: rotate(1deg); }
         }
 
         /* ---------------------------------------------------------- */
         /* Contenedor Principal */
         /* ---------------------------------------------------------- */
         .contenedor {
-            width: 100%; /* Ocupa el 100% para un look full-screen */
+            width: 100%;
             max-width: none;
             margin: 0 auto;
             background-color: var(--color-fondo-principal);
@@ -106,7 +119,7 @@
         }
 
         /* ---------------------------------------------------------- */
-        /* Encabezado (Minimalista y Moderno) */
+        /* Encabezado (Fijo con Sombra Dinámica) */
         /* ---------------------------------------------------------- */
         header {
             display: flex;
@@ -118,11 +131,16 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            transition: box-shadow 0.3s ease; /* Sombra dinámica */
+        }
+
+        header.scrolled {
+            box-shadow: var(--sombra-suave); /* Aparece la sombra al hacer scroll */
         }
 
         .logo-espacio {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             flex-shrink: 0;
             border-radius: 50%;
             overflow: hidden;
@@ -140,89 +158,113 @@
 
         .header-titulo {
             text-align: left;
-            margin-left: 20px;
+            margin-left: 25px;
             flex-grow: 1;
         }
 
         .header-titulo h1 {
             color: var(--color-acento);
-            font-size: 1.5em;
+            font-size: 1.6em;
             margin: 0;
             font-weight: 700;
+            letter-spacing: 1px;
         }
 
         .header-titulo p {
             margin: 0;
-            color: var(--color-texto-claro);
-            font-size: 0.9em;
-            opacity: 0.7;
+            color: var(--color-texto-secundario);
+            font-size: 0.95em;
+            opacity: 0.8;
+            font-style: italic;
         }
 
         /* ---------------------------------------------------------- */
         /* 1. Sección Hero (Bienvenida e Importancia) */
         /* ---------------------------------------------------------- */
         .seccion-bienvenida {
-            padding: 100px 50px;
+            padding: 120px 50px;
             background: linear-gradient(180deg, var(--color-fondo-secundario) 0%, var(--color-fondo-principal) 100%);
-            text-align: left;
+            text-align: center; /* Centramos el texto para la bienvenida */
+            position: relative;
         }
 
         .seccion-bienvenida h2 {
             color: var(--color-principal);
-            font-size: 3em;
+            font-size: 3.2em;
             font-weight: 800;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+            opacity: 0; /* Para animación de aparición */
+            animation: fadeInScale 1s ease-out 0.5s forwards;
         }
         
         .seccion-bienvenida h2 span {
-            color: var(--color-acento); /* Resaltar palabras clave en dorado */
+            color: var(--color-acento); 
+            font-style: normal; /* Asegura que no se aplique el italic de la fuente por defecto */
         }
 
         .seccion-bienvenida p {
-            font-size: 1.3em;
-            max-width: 800px;
-            margin-top: 20px;
-            color: var(--color-texto-claro);
+            font-size: 1.4em;
+            max-width: 900px;
+            margin: 20px auto 0;
+            color: var(--color-texto-secundario);
+            opacity: 0; /* Para animación de aparición */
+            animation: fadeInScale 1s ease-out 0.8s forwards;
         }
 
         .importancia {
-            margin-top: 40px;
-            padding: 25px;
-            background-color: #383838; /* Contraste sutil */
+            margin-top: 50px;
+            padding: 28px;
+            background-color: var(--color-fondo-principal);
             color: var(--color-principal);
-            border-left: 5px solid var(--color-acento); /* Borde dorado fuerte */
-            border-radius: 6px;
+            border-left: 6px solid var(--color-acento-claro); 
+            border-radius: 8px;
             font-style: italic;
             font-weight: 600;
-            box-shadow: var(--sombra-moderna);
+            box-shadow: var(--sombra-suave);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 2;
+            opacity: 0; /* Para animación de aparición */
+            animation: fadeInScale 1s ease-out 1.1s forwards;
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         /* ---------------------------------------------------------- */
-        /* 2. Panel Interactivo de Cuadrillas (Contenido tipo Carrusel) */
+        /* 2. Panel Interactivo de Cuadrillas (Tarjetas con Halo Dorado) */
         /* ---------------------------------------------------------- */
         .seccion-cuadrillas {
             padding: 80px 50px;
+            background-color: var(--color-fondo-principal);
         }
 
         .seccion-cuadrillas h2 {
-            color: var(--color-principal);
-            font-size: 2.5em;
-            margin-bottom: 40px;
-            border-left: 5px solid var(--color-acento);
-            padding-left: 15px;
+            color: var(--color-acento);
+            font-size: 2.8em;
+            margin-bottom: 50px;
+            border-bottom: 2px solid var(--color-acento-claro);
+            padding-bottom: 10px;
+            display: inline-block;
             font-weight: 700;
+            letter-spacing: 1px;
         }
 
         .panel-cuadrillas {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px; 
+            gap: 35px; 
             max-width: 1400px;
             margin: 0 auto;
         }
         
-        @media (min-width: 1024px) {
+        @media (min-width: 1200px) {
             .panel-cuadrillas {
                 grid-template-columns: repeat(6, 1fr); /* 6 por fila en pantallas grandes */
             }
@@ -234,64 +276,72 @@
             flex-direction: column;
             align-items: center;
             cursor: pointer;
-            padding: 20px;
-            border-radius: 12px;
+            padding: 25px 20px;
+            border-radius: 15px;
             background-color: var(--color-fondo-secundario);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--color-borde); /* Borde marrón claro */
             
-            /* Transiciones 3D */
-            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease;
+            /* Transiciones 3D y Sombra */
+            transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                        box-shadow 0.5s ease, 
+                        background-color 0.3s ease;
             transform: perspective(1000px) rotateX(0deg) scale(1); /* Base 3D */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
         }
 
-        /* Efecto Hover (Interactivo - Dándole PROFUNDIDAD) */
+        /* Efecto Hover (Sorprendente: Elevación, Gira 3D y Halo Dorado) */
         .insignia-cuadrilla:hover {
-            background-color: #404040; /* Un poco más claro */
-            color: var(--color-principal);
-            box-shadow: var(--sombra-moderna), var(--sombra-glow); /* Sombra Profunda + Glow */
-            transform: perspective(1000px) rotateX(5deg) scale(1.05); /* Ligeramente inclinado y levantado */
-            border-color: var(--color-acento);
+            background-color: var(--color-fondo-principal); /* Más claro al pasar el cursor */
+            color: var(--color-acento);
+            box-shadow: var(--sombra-suave), var(--sombra-halo-dorado); /* Sombra elegante + Halo Dorado */
+            transform: perspective(1000px) rotateX(7deg) translateY(-10px) scale(1.06); /* Elevado y ligeramente inclinado */
+            border-color: var(--color-acento-claro); /* Borde dorado al hacer hover */
         }
 
         /* Ícono de la Insignia */
         .icono-cuadrilla {
-            width: 80px;
-            height: 80px;
+            width: 85px;
+            height: 85px;
             border-radius: 50%;
             background-color: var(--color-fondo-principal);
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 2.5em;
-            color: var(--color-acento);
-            border: 3px solid var(--color-acento-tenue);
-            transition: all 0.4s ease;
+            font-size: 2.8em;
+            color: var(--color-acento-claro); /* Oro */
+            border: 4px solid var(--color-fondo-secundario);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
         
         .insignia-cuadrilla:hover .icono-cuadrilla {
-            background-color: var(--color-acento);
-            color: var(--color-fondo-principal); /* Marrón profundo */
-            transform: scale(1.1) rotate(5deg);
+            background-color: var(--color-acento-claro); /* Se vuelve oro */
+            color: var(--color-acento); /* Marrón */
+            transform: scale(1.15) rotate(15deg); /* Crece y gira más */
+            border-color: var(--color-acento);
         }
 
         /* Número y Nombre */
         .numero-cuadrilla {
-            font-size: 1.5em;
+            font-size: 1.7em;
             font-weight: 800;
-            color: var(--color-acento);
-            margin-bottom: 5px;
+            color: var(--color-principal);
+            margin-bottom: 8px;
             transition: color 0.3s ease;
         }
 
+        .insignia-cuadrilla:hover .numero-cuadrilla {
+            color: var(--color-acento); /* Marrón acento */
+        }
+
         .nombre-cuadrilla {
-            font-size: 0.95em;
+            font-size: 1em;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--color-texto-claro);
+            color: var(--color-texto-secundario);
+            font-weight: 600;
         }
         
         .insignia-cuadrilla:hover .nombre-cuadrilla {
@@ -299,75 +349,92 @@
         }
 
 
-        /* Texto de Interacción al Hacer Clic (Popup) */
+        /* Texto de Interacción al Hacer Clic (Popup con efecto de resplandor) */
         .interaccion-popup {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(26, 26, 26, 0.98); /* Fondo casi negro */
-            color: var(--color-acento);
+            background-color: rgba(74, 44, 27, 0.98); /* Marrón oscuro casi opaco */
+            color: var(--color-acento-claro); /* Texto dorado */
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            border-radius: 12px;
-            font-size: 1em;
+            border-radius: 15px;
+            font-size: 1.1em;
             font-weight: bold;
             text-align: center;
-            padding: 5px;
+            padding: 10px;
             box-sizing: border-box;
             opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
+            transition: opacity 0.4s ease, transform 0.4s ease;
             pointer-events: none;
             transform: scale(0.9);
-            border: 2px solid var(--color-acento); 
+            border: 2px solid var(--color-acento-claro); 
+            box-shadow: 0 0 0 rgba(212, 175, 55, 0); /* Sombra inicial */
             z-index: 5;
+        }
+
+        .interaccion-popup i {
+            font-size: 2em;
+            margin-bottom: 10px;
+            animation: pulse-gold 1.5s infinite ease-in-out; /* Nuevo efecto */
         }
         
         .insignia-cuadrilla.clicked .interaccion-popup {
             opacity: 1;
             transform: scale(1);
             pointer-events: auto;
+            box-shadow: 0 0 15px var(--color-acento-claro); /* Resplandor dorado al clickear */
+        }
+
+        @keyframes pulse-gold {
+            0% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.8; }
         }
 
 
         /* ---------------------------------------------------------- */
-        /* 3. Pie de Página y Contacto (Footer Limpio) */
+        /* 3. Pie de Página y Contacto (Footer Elegante) */
         /* ---------------------------------------------------------- */
         footer {
             background-color: var(--color-fondo-secundario);
-            color: var(--color-texto-claro);
-            padding: 40px 50px;
+            color: var(--color-texto-secundario);
+            padding: 50px 50px;
             text-align: center;
-            border-top: 3px solid var(--color-acento-tenue);
+            border-top: 3px solid var(--color-acento-claro);
         }
 
         footer h3 {
             margin-top: 0;
             color: var(--color-acento);
-            font-family: sans-serif;
-            font-size: 1.5em;
-            margin-bottom: 25px;
+            font-family: 'Old Standard TT', serif;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            letter-spacing: 1.5px;
         }
 
         .redes-sociales a {
-            color: var(--color-principal);
-            font-size: 2em;
-            margin: 0 15px;
+            color: var(--color-principal); /* Marrón oscuro sobre fondo crema */
+            font-size: 2.2em;
+            margin: 0 18px;
             transition: color 0.3s ease, transform 0.2s ease;
             display: inline-block;
         }
 
         .redes-sociales a:hover {
-            color: var(--color-acento); 
+            color: var(--color-acento-claro); /* Iconos dorados al pasar el cursor */
             transform: scale(1.2);
         }
 
         .creditos {
-            margin-top: 25px;
-            font-size: 0.85em;
-            color: rgba(255, 255, 255, 0.5);
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: var(--color-texto-secundario);
+            opacity: 0.7;
         }
 
         /* ========================================================== */
@@ -379,26 +446,60 @@
             header {
                 padding: 15px 25px;
             }
+            .header-titulo h1 {
+                font-size: 1.4em;
+            }
+            .header-titulo p {
+                font-size: 0.9em;
+            }
             .seccion-bienvenida {
-                padding: 60px 25px;
+                padding: 80px 25px;
             }
             .seccion-bienvenida h2 {
-                font-size: 2.2em;
+                font-size: 2.5em;
             }
             .seccion-bienvenida p {
-                font-size: 1.1em;
+                font-size: 1.2em;
+            }
+            .importancia {
+                padding: 20px;
+                font-size: 1.05em;
             }
             .seccion-cuadrillas {
                 padding: 50px 25px;
             }
             .seccion-cuadrillas h2 {
-                font-size: 2em;
+                font-size: 2.2em;
+                margin-bottom: 40px;
             }
             
             /* Panel de Cuadrillas: Ajuste a 3 columnas */
             .panel-cuadrillas {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
                 gap: 20px;
+            }
+            .insignia-cuadrilla {
+                padding: 15px 10px;
+                border-radius: 12px;
+            }
+            .icono-cuadrilla {
+                width: 70px;
+                height: 70px;
+                font-size: 2.2em;
+                margin-bottom: 10px;
+            }
+            .numero-cuadrilla {
+                font-size: 1.4em;
+            }
+            .nombre-cuadrilla {
+                font-size: 0.9em;
+            }
+            footer {
+                padding: 40px 25px;
+            }
+            .redes-sociales a {
+                font-size: 2em;
+                margin: 0 12px;
             }
         }
 
@@ -409,46 +510,61 @@
                 align-items: flex-start;
                 padding: 15px 20px;
             }
-
             .header-titulo {
                 margin: 5px 0 0 0;
+            }
+            .header-titulo h1 {
+                font-size: 1.2em;
+            }
+            .header-titulo p {
+                font-size: 0.8em;
+            }
+            .seccion-bienvenida {
+                padding: 60px 15px;
+            }
+            .seccion-bienvenida h2 {
+                font-size: 2em;
+            }
+            .seccion-bienvenida p {
+                font-size: 1em;
+            }
+            .loader-text {
+                font-size: 1.5em;
+                letter-spacing: 1px;
             }
             
             /* Panel de Cuadrillas: Ajuste a 2 columnas */
             .panel-cuadrillas {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
+                gap: 10px;
             }
-
-            .seccion-bienvenida {
-                padding: 40px 15px;
+            .seccion-cuadrillas {
+                padding: 30px 15px;
             }
-            
-            .seccion-bienvenida h2 {
+            .seccion-cuadrillas h2 {
                 font-size: 1.8em;
+                text-align: center;
+                border-bottom: none;
+                padding-bottom: 0;
             }
-
             .insignia-cuadrilla {
                 padding: 10px;
+                border-radius: 10px;
             }
-            
             .icono-cuadrilla {
-                width: 50px;
-                height: 50px;
+                width: 55px;
+                height: 55px;
                 font-size: 1.8em;
-                margin-bottom: 5px;
+                margin-bottom: 8px;
             }
-
             .numero-cuadrilla {
-                font-size: 1.3em;
+                font-size: 1.2em;
             }
-
             .nombre-cuadrilla {
-                font-size: 0.8em;
+                font-size: 0.75em;
             }
-
             footer {
-                padding: 25px 15px;
+                padding: 30px 15px;
             }
         }
     </style>
@@ -456,8 +572,7 @@
 <body>
 
     <div id="preloader">
-        <i class="fa-solid fa-handshake loader-icon"></i> 
-        <div class="loader-text">BIENVENIDOS HERMANOS</div>
+        <i class="fa-solid fa-cross loader-icon"></i> <div class="loader-text">BIENVENIDOS HERMANOS</div>
         <div class="loader"></div>
     </div>
 
@@ -474,25 +589,25 @@
 
         <section class="seccion-bienvenida">
             <h2>
-                El Compromiso es la Base de la <span style="font-family: 'Georgia', serif; font-style: italic;">Fe</span>. 
-                <br>Bienvenido, <span>Hermano</span>.
+                El Compromiso es la Base de la <span style="font-family: 'Old Standard TT', serif; font-style: italic;">Fe</span>. 
+                <br>¡Bienvenido, <span>Hermano</span>!
             </h2>
             <p>
-                Este portal ha sido creado para ser la herramienta central de nuestra Hermandad, fortaleciendo la devoción y el espíritu de servicio. Es aquí donde gestionamos su **asistencia** y compromiso con nuestras sagradas actividades.
+                Este portal ha sido creado para fortalecer los lazos de nuestra devoción a la **Virgen Marrón**. Es la herramienta central para gestionar su **asistencia** y compromiso con nuestras sagradas actividades y obras.
             </p>
             <p class="importancia">
-                <i class="fa-solid fa-bell"></i> Su **presencia** en cada actividad es crucial. Manténgase al día, su compromiso es computable para la Hermandad.
+                <i class="fa-solid fa-bell"></i> Su **presencia** en cada encuentro y labor es un acto de fe. Manténgase al día, su compromiso es un reflejo de su devoción y computable para la Hermandad.
             </p>
         </section>
 
         <section class="seccion-cuadrillas">
-            <h2>Panel de Acceso por Cuadrilla</h2>
+            <h2>Nuestras Cuadrillas</h2>
             <div class="panel-cuadrillas" id="panelCuadrillas">
                 </div>
         </section>
 
         <footer>
-            <h3>Unidos en la Fe y el Servicio</h3>
+            <h3>Unidos en la Fe y la Tradición</h3>
             <div class="redes-sociales">
                 <a href="#" target="_blank" title="Facebook Oficial"><i class="fab fa-facebook-f"></i></a>
                 <a href="#" target="_blank" title="Canal de YouTube"><i class="fab fa-youtube"></i></a>
@@ -500,7 +615,7 @@
                 <a href="#" target="_blank" title="Instagram de la Hermandad"><i class="fab fa-instagram"></i></a>
                 <a href="#" target="_blank" title="Sitio Web de la Hermandad"><i class="fa-solid fa-globe"></i></a>
             </div>
-            <p class="creditos">© 2025 Primera Cuadrilla de la Hermandad. Desarrollado con Devoción.</p>
+            <p class="creditos">© 2025 Primera Cuadrilla de la Hermandad. Siempre al Servicio de Nuestra Madre. Desarrollado con Devoción.</p>
         </footer>
     </div>
 
@@ -516,6 +631,7 @@
         const panelCuadrillas = document.getElementById('panelCuadrillas');
         const preloader = document.getElementById('preloader');
         const mainContent = document.getElementById('mainContent');
+        const header = document.querySelector('header');
 
         function crearInsignia(numero, nombre) {
             const insignia = document.createElement('div');
@@ -536,7 +652,7 @@
 
             const popup = document.createElement('div');
             popup.className = 'interaccion-popup';
-            popup.textContent = `Accediendo a la ${nombre} Cuadrilla...`;
+            popup.innerHTML = `<i class="fa-solid fa-hand-holding-heart"></i><span>Accediendo a la ${nombre} Cuadrilla...</span>`;
 
             insignia.appendChild(icono);
             insignia.appendChild(num);
@@ -550,7 +666,7 @@
                     setTimeout(() => {
                         alert(`Redirigiendo a Asistencia: ${nombre} Cuadrilla (ID: ${numero}).`);
                         this.classList.remove('clicked'); 
-                    }, 800); 
+                    }, 1000); // Un poco más de tiempo para el efecto del popup
                 }
             });
 
@@ -572,8 +688,17 @@
                 mainContent.classList.add('loaded'); 
                 setTimeout(() => {
                     preloader.style.display = 'none'; 
-                }, 700);
-            }, 1000); 
+                }, 800); // Ajustado para un fade-out más suave
+            }, 2800); // Un poco más de tiempo para que se vea la animación de escritura
+        });
+
+        // Lógica para la sombra dinámica del header al hacer scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 0) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
         });
 
         document.addEventListener('DOMContentLoaded', renderizarCuadrillas);
