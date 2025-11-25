@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenida | Control de Asistencia y Cuadrillas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ========================================================== */
+        /* Variables y Estilos Base Inspirados en la Hermandad */
+        /* ========================================================== */
+
+        :root {
+            /* Colores más ricos y solemnes */
+            --color-principal: #FDFEFE; /* Blanco suave */
+            --color-secundario: #EAECEE; /* Gris muy claro */
+            --color-acento: #4A235A; /* Púrpura/Morado (dignidad, solemnidad) */
+            --color-acento-claro: #A569BD; /* Púrpura más claro */
+            --color-texto-oscuro: #17202A; /* Azul oscuro casi negro */
+            --color-borde: #D5DBDB; 
+            --sombra-suave: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Merriweather', serif; /* Fuente elegante */
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-secundario);
+            color: var(--color-texto-oscuro);
+            line-height: 1.6;
+        }
+
+        /* ---------------------------------------------------------- */
+        /* PRELOADER (Innovación) */
+        /* ---------------------------------------------------------- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-acento); /* Fondo del color principal de la Hermandad */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader {
+            border: 4px solid var(--color-acento-claro);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ---------------------------------------------------------- */
+        /* Contenedor Principal */
+        /* ---------------------------------------------------------- */
+        .contenedor {
+            width: 95%;
+            max-width: 1300px;
+            margin: 0px auto;
+            background-color: var(--color-principal);
+            box-shadow: var(--sombra-suave);
+            border-radius: 15px;
+            overflow: hidden; /* Para contener la sombra del header */
+            opacity: 0;
+            transition: opacity 1s ease;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .contenedor.loaded {
+            opacity: 1;
+        }
+
+        /* ---------------------------------------------------------- */
+        /* Encabezado y Título (Similar al anterior, pero más limpio) */
+        /* ---------------------------------------------------------- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo-espacio {
+            width: 80px;
+            height: 80px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 3px solid var(--color-acento);
+        }
+
+        .logo-espacio img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .header-titulo {
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .header-titulo h1 {
+            color: var(--color-acento);
+            font-size: 2.5em;
+            margin: 0;
+            font-family: 'Playfair Display', serif; /* Fuente de encabezado */
+        }
+
+        .header-titulo p {
+            margin: 5px 0 0 0;
+            color: var(--color-acento-claro);
+            font-size: 1.1em;
+            font-style: italic;
+        }
+
+        /* ========================================================== */
+        /* 1. Sección de Bienvenida e Importancia */
+        /* ========================================================== */
+        .seccion-bienvenida {
+            padding: 50px 80px;
+            background-color: var(--color-secundario);
+            text-align: center;
+        }
+
+        .seccion-bienvenida h2 {
+            color: var(--color-acento);
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--color-acento-claro);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .seccion-bienvenida p {
+            font-size: 1.2em;
+            max-width: 900px;
+            margin: 20px auto 0;
+            color: var(--color-texto-oscuro);
+        }
+
+        .importancia {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--color-acento-claro);
+            color: white;
+            border-radius: 8px;
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        /* ========================================================== */
+        /* 2. Panel Interactivo de Cuadrillas */
+        /* ========================================================== */
+        .seccion-cuadrillas {
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .seccion-cuadrillas h2 {
+            color: var(--color-texto-oscuro);
+            font-size: 2em;
+            margin-bottom: 40px;
+        }
+
+        .panel-cuadrillas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Hace que sea responsive y en filas de 5 */
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 950px) {
+            .panel-cuadrillas {
+                grid-template-columns: repeat(5, 1fr); /* Fila de 5 en pantallas grandes */
+            }
+        }
+        
+        .insignia-cuadrilla {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: var(--color-principal);
+            border: 1px solid var(--color-borde);
+            transition: all 0.3s ease;
+            position: relative;
+            transform: scale(1); /* Base para la interacción */
+        }
+
+        /* Efecto Hover (Innovación) */
+        .insignia-cuadrilla:hover {
+            background-color: var(--color-acento-claro);
+            color: white;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05) translateY(-5px); /* Se levanta un poco */
+            border-color: var(--color-acento);
+        }
+
+        .insignia-cuadrilla:hover .numero-cuadrilla,
+        .insignia-cuadrilla:hover .nombre-cuadrilla {
+            color: white; /* Cambia el color del texto al pasar el cursor */
+        }
+
+        /* Imagen/Ícono de la Insignia */
+        .icono-cuadrilla {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--color-secundario);
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5em;
+            color: var(--color-acento);
+            border: 2px solid var(--color-acento-claro);
+            transition: all 0.3s ease;
+        }
+        
+        .insignia-cuadrilla:hover .icono-cuadrilla {
+            background-color: white; /* Invierte colores al pasar el cursor */
+            color: var(--color-acento);
+        }
+
+        /* Número y Nombre */
+        .numero-cuadrilla {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--color-acento);
+            margin-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .nombre-cuadrilla {
+            font-size: 0.9em;
+            text-transform: uppercase;
+            color: var(--color-texto-oscuro);
+            transition: color 0.3s ease;
+            text-align: center;
+        }
+
+        /* Texto de Interacción al Hacer Clic (Oculto por defecto) */
+        .interaccion-popup {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(74, 35, 90, 0.95); /* Color de acento con opacidad */
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-align: center;
+            padding: 5px;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            pointer-events: none; /* No interfiere con el clic inicial */
+            transform: scale(0.9);
+        }
+        
+        .insignia-cuadrilla.clicked .interaccion-popup {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto; /* Reactiva puntero para el siguiente clic */
+        }
+
+
+        /* ========================================================== */
+        /* 3. Pie de Página y Contacto (Elegante) */
+        /* ========================================================== */
+        footer {
+            background-color: var(--color-texto-oscuro);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+            border-radius: 0 0 15px 15px;
+        }
+
+        footer h3 {
+            margin-top: 0;
+            color: var(--color-acento-claro);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .redes-sociales a {
+            color: white;
+            font-size: 2em;
+            margin: 0 15px;
+            transition: color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+
+        .redes-sociales a:hover {
+            color: var(--color-acento-claro); /* Iconos de color acento al pasar el cursor */
+            transform: scale(1.2);
+        }
+
+        .creditos {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <div class="contenedor" id="mainContent">
+        <header>
+            <div class="logo-espacio" id="logoCuadrilla">
+                <img src="https://edwinhsvcl14-maker.github.io/asistencias/logo_1cuadrilla.png" alt="Logo de la Hermandad">
+            </div>
+            <div class="header-titulo">
+                <h1>Hermandad de la Primera Cuadrilla</h1>
+                <p>Unidos por la Fe, Comprometidos con el Servicio</p>
+            </div>
+            <div class="logo-espacio" style="visibility: hidden;"></div>
+        </header>
+
+        <section class="seccion-bienvenida">
+            <h2>¡Bienvenidos, Hermanos! 🙏</h2>
+            <p>
+                Este espacio es el punto de encuentro digital para la **Primera Cuadrilla**. Aquí no solo compartimos nuestra fe, sino que administramos con **transparencia y eficiencia** uno de los pilares de nuestra vida en la Hermandad: **La Asistencia**.
+            </p>
+            <p class="importancia">
+                Su participación y asistencia son la manifestación de nuestro compromiso y lealtad. Es **computable** para el desempeño de funciones y es reflejo directo de la **vitalidad** de nuestra Cuadrilla. ¡Asistir es servir!
+            </p>
+        </section>
+
+        <hr style="border: 0; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), var(--color-acento), rgba(0, 0, 0, 0)); margin: 20px 0;">
+
+        <section class="seccion-cuadrillas">
+            <h2>Nuestra Familia de 22 Cuadrillas</h2>
+            <div class="panel-cuadrillas" id="panelCuadrillas">
+                </div>
+        </section>
+
+        <footer>
+            <h3>Contáctenos y Síganos</h3>
+            <div class="redes-sociales">
+                <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="#" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="#" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" target="_blank" title="Twitter/X"><i class="fab fa-twitter"></i></a>
+            </div>
+            <p class="creditos">© 2025 Primera Cuadrilla de la Hermandad. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        const nombresCuadrillas = [
+            "Primera", "Segunda", "Tercera", "Cuarta", "Quinta",
+            "Sexta", "Séptima", "Octava", "Novena", "Décima",
+            "Undécima", "Duodécima", "Decimotercera", "Decimocuarta", "Decimoquinta",
+            "Decimosexta", "Decimoséptima", "Decimoctava", "Decimonovena", "Vigésima",
+            "Vigésima Primera", "Vigésima Segunda"
+        ];
+        
+        const panelCuadrillas = document.getElementById('panelCuadrillas');
+        const preloader = document.getElementById('preloader');
+        const mainContent = document.getElementById('mainContent');
+
+        // Función para crear la insignia de la cuadrilla
+        function crearInsignia(numero, nombre) {
+            const insignia = document.createElement('div');
+            insignia.className = 'insignia-cuadrilla';
+            insignia.setAttribute('data-cuadrilla', numero);
+
+            // Icono/Imagen (Simulado con el número en un círculo)
+            const icono = document.createElement('div');
+            icono.className = 'icono-cuadrilla';
+            icono.innerHTML = `<i class="fa-solid fa-cross"></i>`; // Ícono de Cruz
+
+            const num = document.createElement('div');
+            num.className = 'numero-cuadrilla';
+            num.textContent = numero;
+
+            const nom = document.createElement('div');
+            nom.className = 'nombre-cuadrilla';
+            nom.textContent = nombre;
+
+            // Popup de interacción al hacer clic
+            const popup = document.createElement('div');
+            popup.className = 'interaccion-popup';
+            popup.textContent = `Accediendo a Reporte de ${nombre} Cuadrilla...`;
+
+            insignia.appendChild(icono);
+            insignia.appendChild(num);
+            insignia.appendChild(nom);
+            insignia.appendChild(popup);
+
+            // -------------------------------------------------------------------
+            // Lógica de Interacción (Innovación - Al hacer clic)
+            // -------------------------------------------------------------------
+            insignia.addEventListener('click', function() {
+                // 1. Efecto Visual de "Clickeado"
+                this.classList.toggle('clicked'); 
+
+                // 2. Simulación de Acción (Acceso a la página de asistencia)
+                if (this.classList.contains('clicked')) {
+                    
+                    setTimeout(() => {
+                        // En un sistema real: window.location.href = `/asistencia/${numero}`;
+                        alert(`¡Has accedido al panel de la ${nombre} Cuadrilla! (Simulación de redirección)`);
+                        this.classList.remove('clicked'); // Quita el efecto después de la alerta
+                    }, 500); // Muestra el mensaje por medio segundo antes de la acción simulada
+                } else {
+                    // Si se vuelve a hacer clic antes de la acción (por si acaso)
+                    this.classList.remove('clicked'); 
+                }
+            });
+
+            return insignia;
+        }
+
+        // Llenar el panel de cuadrillas
+        function renderizarCuadrillas() {
+            nombresCuadrillas.forEach((nombre, index) => {
+                const numero = index + 1;
+                const insignia = crearInsignia(numero, nombre);
+                panelCuadrillas.appendChild(insignia);
+            });
+        }
+
+        // -------------------------------------------------------------------
+        // Lógica del Preloader
+        // -------------------------------------------------------------------
+        window.addEventListener('load', () => {
+            // Simula un tiempo mínimo de carga para que el efecto se vea
+            setTimeout(() => {
+                preloader.style.opacity = '0'; // Desvanece el preloader
+                mainContent.classList.add('loaded'); // Muestra el contenido principal
+                setTimeout(() => {
+                    preloader.style.display = 'none'; // Quita el preloader del flujo
+                }, 500);
+            }, 1000); // Espera 1 segundo
+        });
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', renderizarCuadrillas);
+    </script>
+
+</body>
+</html>
