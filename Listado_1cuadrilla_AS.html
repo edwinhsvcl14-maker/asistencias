@@ -135,7 +135,7 @@
         }
 
         /* ---------------------------------------------------------- */
-        /* Estilos de la Tabla (añadida columna Detalle) */
+        /* Estilos de la Tabla */
         /* ---------------------------------------------------------- */
 
         .tabla-responsive {
@@ -301,12 +301,13 @@
 
         .modal-bar-chart-container {
             width: 100%;
-            height: 100px; /* Altura fija para la barra de asistencia */
+            height: 100px; 
+            max-width: 350px; /* Limitar el ancho de la barra para que no se extienda demasiado */
+            margin: 0 auto;
         }
         
         /* Media Queries (sin cambios relevantes) */
         @media (max-width: 768px) {
-             /* ... */
             .modal-content {
                 width: 95%;
                 padding: 20px;
@@ -366,7 +367,8 @@
                         <th>Asambleas</th>
                         <th>Jornadas</th>
                         <th>Total Asistencias</th>
-                        <th>Acciones</th> </tr>
+                        <th>Acciones</th> 
+                    </tr>
                 </thead>
                 <tbody>
                     </tbody>
@@ -434,9 +436,6 @@
                 }
             },
             // ************ SIMULAMOS EL RESTO DE LOS 74 HERMANOS ************
-            // Para mantener el ejemplo funcional, el resto de los hermanos tendrán los mismos eventos y asistencias que el Hno. 2
-            // En un caso real, aquí irían 72 objetos más con IDs únicos.
-            // Para la simulación, generamos 72 más basados en el hermano 2.
             ...Array.from({ length: 72 }, (_, i) => ({ 
                 id: i + 3, 
                 nombre: `HERMANO SIMULADO ${i + 3}`, 
@@ -455,7 +454,7 @@
 
         let chartPromedioGeneral;
         let chartPromedioMisas;
-        let chartAsistenciaIndividual;
+        let chartAsistenciaIndividual; // Variable para controlar el gráfico interno
 
         // Colores y variables del CSS
         const colorTextoOscuro = getComputedStyle(document.documentElement).getPropertyValue('--color-texto-oscuro').trim();
@@ -463,11 +462,11 @@
         const colorExito = getComputedStyle(document.documentElement).getPropertyValue('--color-exito').trim();
         const colorFondoGrafico = '#E0E0E0'; 
 
-        // ** Plugin para mostrar texto en el centro del gráfico (Chart.js)**
-        const centerTextPlugin = {
-            id: 'centerText',
+        // ** Plugin 1: Texto en el centro del Doughnut (para Dashboard)**
+        const centerTextDoughnutPlugin = {
+            id: 'centerTextDoughnut',
             beforeDraw: function(chart) {
-                if (chart.config.options.plugins.centerText) {
+                if (chart.config.options.plugins.centerTextDoughnut) {
                     const {width, height, ctx} = chart;
                     ctx.restore();
                     
@@ -487,7 +486,45 @@
                 }
             }
         };
-        Chart.register(centerTextPlugin);
+        
+        // ** Plugin 2: Texto flotante en la barra horizontal (para Modal)**
+        const centerTextBarPlugin = {
+             id: 'centerTextBar',
+             beforeDraw: function(chart) {
+                if (chart.canvas.id === 'chartAsistenciaIndividual') {
+                    const {width, height, ctx} = chart;
+                    ctx.restore();
+                    
+                    const meta = chart.getDatasetMeta(0); // Obtener metadata del primer dataset
+                    const barElement = meta.data[0]; 
+                    
+                    // Si el elemento de la barra no existe, salir
+                    if (!barElement) return;
+
+                    // Datos de asistencia
+                    const asistidos = chart.config.options.plugins.centerTextBar.asistidos;
+                    const totales = chart.config.options.plugins.centerTextBar.totales;
+                    const porcentaje = chart.data.datasets[0].data[0];
+
+                    const text = `${porcentaje.toFixed(1)}% (${asistidos}/${totales})`;
+                    
+                    ctx.font = `bold 1em 'Georgia', serif`;
+                    ctx.textBaseline = "middle";
+                    ctx.textAlign = "left"; 
+
+                    // Posición: Cerca del borde izquierdo de la barra
+                    const textX = barElement.x > 10 ? 10 : barElement.x; 
+                    const textY = height / 2;
+
+                    ctx.fillStyle = colorTextoOscuro; 
+                    ctx.fillText(text, textX, textY);
+                    ctx.save();
+                }
+            }
+        };
+
+        // Registrar ambos plugins
+        Chart.register(centerTextDoughnutPlugin, centerTextBarPlugin);
 
         // --- Funciones del Dashboard Global ---
 
@@ -496,8 +533,6 @@
             let totalMisasAsistidas = 0;
             let sumaTotalAsistenciasEventosIndividuales = 0; 
             
-            // Calculamos el número de sub-eventos totales que definen la base 100%
-            // Usamos el primer hermano como plantilla, asumiendo que todos tienen los mismos sub-eventos
             const eventosPlantilla = datosAsistencias[0].eventos;
             const numeroTotalSubEventos = eventosPlantilla.retiro.length + eventosPlantilla.asamblea.length + eventosPlantilla.jornadas.length;
 
@@ -514,23 +549,20 @@
                 
                 sumaTotalAsistenciasEventosIndividuales += asistenciasPersona;
                 
-                // Calculamos asistencias a 'Misas de Retiro' (Asistió al menos a 1/2)
                 const asistioMisa = persona.eventos.retiro.some(e => e.asistio);
                 if (asistioMisa) totalMisasAsistidas++;
             });
 
-            // Calculo del promedio general basado en sub-eventos
             const totalAsistenciasPosiblesEnTodosLosEventos = totalHermanos * numeroTotalSubEventos;
             const promedioGeneralPorcentaje = (sumaTotalAsistenciasEventosIndividuales / totalAsistenciasPosiblesEnTodosLosEventos) * 100;
 
-            // Promedio de participación en Misas (Porcentaje de hermanos que asistieron a alguna Misa)
             const promedioMisasPorcentaje = (totalMisasAsistidas / totalHermanos) * 100;
 
             return {
                 totalHermanos,
                 promedioGeneral: parseFloat(promedioGeneralPorcentaje.toFixed(1)),
                 promedioMisas: parseFloat(promedioMisasPorcentaje.toFixed(1)),
-                numeroTotalSubEventos // Para el cálculo interno
+                numeroTotalSubEventos
             };
         }
 
@@ -551,7 +583,7 @@
                 }]},
                 options: {
                     responsive: true, maintainAspectRatio: false, cutout: '75%', 
-                    plugins: { legend: { display: false }, tooltip: { enabled: true }, centerText: true },
+                    plugins: { legend: { display: false }, tooltip: { enabled: true }, centerTextDoughnut: true },
                     animation: { animateRotate: true, animateScale: true }
                 }
             });
@@ -568,7 +600,7 @@
                 }]},
                 options: {
                     responsive: true, maintainAspectRatio: false, cutout: '75%',
-                    plugins: { legend: { display: false }, tooltip: { enabled: true }, centerText: true },
+                    plugins: { legend: { display: false }, tooltip: { enabled: true }, centerTextDoughnut: true },
                     animation: { animateRotate: true, animateScale: true }
                 }
             });
@@ -602,22 +634,25 @@
                 celdaNombre.style.textAlign = 'left'; 
                 fila.appendChild(celdaNombre);
 
-                // Celda Resumen Misas
+                // Columna principal - Asistencia a Misa (si asistió a al menos una)
                 let celdaMisa = document.createElement('td');
-                celdaMisa.textContent = persona.eventos.retiro.some(e => e.asistio) ? '✅' : '❌';
-                celdaMisa.classList.add(persona.eventos.retiro.some(e => e.asistio) ? 'asistio' : 'falto');
+                const asistioMisa = persona.eventos.retiro.some(e => e.asistio);
+                celdaMisa.textContent = asistioMisa ? '✅' : '❌';
+                celdaMisa.classList.add(asistioMisa ? 'asistio' : 'falto');
                 fila.appendChild(celdaMisa);
                 
-                // Celda Resumen Asambleas
+                // Columna principal - Asistencia a Asamblea (si asistió a al menos una)
                 let celdaAsamblea = document.createElement('td');
-                celdaAsamblea.textContent = persona.eventos.asamblea.some(e => e.asistio) ? '✅' : '❌';
-                celdaAsamblea.classList.add(persona.eventos.asamblea.some(e => e.asistio) ? 'asistio' : 'falto');
+                const asistioAsamblea = persona.eventos.asamblea.some(e => e.asistio);
+                celdaAsamblea.textContent = asistioAsamblea ? '✅' : '❌';
+                celdaAsamblea.classList.add(asistioAsamblea ? 'asistio' : 'falto');
                 fila.appendChild(celdaAsamblea);
 
-                // Celda Resumen Jornadas
+                // Columna principal - Asistencia a Jornadas (si asistió a al menos una)
                 let celdaJornada = document.createElement('td');
-                celdaJornada.textContent = persona.eventos.jornadas.some(e => e.asistio) ? '✅' : '❌';
-                celdaJornada.classList.add(persona.eventos.jornadas.some(e => e.asistio) ? 'asistio' : 'falto');
+                const asistioJornada = persona.eventos.jornadas.some(e => e.asistio);
+                celdaJornada.textContent = asistioJornada ? '✅' : '❌';
+                celdaJornada.classList.add(asistioJornada ? 'asistio' : 'falto');
                 fila.appendChild(celdaJornada);
 
 
@@ -626,7 +661,7 @@
                 celdaTotal.style.fontWeight = 'bold';
                 fila.appendChild(celdaTotal);
                 
-                // Nueva Celda: Ver Detalle
+                // Columna: Ver Detalle
                 const celdaAccion = document.createElement('td');
                 const btnDetalle = document.createElement('button');
                 btnDetalle.textContent = 'Ver Detalle';
@@ -651,11 +686,12 @@
             
             // Cargar tabla interna
             Object.keys(hermano.eventos).forEach(tipo => {
+                const tipoDisplay = tipo.charAt(0).toUpperCase() + tipo.slice(1);
                 hermano.eventos[tipo].forEach(evento => {
                     const fila = document.createElement('tr');
                     
                     const celdaTipo = document.createElement('td');
-                    celdaTipo.textContent = tipo.charAt(0).toUpperCase() + tipo.slice(1);
+                    celdaTipo.textContent = tipoDisplay;
                     
                     const celdaNombre = document.createElement('td');
                     celdaNombre.textContent = evento.nombre;
@@ -674,19 +710,26 @@
                 });
             });
             
-            // Renderizar gráfico interno (Barra de Progreso Horizontal)
-            renderizarChartIndividual(asistidos, totales);
-
-            // Mostrar Modal con animación
+            // Mostrar Modal *antes* de renderizar el gráfico
             detalleModal.style.display = 'flex';
             // Pequeño delay para forzar la transición CSS (fade-in)
-            setTimeout(() => detalleModal.classList.add('show'), 10); 
+            setTimeout(() => {
+                detalleModal.classList.add('show');
+                // Renderizar gráfico *después* de que el contenedor es visible y tiene dimensiones
+                renderizarChartIndividual(asistidos, totales);
+            }, 50); 
         }
 
         function cerrarModal() {
             detalleModal.classList.remove('show');
             // Ocultar completamente después de la transición
             setTimeout(() => detalleModal.style.display = 'none', 300); 
+            
+            // Destruir el gráfico interno al cerrar el modal
+            if (chartAsistenciaIndividual) {
+                chartAsistenciaIndividual.destroy();
+                chartAsistenciaIndividual = null;
+            }
         }
         
         // Función para el gráfico de barra horizontal (interno del modal)
@@ -694,33 +737,38 @@
             const porcentaje = (asistidos / totales) * 100;
             const ctxIndividual = document.getElementById('chartAsistenciaIndividual').getContext('2d');
             
-            if (chartAsistenciaIndividual) chartAsistenciaIndividual.destroy();
+            // Aseguramos que el gráfico anterior se destruya
+            if (chartAsistenciaIndividual) {
+                chartAsistenciaIndividual.destroy();
+            }
 
             chartAsistenciaIndividual = new Chart(ctxIndividual, {
                 type: 'bar',
                 data: {
                     labels: ['Asistencia'],
-                    datasets: [{
-                        label: 'Porcentaje de Asistencia',
-                        data: [porcentaje.toFixed(1)],
-                        backgroundColor: colorExito,
-                        borderColor: colorExito,
-                        borderWidth: 1,
-                        barPercentage: 1.0,
-                        categoryPercentage: 1.0
-                    },
-                    {
-                        label: 'Faltas',
-                        data: [(100 - porcentaje).toFixed(1)],
-                        backgroundColor: colorFondoGrafico,
-                        borderColor: colorFondoGrafico,
-                        borderWidth: 1,
-                        barPercentage: 1.0,
-                        categoryPercentage: 1.0
-                    }]
+                    datasets: [
+                        // Dataset para la porción asistida
+                        {
+                            label: 'Asistió',
+                            data: [porcentaje],
+                            backgroundColor: colorExito,
+                            borderWidth: 0,
+                            barPercentage: 1.0,
+                            categoryPercentage: 1.0,
+                        },
+                        // Dataset para la porción faltante
+                        {
+                            label: 'Faltó',
+                            data: [100 - porcentaje],
+                            backgroundColor: colorFondoGrafico,
+                            borderWidth: 0,
+                            barPercentage: 1.0,
+                            categoryPercentage: 1.0,
+                        }
+                    ]
                 },
                 options: {
-                    indexAxis: 'y', // Hace la barra horizontal
+                    indexAxis: 'y', 
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
@@ -728,48 +776,26 @@
                             stacked: true,
                             max: 100,
                             min: 0,
-                            display: false // Oculta los ejes X
+                            display: false 
                         },
                         y: {
                             stacked: true,
-                            display: false // Oculta los ejes Y
+                            display: false 
                         }
                     },
                     plugins: {
                         legend: { display: false },
                         tooltip: { enabled: true },
-                        // Plugin para mostrar texto de porcentaje en la barra
-                        centerText: { // Reutilizamos el plugin, pero para la barra horizontal
-                             percentage: `${porcentaje.toFixed(1)}% (${asistidos}/${totales})`
+                        centerTextBar: { // Configuramos el plugin para el texto
+                             asistidos: asistidos,
+                             totales: totales
                         }
                     },
                     animation: {
                         duration: 1000,
                         easing: 'easeInOutQuad'
                     }
-                },
-                plugins: [{
-                    // Sobreescribe centerText para usarlo en la barra horizontal
-                    id: 'centerTextBar',
-                    beforeDraw: function(chart) {
-                        if (chart.canvas.id === 'chartAsistenciaIndividual') {
-                            const {width, height, ctx} = chart;
-                            ctx.restore();
-                            
-                            const text = `${porcentaje.toFixed(1)}% (${asistidos}/${totales})`;
-                            
-                            ctx.font = `bold 1em 'Georgia', serif`;
-                            ctx.textBaseline = "middle";
-
-                            const textX = 10; // Posición fija a la izquierda
-                            const textY = height / 2;
-
-                            ctx.fillStyle = colorTextoOscuro; 
-                            ctx.fillText(text, textX, textY);
-                            ctx.save();
-                        }
-                    }
-                }]
+                }
             });
         }
 
