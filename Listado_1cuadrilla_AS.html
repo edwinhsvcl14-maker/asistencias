@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Asistencia - Primera Cuadrillaa</title>
+    <title>Control de Asistencia - Primera Cuadrilla</title>
     <style>
         /* ========================================================== */
         /* Estilos CSS Integrados para Diseño Profesional */
@@ -15,6 +15,8 @@
             --color-acento: #A0522D; /* Sienna (Marrón medio) */
             --color-texto-oscuro: #3E2723; /* Marrón oscuro para texto */
             --color-borde: #D2B48C; /* Tan (Marrón claro) */
+            --color-exito: #38761D; /* Verde oscuro */
+            --color-peligro: #CC0000; /* Rojo oscuro */
         }
 
         body {
@@ -40,21 +42,21 @@
         /* ---------------------------------------------------------- */
         header {
             display: flex;
-            justify-content: space-between; /* Distribuye el espacio entre los elementos */
-            align-items: center; /* Centra verticalmente */
+            justify-content: space-between; 
+            align-items: center; 
             padding-bottom: 20px;
             border-bottom: 3px solid var(--color-acento);
             margin-bottom: 30px;
         }
 
         .header-titulo {
-            flex-grow: 1; /* Permite que el título ocupe el espacio restante */
+            flex-grow: 1; 
             text-align: center;
         }
 
         .header-titulo h1 {
             color: var(--color-acento);
-            font-size: 2.2em; /* Ligeramente más pequeño para hacer espacio */
+            font-size: 2.2em; 
             margin: 0;
         }
         
@@ -63,19 +65,72 @@
         }
 
         .logo-espacio {
-            width: 100px; /* Tamaño fijo para el logo */
+            width: 100px; 
             height: 100px;
             border: 2px dashed var(--color-borde);
-            border-radius: 50%; /* Forma circular, puedes cambiar a '0' para cuadrado */
+            border-radius: 50%; 
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 0.8em;
             color: var(--color-acento);
-            flex-shrink: 0; /* Evita que el logo se encoja */
+            flex-shrink: 0; 
             padding: 5px;
             box-sizing: border-box;
-            background-color: white; /* Fondo blanco para el logo */
+            background-color: white; 
+        }
+        
+        /* ---------------------------------------------------------- */
+        /* Estilos del Dashboard (Nuevo) */
+        /* ---------------------------------------------------------- */
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: var(--color-secundario);
+            border: 1px solid var(--color-borde);
+        }
+
+        .tarjeta-resumen {
+            flex: 1 1 calc(33.33% - 20px); /* 3 tarjetas por fila en escritorio */
+            min-width: 250px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            border-left: 5px solid var(--color-acento);
+        }
+
+        .tarjeta-resumen h3 {
+            margin-top: 0;
+            color: var(--color-acento);
+            font-size: 1.1em;
+            text-transform: uppercase;
+        }
+
+        .tarjeta-resumen .valor {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--color-texto-oscuro);
+        }
+
+        .barra-progreso-contenedor {
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .barra-progreso {
+            height: 100%;
+            background-color: var(--color-exito);
+            width: 0%; /* Se actualizará con JS */
+            transition: width 1s ease-out;
         }
 
         /* ---------------------------------------------------------- */
@@ -130,8 +185,8 @@
         }
 
         /* Columna de Asistencia - Colores Condicionales */
-        .asistio { color: #38761D; font-weight: bold; } 
-        .falto { color: #CC0000; font-weight: bold; } 
+        .asistio { color: var(--color-exito); font-weight: bold; } 
+        .falto { color: var(--color-peligro); font-weight: bold; } 
 
         /* ---------------------------------------------------------- */
         /* Botón de Descarga */
@@ -178,6 +233,31 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* ---------------------------------------------------------- */
+        /* Media Queries para Responsividad */
+        /* ---------------------------------------------------------- */
+        @media (max-width: 768px) {
+            .dashboard {
+                flex-direction: column;
+            }
+            .tarjeta-resumen {
+                flex: 1 1 100%; /* Una tarjeta por fila en móviles */
+                min-width: auto;
+            }
+            .header-titulo h1 {
+                font-size: 1.8em;
+            }
+            header {
+                flex-direction: column;
+            }
+            .logo-espacio {
+                margin-bottom: 10px;
+            }
+            .header-titulo {
+                text-align: center;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -192,15 +272,37 @@
                 <p>Listado detallado de participación en actividades.</p>
             </div>
             <div class="logo-espacio" style="visibility: hidden;">
-
-            </div> 
+                </div> 
         </header>
 
+        <h2>📊 Resumen de Participación</h2>
+        <section class="dashboard">
+            <div class="tarjeta-resumen">
+                <h3>Total de Hermanos</h3>
+                <div class="valor" id="totalHermanos">0</div>
+                <p>Miembros activos en la lista.</p>
+            </div>
+
+            <div class="tarjeta-resumen">
+                <h3>Promedio de Asistencia</h3>
+                <div class="valor" id="promedioGeneral">0%</div>
+                <div class="barra-progreso-contenedor">
+                    <div class="barra-progreso" id="barraPromedio" style="background-color: var(--color-exito);"></div>
+                </div>
+            </div>
+
+            <div class="tarjeta-resumen">
+                <h3>Participación en Misas</h3>
+                <div class="valor" id="totalMisas">0 / 0</div>
+                <p>Porcentaje de Hermanos que asistieron.</p>
+            </div>
+        </section>
+        <h2>📋 Detalle de Asistencias</h2>
         <div class="tabla-responsive">
             <table id="tablaAsistencias">
                 <thead>
                     <tr>
-                        <th>Nombre y Apellido</th>
+                        <th style="text-align: left;">Nombre y Apellido</th>
                         <th>Misas de Retiro</th>
                         <th>Asambleas</th>
                         <th>Jornadas</th>
@@ -295,13 +397,63 @@
     { id: 74, nombre: "YLLESCAS PEDRAZA CRYTIAN", retiro: true, asamblea: true, jornadas: false }
 ];
 
-
-
-
         const tablaBody = document.querySelector('#tablaAsistencias tbody');
         const btnDescargar = document.getElementById('btnDescargarPDF');
 
-        // Función para renderizar la tabla
+        // Función para calcular las estadísticas
+        function calcularEstadisticas() {
+            const totalHermanos = datosAsistencias.length;
+            let totalMisas = 0;
+            let totalAsambleas = 0;
+            let totalJornadas = 0;
+            let sumaTotalAsistencias = 0;
+            const totalEventos = 3; // Misas, Asambleas, Jornadas
+
+            datosAsistencias.forEach(persona => {
+                const asistenciasPersona = (persona.retiro ? 1 : 0) + (persona.asamblea ? 1 : 0) + (persona.jornadas ? 1 : 0);
+                sumaTotalAsistencias += asistenciasPersona;
+                if (persona.retiro) totalMisas++;
+                if (persona.asamblea) totalAsambleas++;
+                if (persona.jornadas) totalJornadas++;
+            });
+
+            const totalEventosPosibles = totalHermanos * totalEventos;
+            const promedioGeneralPorcentaje = (sumaTotalAsistencias / totalEventosPosibles) * 100;
+            const promedioMisasPorcentaje = (totalMisas / totalHermanos) * 100;
+
+            return {
+                totalHermanos,
+                promedioGeneral: promedioGeneralPorcentaje.toFixed(1),
+                totalMisas,
+                promedioMisas: promedioMisasPorcentaje.toFixed(1),
+                totalEventos
+            };
+        }
+
+        // Función para renderizar el Dashboard
+        function renderizarDashboard() {
+            const stats = calcularEstadisticas();
+
+            document.getElementById('totalHermanos').textContent = stats.totalHermanos;
+
+            // Promedio General
+            document.getElementById('promedioGeneral').textContent = `${stats.promedioGeneral}%`;
+            document.getElementById('barraPromedio').style.width = `${stats.promedioGeneral}%`;
+            
+            // Participación en Misas
+            document.getElementById('totalMisas').textContent = `${stats.totalMisas} / ${stats.totalHermanos}`;
+            const tarjetaMisas = document.querySelector('.tarjeta-resumen:nth-child(3)');
+            const barraProgresoMisas = document.createElement('div');
+            barraProgresoMisas.className = 'barra-progreso-contenedor';
+            barraProgresoMisas.innerHTML = `<div class="barra-progreso" style="width: ${stats.promedioMisas}%; background-color: var(--color-acento);"></div>`;
+            
+            // Asegurarse de que solo haya una barra de progreso para Misas
+            if(tarjetaMisas.querySelectorAll('.barra-progreso-contenedor').length === 0) {
+                 tarjetaMisas.appendChild(barraProgresoMisas);
+            }
+        }
+
+        // Función para renderizar la tabla de detalle
         function renderizarTabla() {
             tablaBody.innerHTML = ''; 
 
@@ -338,7 +490,7 @@
 
         // Función para simular la descarga de PDF
         function descargarPDF() {
-            alert("Simulando la generación y descarga del PDF. En un sistema real, el archivo se descargaría ahora.");
+            alert("Simulando la generación y descarga del reporte detallado. En un sistema real, el archivo se descargaría ahora.");
             
             const contenido = "--- Reporte Detallado de Asistencias - Primera Cuadrilla ---\n\n" + 
                               "Nombre | Retiro | Asamblea | Jornadas | Total\n" +
@@ -359,7 +511,10 @@
         }
 
         // Event Listeners
-        document.addEventListener('DOMContentLoaded', renderizarTabla);
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarDashboard();
+            renderizarTabla();
+        });
         btnDescargar.addEventListener('click', descargarPDF);
     </script>
 
