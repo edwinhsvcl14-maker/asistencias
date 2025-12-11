@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control de Asistencia - Primera Cuadrilla</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* ========================================================== */
         /* Estilos CSS Integrados para Diseño Profesional */
@@ -97,7 +98,7 @@
 
         .tarjeta-resumen {
             flex: 1 1 calc(33.33% - 20px); 
-            min-width: 250px; /* Asegura que no sea demasiado pequeña en pantallas medianas */
+            min-width: 250px; 
             background-color: white;
             padding: 20px;
             border-radius: 8px;
@@ -117,19 +118,19 @@
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 150px; /* Tamaño máximo del gráfico circular */
+            max-width: 150px; 
             height: 150px;
-            margin: 10px auto 0 auto; /* Centrar y espaciar */
+            margin: 10px auto 0 auto; 
         }
         .chart-container canvas {
-            display: block; /* Elimina espacio extra debajo del canvas */
+            display: block; 
         }
 
         .tarjeta-resumen .valor {
             font-size: 2.5em;
             font-weight: bold;
             color: var(--color-texto-oscuro);
-            margin-top: 15px; /* Espacio para el número total de hermanos */
+            margin-top: 15px; 
         }
         .tarjeta-resumen .descripcion {
             font-size: 0.9em;
@@ -394,40 +395,64 @@
         const tablaBody = document.querySelector('#tablaAsistencias tbody');
         const btnDescargar = document.getElementById('btnDescargarPDF');
 
-        // Referencias a los gráficos
         let chartPromedioGeneral;
         let chartPromedioMisas;
+
+        // Definimos el color del texto oscuro (para el centro del gráfico)
+        const colorTextoOscuro = getComputedStyle(document.documentElement).getPropertyValue('--color-texto-oscuro').trim();
+
+        // ** Plugin para mostrar texto en el centro del gráfico (Chart.js)**
+        const centerTextPlugin = {
+            id: 'centerText',
+            beforeDraw: function(chart) {
+                if (chart.config.options.plugins.centerText) {
+                    const {width, height, ctx} = chart;
+                    ctx.restore();
+                    
+                    // Obtener el porcentaje a mostrar
+                    const percentage = chart.data.datasets[0].data[0].toFixed(1);
+                    
+                    const fontSize = (height / 120).toFixed(2);
+                    ctx.font = `bold ${fontSize}em 'Georgia', serif`;
+                    ctx.textBaseline = "middle";
+
+                    const text = `${percentage}%`;
+                    const textX = Math.round((width - ctx.measureText(text).width) / 2);
+                    const textY = height / 2;
+
+                    ctx.fillStyle = colorTextoOscuro; 
+                    ctx.fillText(text, textX, textY);
+                    ctx.save();
+                }
+            }
+        };
+        // Registrar el plugin globalmente
+        Chart.register(centerTextPlugin);
 
         // Función para calcular las estadísticas
         function calcularEstadisticas() {
             const totalHermanos = datosAsistencias.length;
             let totalMisasAsistidas = 0;
-            let totalAsambleasAsistidas = 0;
-            let totalJornadasAsistidas = 0;
-            let sumaTotalAsistenciasEventosIndividuales = 0; // Suma de asistencias de cada hermano a CUALQUIER evento
-            const numeroTiposDeEventos = 3; // Misas de Retiro, Asambleas, Jornadas
+            let sumaTotalAsistenciasEventosIndividuales = 0; 
+            const numeroTiposDeEventos = 3; 
 
             datosAsistencias.forEach(persona => {
                 const asistenciasPersona = (persona.retiro ? 1 : 0) + (persona.asamblea ? 1 : 0) + (persona.jornadas ? 1 : 0);
                 sumaTotalAsistenciasEventosIndividuales += asistenciasPersona;
                 if (persona.retiro) totalMisasAsistidas++;
-                if (persona.asamblea) totalAsambleasAsistidas++;
-                if (persona.jornadas) totalJornadasAsistidas++;
             });
 
-            // Calculo del promedio general
-            // Suma de asistencias individuales (ej. si uno asistió a 2/3 y otro a 1/3, suma 3)
-            // Dividido entre el total de eventos * número de hermanos (3 * 74)
+            // Promedio general (66.7% en este caso de ejemplo)
             const totalAsistenciasPosiblesEnTodosLosEventos = totalHermanos * numeroTiposDeEventos;
             const promedioGeneralPorcentaje = (sumaTotalAsistenciasEventosIndividuales / totalAsistenciasPosiblesEnTodosLosEventos) * 100;
 
-            // Promedio de participación en Misas (Cuántos hermanos asistieron a las Misas de Retiro)
+            // Promedio de participación en Misas (100% en este caso de ejemplo)
             const promedioMisasPorcentaje = (totalMisasAsistidas / totalHermanos) * 100;
 
             return {
                 totalHermanos,
-                promedioGeneral: parseFloat(promedioGeneralPorcentaje.toFixed(1)), // Convertir a número para Chart.js
-                promedioMisas: parseFloat(promedioMisasPorcentaje.toFixed(1)), // Convertir a número para Chart.js
+                promedioGeneral: parseFloat(promedioGeneralPorcentaje.toFixed(1)),
+                promedioMisas: parseFloat(promedioMisasPorcentaje.toFixed(1)),
             };
         }
 
@@ -435,23 +460,19 @@
         function renderizarDashboard() {
             const stats = calcularEstadisticas();
             
-            // Colores del CSS para Chart.js
             const colorAcento = getComputedStyle(document.documentElement).getPropertyValue('--color-acento').trim();
             const colorExito = getComputedStyle(document.documentElement).getPropertyValue('--color-exito').trim();
-            const colorFondoGrafico = '#E0E0E0'; // Un gris claro para el fondo de la barra de progreso
+            const colorFondoGrafico = '#E0E0E0'; 
 
             document.getElementById('totalHermanos').textContent = stats.totalHermanos;
 
-            // Destruir gráficos existentes si ya fueron inicializados para evitar duplicados
-            if (chartPromedioGeneral) chartPromedioGeneral.destroy();
-            if (chartPromedioMisas) chartPromedioMisas.destroy();
-
-            // Gráfico de Promedio General
+            // 1. Gráfico de Promedio General
             const ctxGeneral = document.getElementById('chartPromedioGeneral').getContext('2d');
+            
+            // Creamos o actualizamos el gráfico
             chartPromedioGeneral = new Chart(ctxGeneral, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Asistencias', 'Faltas'],
                     datasets: [{
                         data: [stats.promedioGeneral, 100 - stats.promedioGeneral],
                         backgroundColor: [
@@ -463,71 +484,31 @@
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false, // Importante para ajustar el tamaño del contenedor
-                    cutout: '75%', // Ancho del anillo
+                    maintainAspectRatio: false,
+                    cutout: '75%', 
                     plugins: {
-                        legend: {
-                            display: false // Oculta la leyenda
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed !== null) {
-                                        label += context.parsed + '%';
-                                    }
-                                    return label;
-                                }
-                            }
-                        }
+                        legend: { display: false },
+                        tooltip: { enabled: true },
+                        centerText: true // Habilitamos el plugin para este gráfico
                     },
-                    elements: {
-                        arc: {
-                            borderWidth: 0 // Quita el borde entre segmentos
-                        }
-                    },
-                    // Plugin para mostrar texto en el centro del donut
-                    // Ver https://www.chartjs.org/docs/latest/charts/doughnut.html#pie-chart-with-custom-text
-                    // Se puede crear un plugin custom para esto
-                    // Por simplicidad, por ahora solo se mostrará el tooltip.
-                },
-                 plugins: [{
-                    // Plugin para mostrar el porcentaje en el centro del Doughnut
-                    // Requiere un poco más de configuración para que se vea bien
-                    // Lo dejamos como un valor a mostrar en el tooltip por ahora.
-                    // O se puede agregar un div flotante sobre el canvas.
-                    id: 'centerText',
-                    beforeDraw: function(chart) {
-                        if (chart.canvas.id === 'chartPromedioGeneral' && chart.data.datasets.length > 0) {
-                            const {width, height, ctx} = chart;
-                            ctx.restore();
-                            const fontSize = (height / 114).toFixed(2);
-                            ctx.font = `bold ${fontSize}em ${getComputedStyle(document.body).fontFamily}`;
-                            ctx.textBaseline = "middle";
-                            const text = `${stats.promedioGeneral}%`;
-                            const textX = Math.round((width - ctx.measureText(text).width) / 2);
-                            const textY = height / 2;
-                            ctx.fillStyle = colorTextoOscuro; // Usar el color de texto del CSS
-                            ctx.fillText(text, textX, textY);
-                            ctx.save();
-                        }
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true
                     }
-                }]
+                }
             });
 
-            // Gráfico de Participación en Misas
+            // 2. Gráfico de Participación en Misas
             const ctxMisas = document.getElementById('chartPromedioMisas').getContext('2d');
+            
+            // Creamos o actualizamos el gráfico
             chartPromedioMisas = new Chart(ctxMisas, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Misas', 'No Misas'],
                     datasets: [{
                         data: [stats.promedioMisas, 100 - stats.promedioMisas],
                         backgroundColor: [
-                            colorAcento, // Usar el color de acento para este gráfico
+                            colorAcento, 
                             colorFondoGrafico
                         ],
                         hoverOffset: 4
@@ -538,50 +519,18 @@
                     maintainAspectRatio: false,
                     cutout: '75%',
                     plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed !== null) {
-                                        label += context.parsed + '%';
-                                    }
-                                    return label;
-                                }
-                            }
-                        }
+                        legend: { display: false },
+                        tooltip: { enabled: true },
+                        centerText: true // Habilitamos el plugin para este gráfico
                     },
-                    elements: {
-                        arc: {
-                            borderWidth: 0
-                        }
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true
                     }
-                },
-                plugins: [{
-                    id: 'centerText',
-                    beforeDraw: function(chart) {
-                        if (chart.canvas.id === 'chartPromedioMisas' && chart.data.datasets.length > 0) {
-                            const {width, height, ctx} = chart;
-                            ctx.restore();
-                            const fontSize = (height / 114).toFixed(2);
-                            ctx.font = `bold ${fontSize}em ${getComputedStyle(document.body).fontFamily}`;
-                            ctx.textBaseline = "middle";
-                            const text = `${stats.promedioMisas}%`;
-                            const textX = Math.round((width - ctx.measureText(text).width) / 2);
-                            const textY = height / 2;
-                            ctx.fillStyle = colorTextoOscuro;
-                            ctx.fillText(text, textX, textY);
-                            ctx.save();
-                        }
-                    }
-                }]
+                }
             });
         }
+
 
         // Función para renderizar la tabla de detalle (sin cambios)
         function renderizarTabla() {
@@ -613,3 +562,40 @@
                 celdaTotal.textContent = totalAsistencias;
                 celdaTotal.style.fontWeight = 'bold';
                 fila.appendChild(celdaTotal);
+
+                tablaBody.appendChild(fila);
+            });
+        }
+
+        // Función para simular la descarga de PDF (sin cambios)
+        function descargarPDF() {
+            alert("Simulando la generación y descarga del reporte detallado. En un sistema real, el archivo se descargaría ahora.");
+            
+            const contenido = "--- Reporte Detallado de Asistencias - Primera Cuadrilla ---\n\n" + 
+                              "Nombre | Retiro | Asamblea | Jornadas | Total\n" +
+                              "---------------------------------------------------\n" +
+                              datosAsistencias.map(p => 
+                                  `${p.nombre} | ${p.retiro ? 'Si' : 'No'} | ${p.asamblea ? 'Si' : 'No'} | ${p.jornadas ? 'Si' : 'No'} | ${(p.retiro + p.asamblea + p.jornadas)}`
+                              ).join('\n');
+
+            const blob = new Blob([contenido], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Reporte_Asistencias_Cuadrilla.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Inicialización de la página al cargar
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarDashboard();
+            renderizarTabla();
+        });
+        btnDescargar.addEventListener('click', descargarPDF);
+    </script>
+
+</body>
+</html>
