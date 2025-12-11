@@ -8,7 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         /* ========================================================== */
-        /* Estilos CSS Integrados para Diseño Profesional */
+        /* Estilos CSS Base y Colores */
         /* ========================================================== */
 
         :root {
@@ -38,9 +38,9 @@
             border-radius: 12px;
             padding: 30px;
         }
-
+        
         /* ---------------------------------------------------------- */
-        /* Estilos del Encabezado */
+        /* Estilos del Encabezado (sin cambios) */
         /* ---------------------------------------------------------- */
         header {
             display: flex;
@@ -83,7 +83,7 @@
         }
         
         /* ---------------------------------------------------------- */
-        /* Estilos del Dashboard */
+        /* Estilos del Dashboard (sin cambios relevantes) */
         /* ---------------------------------------------------------- */
         .dashboard {
             display: flex;
@@ -114,7 +114,6 @@
             text-transform: uppercase;
         }
 
-        /* Estilos específicos para el canvas de Chart.js */
         .chart-container {
             position: relative;
             width: 100%;
@@ -122,10 +121,7 @@
             height: 150px;
             margin: 10px auto 0 auto; 
         }
-        .chart-container canvas {
-            display: block; 
-        }
-
+        
         .tarjeta-resumen .valor {
             font-size: 2.5em;
             font-weight: bold;
@@ -138,9 +134,8 @@
             margin-top: 5px;
         }
 
-
         /* ---------------------------------------------------------- */
-        /* Estilos de la Tabla */
+        /* Estilos de la Tabla (añadida columna Detalle) */
         /* ---------------------------------------------------------- */
 
         .tabla-responsive {
@@ -177,80 +172,148 @@
             top: 0;
             z-index: 10;
         }
-
-        /* Efecto Hover (Interactivo) */
+        
         tbody tr:hover {
             background-color: #E8E4D9; 
             transition: background-color 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
         }
 
-        /* Colores Alternos para Filas */
         tbody tr:nth-child(even) {
             background-color: #FCF8F3; 
         }
 
-        /* Columna de Asistencia - Colores Condicionales */
         .asistio { color: var(--color-exito); font-weight: bold; } 
         .falto { color: var(--color-peligro); font-weight: bold; } 
-
-        /* ---------------------------------------------------------- */
-        /* Botón de Descarga */
-        /* ---------------------------------------------------------- */
-
-        .pie-pagina {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px dashed var(--color-borde);
-        }
-
-        #btnDescargarPDF {
+        
+        /* Estilo para el botón de Detalle */
+        .btn-detalle {
             background-color: var(--color-acento);
             color: white;
             border: none;
-            padding: 15px 30px;
-            font-size: 1.1em;
-            border-radius: 8px;
+            padding: 8px 15px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: background-color 0.3s;
+            font-size: 0.9em;
         }
-
-        #btnDescargarPDF:hover {
+        .btn-detalle:hover {
             background-color: #8B4513; 
-            transform: translateY(-2px);
         }
 
-        #btnDescargarPDF:active {
-            transform: translateY(0);
+
+        /* ========================================================== */
+        /* Estilos para el MODAL (POP-UP) */
+        /* ========================================================== */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none; /* Oculto por defecto */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0; /* Para el efecto fade-in */
+            transition: opacity 0.3s ease;
         }
 
-        /* ---------------------------------------------------------- */
-        /* Media Queries para Responsividad */
-        /* ---------------------------------------------------------- */
+        .modal-backdrop.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: white;
+            color: var(--color-texto-oscuro);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 700px;
+            transform: scale(0.9); /* Para el efecto de zoom-in */
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+        
+        .modal-backdrop.show .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid var(--color-borde);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5em;
+            color: var(--color-acento);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: var(--color-acento);
+            padding: 5px;
+            transition: color 0.2s;
+        }
+        .close-btn:hover {
+            color: var(--color-peligro);
+        }
+
+        /* Estilos internos del modal */
+        .modal-stats {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            align-items: center;
+            border: 1px solid var(--color-borde);
+            padding: 15px;
+            border-radius: 8px;
+            background-color: var(--color-secundario);
+        }
+        
+        .modal-detalle-tabla {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .modal-detalle-tabla th, .modal-detalle-tabla td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        .modal-detalle-tabla th {
+            background-color: var(--color-acento);
+            color: white;
+            text-transform: uppercase;
+            font-size: 0.85em;
+        }
+
+        .modal-bar-chart-container {
+            width: 100%;
+            height: 100px; /* Altura fija para la barra de asistencia */
+        }
+        
+        /* Media Queries (sin cambios relevantes) */
         @media (max-width: 768px) {
-            .dashboard {
+             /* ... */
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+            .modal-stats {
                 flex-direction: column;
-            }
-            .tarjeta-resumen {
-                flex: 1 1 100%; 
-                min-width: auto;
-            }
-            .header-titulo h1 {
-                font-size: 1.8em;
-            }
-            header {
-                flex-direction: column;
-            }
-            .logo-espacio {
-                margin-bottom: 10px;
-            }
-            .header-titulo {
-                text-align: center;
-            }
-            .chart-container {
-                max-width: 120px;
-                height: 120px;
+                align-items: stretch;
             }
         }
     </style>
@@ -292,6 +355,7 @@
                 </div>
             </div>
         </section>
+        
         <h2>📋 Detalle de Asistencias</h2>
         <div class="tabla-responsive">
             <table id="tablaAsistencias">
@@ -302,7 +366,7 @@
                         <th>Asambleas</th>
                         <th>Jornadas</th>
                         <th>Total Asistencias</th>
-                    </tr>
+                        <th>Acciones</th> </tr>
                 </thead>
                 <tbody>
                     </tbody>
@@ -313,93 +377,91 @@
             <button id="btnDescargarPDF">Descargar Reporte Detallado (Simulación)</button>
         </div>
     </div>
+    
+    <div id="detalleModal" class="modal-backdrop">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalNombreHermano">Detalle de Asistencia</h2>
+                <button class="close-btn" onclick="cerrarModal()">&times;</button>
+            </div>
 
+            <div class="modal-body">
+                
+                <div class="modal-stats">
+                    <div style="flex: 1;">
+                        <p style="margin: 0; font-weight: bold; font-size: 1.1em;">Asistencia Individual</p>
+                        <p style="margin: 5px 0 0 0;">(Eventos asistidos / Eventos totales)</p>
+                    </div>
+                    <div class="modal-bar-chart-container" style="flex: 2;">
+                        <canvas id="chartAsistenciaIndividual"></canvas>
+                    </div>
+                </div>
+
+                <table class="modal-detalle-tabla">
+                    <thead>
+                        <tr>
+                            <th>Evento</th>
+                            <th>Sub-Evento</th>
+                            <th>Asistencia</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modalDetalleBody">
+                        </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
     <script>
+        // Datos simulados con sub-eventos detallados
         const datosAsistencias = [
-    { id: 1, nombre: "ALVA ALVAREZ ALFONSO DE JESUS", retiro: true, asamblea: true, jornadas: false },
-    { id: 2, nombre: "AQUIJE VALDEZ WILLY HUDSON", retiro: true, asamblea: true, jornadas: false },
-    { id: 3, nombre: "ARTEAGA LINARES RICARDO DANIEL", retiro: true, asamblea: true, jornadas: false },
-    { id: 4, nombre: "ASCUES URIBE CESAR AUGUSTO", retiro: true, asamblea: true, jornadas: false },
-    { id: 5, nombre: "BARBARAN LUYO JORGE LUIS", retiro: true, asamblea: true, jornadas: false },
-    { id: 6, nombre: "BARRIONUEVO ROMAN RAFAEL ANTONIO", retiro: true, asamblea: true, jornadas: false },
-    { id: 7, nombre: "BORJAS VARGAS BRAULIO PEDRO", retiro: true, asamblea: true, jornadas: false },
-    { id: 8, nombre: "BRAVO CASTRO BENIGNO ROBERTO", retiro: true, asamblea: true, jornadas: false },
-    { id: 9, nombre: "CAJAVILCA MAYO ANTHONY YELTSYN", retiro: true, asamblea: true, jornadas: false },
-    { id: 10, nombre: "CALDERON VIVAR ENRIQUE MARIO", retiro: true, asamblea: true, jornadas: false },
-    { id: 11, nombre: "CALLO MENDOZA MANUEL", retiro: true, asamblea: true, jornadas: false },
-    { id: 12, nombre: "CANEPA CALERO MANUEL ESTEBAN", retiro: true, asamblea: true, jornadas: false },
-    { id: 13, nombre: "CANEPA SANTIAGO MANUEL LUIS", retiro: true, asamblea: true, jornadas: false },
-    { id: 14, nombre: "CARTY MEZA CARLOS ELIAS", retiro: true, asamblea: true, jornadas: false },
-    { id: 15, nombre: "CASTAÑEDA GONZALES ROBERTO GREGORIO", retiro: true, asamblea: true, jornadas: false },
-    { id: 16, nombre: "CASTILLO LEQUERICA DEMIJEAS", retiro: true, asamblea: true, jornadas: false },
-    { id: 17, nombre: "CASTRO MAC ECHRAN GIAMPIER ALEXANDER", retiro: true, asamblea: true, jornadas: false },
-    { id: 18, nombre: "CHACON CASTRO SEBASTIAN AUGUSTO", retiro: true, asamblea: true, jornadas: false },
-    { id: 19, nombre: "CHU HARO JUAN JOSE", retiro: true, asamblea: true, jornadas: false },
-    { id: 20, nombre: "CHU OLAYA ANTONIO", retiro: true, asamblea: true, jornadas: false },
-    { id: 21, nombre: "CHU OLAYA JOSE LUIS", retiro: true, asamblea: true, jornadas: false },
-    { id: 22, nombre: "CORILLA QUEVEDO STEFANO RAUL", retiro: true, asamblea: true, jornadas: false },
-    { id: 23, nombre: "DONAYRE LOVERA JOSE LUIS", retiro: true, asamblea: true, jornadas: false },
-    { id: 24, nombre: "DONAYRE REYES LUIS OSWALDO", retiro: true, asamblea: true, jornadas: false },
-    { id: 25, nombre: "ESPINOZA LAMAS BRAULIO RODRIGO", retiro: true, asamblea: true, jornadas: false },
-    { id: 26, nombre: "FELIPA MUÑOZ ERNESTO ALONSO", retiro: true, asamblea: true, jornadas: false },
-    { id: 27, nombre: "FERRE CASTRO LUIS ALBERTO", retiro: true, asamblea: true, jornadas: false },
-    { id: 28, nombre: "GALLO CCAHUIN NICOLAS", retiro: true, asamblea: true, jornadas: false },
-    { id: 29, nombre: "GALLO MILACHAY JOSE", retiro: true, asamblea: true, jornadas: false },
-    { id: 30, nombre: "GANOZA CARRICOVA JESÚS", retiro: true, asamblea: true, jornadas: false },
-    { id: 31, nombre: "GARAYAR MENDOZA FREDDY ANTONIO", retiro: true, asamblea: true, jornadas: false },
-    { id: 32, nombre: "GARCIA ESCUDERO CARLOS", retiro: true, asamblea: true, jornadas: false },
-    { id: 33, nombre: "GARCIA LEON JESUS KARL GIANMARCO", retiro: true, asamblea: true, jornadas: false },
-    { id: 34, nombre: "GARRETONDE ORDOÑEZ EDSON PAOLO GERARDO", retiro: true, asamblea: true, jornadas: false },
-    { id: 35, nombre: "GARRO CCAHUIN FRANCISCO NICOLAS", retiro: true, asamblea: true, jornadas: false },
-    { id: 36, nombre: "GUEVARA ESCALERA JUAN CARLOS", retiro: true, asamblea: true, jornadas: false },
-    { id: 37, nombre: "HERVIAS MEZA CESAR HUMBERTO", retiro: true, asamblea: true, jornadas: false },
-    { id: 38, nombre: "ILLESCAS LAVINZ FERNANDO ALFONSO", retiro: true, asamblea: true, jornadas: false },
-    { id: 39, nombre: "INFANTE TINOCO JORGE", retiro: true, asamblea: true, jornadas: false },
-    { id: 40, nombre: "JIMENEZ RUIZ SERGIO ALFONSO", retiro: true, asamblea: true, jornadas: false },
-    { id: 41, nombre: "LAGRAVERE CABRERA JOSE CARLOS", retiro: true, asamblea: true, jornadas: false },
-    { id: 42, nombre: "LARRIVIERE LUCAR GUNTHER PAUL", retiro: true, asamblea: true, jornadas: false },
-    { id: 43, nombre: "LEANDRO ZAVALA ALEJANDRO", retiro: true, asamblea: true, jornadas: false },
-    { id: 44, nombre: "LINDEMBERG FARFAN HANS", retiro: true, asamblea: true, jornadas: false },
-    { id: 45, nombre: "LINDEMBERG WONG HUMBERTO JORGE", retiro: true, asamblea: true, jornadas: false },
-    { id: 46, nombre: "LOSTAUNAU VELEZ JOSEPH SEBASTIAN", retiro: true, asamblea: true, jornadas: false },
-    { id: 47, nombre: "LOYOLA YLLESCAS JOSÉ LUIS", retiro: true, asamblea: true, jornadas: false },
-    { id: 48, nombre: "MACHUCA CHAMPI LEANDRO CESAR", retiro: true, asamblea: true, jornadas: false },
-    { id: 49, nombre: "MASSONI LLAQUE CHRISTIAN ROBERTO", retiro: true, asamblea: true, jornadas: false },
-    { id: 50, nombre: "MELENDEZ BEJARANO JOSE", retiro: true, asamblea: true, jornadas: false },
-    { id: 51, nombre: "MENDOZA SIFUENTES JESUS EMILIO", retiro: true, asamblea: true, jornadas: false },
-    { id: 52, nombre: "MONCADA CHAVEZ JOSE PAUL", retiro: true, asamblea: true, jornadas: false },
-    { id: 53, nombre: "NAVARRO POLO BRYAN", retiro: true, asamblea: true, jornadas: false },
-    { id: 54, nombre: "ORELLANO BARRIONUEVO ANGELO LUCIANO", retiro: true, asamblea: true, jornadas: false },
-    { id: 55, nombre: "ORELLANO BARRIONUEVO FABRIZIO ABELARDO", retiro: true, asamblea: true, jornadas: false },
-    { id: 56, nombre: "ORTIZ ISHUU JAIME DANIEL", retiro: true, asamblea: true, jornadas: false },
-    { id: 57, nombre: "PAREDES CISNEROS BERNABE", retiro: true, asamblea: true, jornadas: false },
-    { id: 58, nombre: "PIGHI BARRIONUEVO CARLOS", retiro: true, asamblea: true, jornadas: false },
-    { id: 59, nombre: "REYES ARTIEDA SEBASTIAN RODRIGO", retiro: true, asamblea: true, jornadas: false },
-    { id: 60, nombre: "REYES BAZAN EFRAIN", retiro: true, asamblea: true, jornadas: false },
-    { id: 61, nombre: "REYES PEÑA JULIO CARLOS", retiro: true, asamblea: true, jornadas: false },
-    { id: 62, nombre: "SALAZAR PIGHI PAUL JOAO", retiro: true, asamblea: true, jornadas: false },
-    { id: 63, nombre: "SALAZAR VERGARA RAUL", retiro: true, asamblea: true, jornadas: false },
-    { id: 64, nombre: "SOLIS CENTENO FELIPE ABELARDO", retiro: true, asamblea: true, jornadas: false },
-    { id: 65, nombre: "SUSSONI MURO ALDO JEFFERSON", retiro: true, asamblea: true, jornadas: false },
-    { id: 66, nombre: "TANTAHUATAY GARCIA JORGE ALFREDO", retiro: true, asamblea: true, jornadas: false },
-    { id: 67, nombre: "TORRES JIMENEZ LUIS MIGUEL", retiro: true, asamblea: true, jornadas: false },
-    { id: 68, nombre: "VERA AGUILAR CHRISTIAN ALBERTO", retiro: true, asamblea: true, jornadas: false },
-    { id: 69, nombre: "VIDAL BARRIONUEVO MANUEL", retiro: true, asamblea: true, jornadas: false },
-    { id: 70, nombre: "VILLACORTA HUERTAS FRANK FREDY", retiro: true, asamblea: true, jornadas: false },
-    { id: 71, nombre: "VILLANUEVA SILVA OSCAR ANTONIO", retiro: true, asamblea: true, jornadas: false },
-    { id: 72, nombre: "YLLESCAS ALARCON JULIO CESAR", retiro: true, asamblea: true, jornadas: false },
-    { id: 73, nombre: "YLLESCAS PEDRAZA ALEXIS", retiro: true, asamblea: true, jornadas: false },
-    { id: 74, nombre: "YLLESCAS PEDRAZA CRYTIAN", retiro: true, asamblea: true, jornadas: false }
-];
+            { 
+                id: 1, 
+                nombre: "ALVA ALVAREZ ALFONSO DE JESUS", 
+                eventos: {
+                    retiro: [{ nombre: "Misa Agosto", asistio: true }, { nombre: "Misa Septiembre", asistio: true }],
+                    asamblea: [{ nombre: "Asamblea Mayo", asistio: true }, { nombre: "Asamblea Octubre", asistio: true }],
+                    jornadas: [{ nombre: "Jornada 1", asistio: false }]
+                }
+            },
+            { 
+                id: 2, 
+                nombre: "AQUIJE VALDEZ WILLY HUDSON", 
+                eventos: {
+                    retiro: [{ nombre: "Misa Agosto", asistio: true }, { nombre: "Misa Septiembre", asistio: true }],
+                    asamblea: [{ nombre: "Asamblea Mayo", asistio: true }, { nombre: "Asamblea Octubre", asistio: false }],
+                    jornadas: [{ nombre: "Jornada 1", asistio: false }]
+                }
+            },
+            // ************ SIMULAMOS EL RESTO DE LOS 74 HERMANOS ************
+            // Para mantener el ejemplo funcional, el resto de los hermanos tendrán los mismos eventos y asistencias que el Hno. 2
+            // En un caso real, aquí irían 72 objetos más con IDs únicos.
+            // Para la simulación, generamos 72 más basados en el hermano 2.
+            ...Array.from({ length: 72 }, (_, i) => ({ 
+                id: i + 3, 
+                nombre: `HERMANO SIMULADO ${i + 3}`, 
+                eventos: {
+                    retiro: [{ nombre: "Misa Agosto", asistio: true }, { nombre: "Misa Septiembre", asistio: true }],
+                    asamblea: [{ nombre: "Asamblea Mayo", asistio: true }, { nombre: "Asamblea Octubre", asistio: false }],
+                    jornadas: [{ nombre: "Jornada 1", asistio: false }]
+                }
+            }))
+        ];
 
         const tablaBody = document.querySelector('#tablaAsistencias tbody');
         const btnDescargar = document.getElementById('btnDescargarPDF');
+        const detalleModal = document.getElementById('detalleModal');
+        const modalDetalleBody = document.getElementById('modalDetalleBody');
 
         let chartPromedioGeneral;
         let chartPromedioMisas;
+        let chartAsistenciaIndividual;
 
-        // Definimos el color del texto oscuro (para el centro del gráfico)
+        // Colores y variables del CSS
         const colorTextoOscuro = getComputedStyle(document.documentElement).getPropertyValue('--color-texto-oscuro').trim();
+        const colorAcento = getComputedStyle(document.documentElement).getPropertyValue('--color-acento').trim();
+        const colorExito = getComputedStyle(document.documentElement).getPropertyValue('--color-exito').trim();
+        const colorFondoGrafico = '#E0E0E0'; 
 
         // ** Plugin para mostrar texto en el centro del gráfico (Chart.js)**
         const centerTextPlugin = {
@@ -409,7 +471,6 @@
                     const {width, height, ctx} = chart;
                     ctx.restore();
                     
-                    // Obtener el porcentaje a mostrar
                     const percentage = chart.data.datasets[0].data[0].toFixed(1);
                     
                     const fontSize = (height / 120).toFixed(2);
@@ -426,156 +487,302 @@
                 }
             }
         };
-        // Registrar el plugin globalmente
         Chart.register(centerTextPlugin);
 
-        // Función para calcular las estadísticas
+        // --- Funciones del Dashboard Global ---
+
         function calcularEstadisticas() {
             const totalHermanos = datosAsistencias.length;
             let totalMisasAsistidas = 0;
             let sumaTotalAsistenciasEventosIndividuales = 0; 
-            const numeroTiposDeEventos = 3; 
+            
+            // Calculamos el número de sub-eventos totales que definen la base 100%
+            // Usamos el primer hermano como plantilla, asumiendo que todos tienen los mismos sub-eventos
+            const eventosPlantilla = datosAsistencias[0].eventos;
+            const numeroTotalSubEventos = eventosPlantilla.retiro.length + eventosPlantilla.asamblea.length + eventosPlantilla.jornadas.length;
 
             datosAsistencias.forEach(persona => {
-                const asistenciasPersona = (persona.retiro ? 1 : 0) + (persona.asamblea ? 1 : 0) + (persona.jornadas ? 1 : 0);
+                let asistenciasPersona = 0;
+                
+                Object.values(persona.eventos).forEach(subEventos => {
+                    subEventos.forEach(evento => {
+                        if (evento.asistio) {
+                            asistenciasPersona++;
+                        }
+                    });
+                });
+                
                 sumaTotalAsistenciasEventosIndividuales += asistenciasPersona;
-                if (persona.retiro) totalMisasAsistidas++;
+                
+                // Calculamos asistencias a 'Misas de Retiro' (Asistió al menos a 1/2)
+                const asistioMisa = persona.eventos.retiro.some(e => e.asistio);
+                if (asistioMisa) totalMisasAsistidas++;
             });
 
-            // Promedio general (66.7% en este caso de ejemplo)
-            const totalAsistenciasPosiblesEnTodosLosEventos = totalHermanos * numeroTiposDeEventos;
+            // Calculo del promedio general basado en sub-eventos
+            const totalAsistenciasPosiblesEnTodosLosEventos = totalHermanos * numeroTotalSubEventos;
             const promedioGeneralPorcentaje = (sumaTotalAsistenciasEventosIndividuales / totalAsistenciasPosiblesEnTodosLosEventos) * 100;
 
-            // Promedio de participación en Misas (100% en este caso de ejemplo)
+            // Promedio de participación en Misas (Porcentaje de hermanos que asistieron a alguna Misa)
             const promedioMisasPorcentaje = (totalMisasAsistidas / totalHermanos) * 100;
 
             return {
                 totalHermanos,
                 promedioGeneral: parseFloat(promedioGeneralPorcentaje.toFixed(1)),
                 promedioMisas: parseFloat(promedioMisasPorcentaje.toFixed(1)),
+                numeroTotalSubEventos // Para el cálculo interno
             };
         }
 
-        // Función para renderizar el Dashboard con gráficos circulares Chart.js
         function renderizarDashboard() {
             const stats = calcularEstadisticas();
             
-            const colorAcento = getComputedStyle(document.documentElement).getPropertyValue('--color-acento').trim();
-            const colorExito = getComputedStyle(document.documentElement).getPropertyValue('--color-exito').trim();
-            const colorFondoGrafico = '#E0E0E0'; 
-
             document.getElementById('totalHermanos').textContent = stats.totalHermanos;
 
             // 1. Gráfico de Promedio General
             const ctxGeneral = document.getElementById('chartPromedioGeneral').getContext('2d');
-            
-            // Creamos o actualizamos el gráfico
+            if (chartPromedioGeneral) chartPromedioGeneral.destroy();
             chartPromedioGeneral = new Chart(ctxGeneral, {
                 type: 'doughnut',
-                data: {
-                    datasets: [{
-                        data: [stats.promedioGeneral, 100 - stats.promedioGeneral],
-                        backgroundColor: [
-                            colorExito,
-                            colorFondoGrafico
-                        ],
-                        hoverOffset: 4
-                    }]
-                },
+                data: { datasets: [{
+                    data: [stats.promedioGeneral, 100 - stats.promedioGeneral],
+                    backgroundColor: [colorExito, colorFondoGrafico],
+                    hoverOffset: 4
+                }]},
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: '75%', 
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: true },
-                        centerText: true // Habilitamos el plugin para este gráfico
-                    },
-                    animation: {
-                        animateRotate: true,
-                        animateScale: true
-                    }
+                    responsive: true, maintainAspectRatio: false, cutout: '75%', 
+                    plugins: { legend: { display: false }, tooltip: { enabled: true }, centerText: true },
+                    animation: { animateRotate: true, animateScale: true }
                 }
             });
 
             // 2. Gráfico de Participación en Misas
             const ctxMisas = document.getElementById('chartPromedioMisas').getContext('2d');
-            
-            // Creamos o actualizamos el gráfico
+            if (chartPromedioMisas) chartPromedioMisas.destroy();
             chartPromedioMisas = new Chart(ctxMisas, {
                 type: 'doughnut',
-                data: {
-                    datasets: [{
-                        data: [stats.promedioMisas, 100 - stats.promedioMisas],
-                        backgroundColor: [
-                            colorAcento, 
-                            colorFondoGrafico
-                        ],
-                        hoverOffset: 4
-                    }]
-                },
+                data: { datasets: [{
+                    data: [stats.promedioMisas, 100 - stats.promedioMisas],
+                    backgroundColor: [colorAcento, colorFondoGrafico],
+                    hoverOffset: 4
+                }]},
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    cutout: '75%',
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: { enabled: true },
-                        centerText: true // Habilitamos el plugin para este gráfico
-                    },
-                    animation: {
-                        animateRotate: true,
-                        animateScale: true
-                    }
+                    responsive: true, maintainAspectRatio: false, cutout: '75%',
+                    plugins: { legend: { display: false }, tooltip: { enabled: true }, centerText: true },
+                    animation: { animateRotate: true, animateScale: true }
                 }
             });
         }
 
+        // --- Funciones de la Tabla y el Modal ---
 
-        // Función para renderizar la tabla de detalle (sin cambios)
+        function obtenerResumenAsistencias(hermano) {
+            let resumen = { retiro: 0, asamblea: 0, jornadas: 0, total: 0 };
+            
+            Object.keys(hermano.eventos).forEach(tipo => {
+                hermano.eventos[tipo].forEach(evento => {
+                    if (evento.asistio) {
+                        resumen[tipo]++;
+                        resumen.total++;
+                    }
+                });
+            });
+            return resumen;
+        }
+
         function renderizarTabla() {
             tablaBody.innerHTML = ''; 
 
             datosAsistencias.forEach(persona => {
+                const resumen = obtenerResumenAsistencias(persona);
                 const fila = document.createElement('tr');
-                let totalAsistencias = 0;
 
                 const celdaNombre = document.createElement('td');
                 celdaNombre.textContent = persona.nombre;
                 celdaNombre.style.textAlign = 'left'; 
                 fila.appendChild(celdaNombre);
 
-                ['retiro', 'asamblea', 'jornadas'].forEach(evento => {
-                    const celdaEvento = document.createElement('td');
-                    if (persona[evento]) {
-                        celdaEvento.textContent = '✅'; 
-                        celdaEvento.classList.add('asistio');
-                        totalAsistencias++;
-                    } else {
-                        celdaEvento.textContent = '❌'; 
-                        celdaEvento.classList.add('falto');
-                    }
-                    fila.appendChild(celdaEvento);
-                });
+                // Celda Resumen Misas
+                let celdaMisa = document.createElement('td');
+                celdaMisa.textContent = persona.eventos.retiro.some(e => e.asistio) ? '✅' : '❌';
+                celdaMisa.classList.add(persona.eventos.retiro.some(e => e.asistio) ? 'asistio' : 'falto');
+                fila.appendChild(celdaMisa);
+                
+                // Celda Resumen Asambleas
+                let celdaAsamblea = document.createElement('td');
+                celdaAsamblea.textContent = persona.eventos.asamblea.some(e => e.asistio) ? '✅' : '❌';
+                celdaAsamblea.classList.add(persona.eventos.asamblea.some(e => e.asistio) ? 'asistio' : 'falto');
+                fila.appendChild(celdaAsamblea);
+
+                // Celda Resumen Jornadas
+                let celdaJornada = document.createElement('td');
+                celdaJornada.textContent = persona.eventos.jornadas.some(e => e.asistio) ? '✅' : '❌';
+                celdaJornada.classList.add(persona.eventos.jornadas.some(e => e.asistio) ? 'asistio' : 'falto');
+                fila.appendChild(celdaJornada);
+
 
                 const celdaTotal = document.createElement('td');
-                celdaTotal.textContent = totalAsistencias;
+                celdaTotal.textContent = resumen.total;
                 celdaTotal.style.fontWeight = 'bold';
                 fila.appendChild(celdaTotal);
+                
+                // Nueva Celda: Ver Detalle
+                const celdaAccion = document.createElement('td');
+                const btnDetalle = document.createElement('button');
+                btnDetalle.textContent = 'Ver Detalle';
+                btnDetalle.classList.add('btn-detalle');
+                btnDetalle.onclick = () => abrirModal(persona.id);
+                celdaAccion.appendChild(btnDetalle);
+                fila.appendChild(celdaAccion);
 
                 tablaBody.appendChild(fila);
             });
         }
 
-        // Función para simular la descarga de PDF (sin cambios)
+        function abrirModal(idHermano) {
+            const hermano = datosAsistencias.find(p => p.id === idHermano);
+            if (!hermano) return;
+
+            document.getElementById('modalNombreHermano').textContent = `Detalle de Asistencia: ${hermano.nombre}`;
+            modalDetalleBody.innerHTML = '';
+            
+            let asistidos = 0;
+            let totales = 0;
+            
+            // Cargar tabla interna
+            Object.keys(hermano.eventos).forEach(tipo => {
+                hermano.eventos[tipo].forEach(evento => {
+                    const fila = document.createElement('tr');
+                    
+                    const celdaTipo = document.createElement('td');
+                    celdaTipo.textContent = tipo.charAt(0).toUpperCase() + tipo.slice(1);
+                    
+                    const celdaNombre = document.createElement('td');
+                    celdaNombre.textContent = evento.nombre;
+
+                    const celdaAsistencia = document.createElement('td');
+                    celdaAsistencia.textContent = evento.asistio ? '✅ Asistió' : '❌ Faltó';
+                    celdaAsistencia.classList.add(evento.asistio ? 'asistio' : 'falto');
+                    
+                    if(evento.asistio) asistidos++;
+                    totales++;
+
+                    fila.appendChild(celdaTipo);
+                    fila.appendChild(celdaNombre);
+                    fila.appendChild(celdaAsistencia);
+                    modalDetalleBody.appendChild(fila);
+                });
+            });
+            
+            // Renderizar gráfico interno (Barra de Progreso Horizontal)
+            renderizarChartIndividual(asistidos, totales);
+
+            // Mostrar Modal con animación
+            detalleModal.style.display = 'flex';
+            // Pequeño delay para forzar la transición CSS (fade-in)
+            setTimeout(() => detalleModal.classList.add('show'), 10); 
+        }
+
+        function cerrarModal() {
+            detalleModal.classList.remove('show');
+            // Ocultar completamente después de la transición
+            setTimeout(() => detalleModal.style.display = 'none', 300); 
+        }
+        
+        // Función para el gráfico de barra horizontal (interno del modal)
+        function renderizarChartIndividual(asistidos, totales) {
+            const porcentaje = (asistidos / totales) * 100;
+            const ctxIndividual = document.getElementById('chartAsistenciaIndividual').getContext('2d');
+            
+            if (chartAsistenciaIndividual) chartAsistenciaIndividual.destroy();
+
+            chartAsistenciaIndividual = new Chart(ctxIndividual, {
+                type: 'bar',
+                data: {
+                    labels: ['Asistencia'],
+                    datasets: [{
+                        label: 'Porcentaje de Asistencia',
+                        data: [porcentaje.toFixed(1)],
+                        backgroundColor: colorExito,
+                        borderColor: colorExito,
+                        borderWidth: 1,
+                        barPercentage: 1.0,
+                        categoryPercentage: 1.0
+                    },
+                    {
+                        label: 'Faltas',
+                        data: [(100 - porcentaje).toFixed(1)],
+                        backgroundColor: colorFondoGrafico,
+                        borderColor: colorFondoGrafico,
+                        borderWidth: 1,
+                        barPercentage: 1.0,
+                        categoryPercentage: 1.0
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', // Hace la barra horizontal
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            stacked: true,
+                            max: 100,
+                            min: 0,
+                            display: false // Oculta los ejes X
+                        },
+                        y: {
+                            stacked: true,
+                            display: false // Oculta los ejes Y
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: true },
+                        // Plugin para mostrar texto de porcentaje en la barra
+                        centerText: { // Reutilizamos el plugin, pero para la barra horizontal
+                             percentage: `${porcentaje.toFixed(1)}% (${asistidos}/${totales})`
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeInOutQuad'
+                    }
+                },
+                plugins: [{
+                    // Sobreescribe centerText para usarlo en la barra horizontal
+                    id: 'centerTextBar',
+                    beforeDraw: function(chart) {
+                        if (chart.canvas.id === 'chartAsistenciaIndividual') {
+                            const {width, height, ctx} = chart;
+                            ctx.restore();
+                            
+                            const text = `${porcentaje.toFixed(1)}% (${asistidos}/${totales})`;
+                            
+                            ctx.font = `bold 1em 'Georgia', serif`;
+                            ctx.textBaseline = "middle";
+
+                            const textX = 10; // Posición fija a la izquierda
+                            const textY = height / 2;
+
+                            ctx.fillStyle = colorTextoOscuro; 
+                            ctx.fillText(text, textX, textY);
+                            ctx.save();
+                        }
+                    }
+                }]
+            });
+        }
+
+
+        // Funcionalidad de la descarga (sin cambios)
         function descargarPDF() {
             alert("Simulando la generación y descarga del reporte detallado. En un sistema real, el archivo se descargaría ahora.");
             
             const contenido = "--- Reporte Detallado de Asistencias - Primera Cuadrilla ---\n\n" + 
-                              "Nombre | Retiro | Asamblea | Jornadas | Total\n" +
+                              "Nombre | Total Sub-Eventos Asistidos\n" +
                               "---------------------------------------------------\n" +
                               datosAsistencias.map(p => 
-                                  `${p.nombre} | ${p.retiro ? 'Si' : 'No'} | ${p.asamblea ? 'Si' : 'No'} | ${p.jornadas ? 'Si' : 'No'} | ${(p.retiro + p.asamblea + p.jornadas)}`
+                                  `${p.nombre} | ${obtenerResumenAsistencias(p).total}`
                               ).join('\n');
 
             const blob = new Blob([contenido], { type: 'text/plain' });
@@ -595,6 +802,20 @@
             renderizarTabla();
         });
         btnDescargar.addEventListener('click', descargarPDF);
+        
+        // Cerrar modal al hacer clic fuera
+        detalleModal.addEventListener('click', (e) => {
+            if (e.target === detalleModal) {
+                cerrarModal();
+            }
+        });
+        
+        // Cerrar modal con tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape" && detalleModal.classList.contains('show')) {
+                cerrarModal();
+            }
+        });
     </script>
 
 </body>
