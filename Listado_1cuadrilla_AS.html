@@ -212,11 +212,11 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
-            display: none; /* Oculto por defecto */
+            display: none; 
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            opacity: 0; /* Para el efecto fade-in */
+            opacity: 0; 
             transition: opacity 0.3s ease;
         }
 
@@ -233,7 +233,7 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             width: 90%;
             max-width: 700px;
-            transform: scale(0.9); /* Para el efecto de zoom-in */
+            transform: scale(0.9); 
             transition: transform 0.3s ease;
             position: relative;
         }
@@ -302,20 +302,38 @@
         .modal-bar-chart-container {
             width: 100%;
             height: 100px; 
-            max-width: 350px; /* Limitar el ancho de la barra para que no se extienda demasiado */
+            max-width: 350px; 
             margin: 0 auto;
         }
         
-        /* Media Queries (sin cambios relevantes) */
-        @media (max-width: 768px) {
-            .modal-content {
-                width: 95%;
-                padding: 20px;
-            }
-            .modal-stats {
-                flex-direction: column;
-                align-items: stretch;
-            }
+        /* ---------------------------------------------------------- */
+        /* Estilos del Botón de Descarga (Corregido) */
+        /* ---------------------------------------------------------- */
+        .pie-pagina {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--color-borde);
+        }
+
+        #btnDescargarPDF {
+            background-color: var(--color-acento);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        #btnDescargarPDF:hover {
+            background-color: #8B4513; 
+            transform: translateY(-2px);
+        }
+
+        #btnDescargarPDF:active {
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -327,7 +345,7 @@
                 <img src="https://edwinhsvcl14-maker.github.io/asistencias/logo_1cuadrilla.png" alt="Logo de la Cuadrilla" style="width: 80%; height: 80%; object-fit: cover; border-radius: 50%;">
             </div>
             <div class="header-titulo">
-                <h1>Control de Asistencia Primera Cuadrilla123</h1>
+                <h1>Control de Asistencia Primera Cuadrilla</h1>
                 <p>Listado detallado de participación en actividades.</p>
             </div>
             <div class="logo-espacio" style="visibility: hidden;">
@@ -454,7 +472,7 @@
 
         let chartPromedioGeneral;
         let chartPromedioMisas;
-        let chartAsistenciaIndividual; // Variable para controlar el gráfico interno
+        let chartAsistenciaIndividual; 
 
         // Colores y variables del CSS
         const colorTextoOscuro = getComputedStyle(document.documentElement).getPropertyValue('--color-texto-oscuro').trim();
@@ -490,34 +508,43 @@
         // ** Plugin 2: Texto flotante en la barra horizontal (para Modal)**
         const centerTextBarPlugin = {
              id: 'centerTextBar',
-             beforeDraw: function(chart) {
+             afterDraw: function(chart) {
                 if (chart.canvas.id === 'chartAsistenciaIndividual') {
                     const {width, height, ctx} = chart;
                     ctx.restore();
                     
-                    const meta = chart.getDatasetMeta(0); // Obtener metadata del primer dataset
+                    // Aseguramos que el chart esté animado y listo
+                    if (!chart.isRTL && chart.tooltip._active && chart.tooltip._active.length === 0) return;
+                    
+                    const meta = chart.getDatasetMeta(0); 
                     const barElement = meta.data[0]; 
                     
-                    // Si el elemento de la barra no existe, salir
                     if (!barElement) return;
 
-                    // Datos de asistencia
-                    const asistidos = chart.config.options.plugins.centerTextBar.asistidos;
-                    const totales = chart.config.options.plugins.centerTextBar.totales;
+                    // Obtenemos los datos del plugin
+                    const asistidos = chart.options.plugins.centerTextBar.asistidos;
+                    const totales = chart.options.plugins.centerTextBar.totales;
                     const porcentaje = chart.data.datasets[0].data[0];
 
                     const text = `${porcentaje.toFixed(1)}% (${asistidos}/${totales})`;
                     
-                    ctx.font = `bold 1em 'Georgia', serif`;
+                    ctx.font = `bold 1.1em 'Georgia', serif`;
                     ctx.textBaseline = "middle";
-                    ctx.textAlign = "left"; 
+                    ctx.textAlign = "center"; // Centramos el texto
 
-                    // Posición: Cerca del borde izquierdo de la barra
-                    const textX = barElement.x > 10 ? 10 : barElement.x; 
+                    // Posición Y: Centro vertical de la barra
                     const textY = height / 2;
+                    
+                    // Posición X: Centro horizontal del contenedor
+                    const textX = width / 2; 
 
-                    ctx.fillStyle = colorTextoOscuro; 
-                    ctx.fillText(text, textX, textY);
+                    ctx.fillStyle = (porcentaje > 40) ? 'white' : colorTextoOscuro; // Cambio de color si la barra es pequeña
+                    
+                    // Para que no se dibuje hasta que esté visible completamente
+                    if (detalleModal.classList.contains('show')) {
+                        ctx.fillText(text, textX, textY);
+                    }
+                    
                     ctx.save();
                 }
             }
@@ -529,6 +556,7 @@
         // --- Funciones del Dashboard Global ---
 
         function calcularEstadisticas() {
+            // ... (Lógica de cálculo de estadísticas, sin cambios funcionales) ...
             const totalHermanos = datosAsistencias.length;
             let totalMisasAsistidas = 0;
             let sumaTotalAsistenciasEventosIndividuales = 0; 
@@ -623,6 +651,7 @@
         }
 
         function renderizarTabla() {
+            // ... (Lógica de renderizado de tabla, sin cambios funcionales) ...
             tablaBody.innerHTML = ''; 
 
             datosAsistencias.forEach(persona => {
@@ -712,17 +741,16 @@
             
             // Mostrar Modal *antes* de renderizar el gráfico
             detalleModal.style.display = 'flex';
-            // Pequeño delay para forzar la transición CSS (fade-in)
+            
             setTimeout(() => {
                 detalleModal.classList.add('show');
-                // Renderizar gráfico *después* de que el contenedor es visible y tiene dimensiones
+                // Renderizar gráfico *después* de que el contenedor es visible
                 renderizarChartIndividual(asistidos, totales);
             }, 50); 
         }
 
         function cerrarModal() {
             detalleModal.classList.remove('show');
-            // Ocultar completamente después de la transición
             setTimeout(() => detalleModal.style.display = 'none', 300); 
             
             // Destruir el gráfico interno al cerrar el modal
@@ -734,10 +762,9 @@
         
         // Función para el gráfico de barra horizontal (interno del modal)
         function renderizarChartIndividual(asistidos, totales) {
-            const porcentaje = (asistidos / totales) * 100;
+            const porcentaje = totales === 0 ? 0 : (asistidos / totales) * 100;
             const ctxIndividual = document.getElementById('chartAsistenciaIndividual').getContext('2d');
             
-            // Aseguramos que el gráfico anterior se destruya
             if (chartAsistenciaIndividual) {
                 chartAsistenciaIndividual.destroy();
             }
@@ -747,7 +774,6 @@
                 data: {
                     labels: ['Asistencia'],
                     datasets: [
-                        // Dataset para la porción asistida
                         {
                             label: 'Asistió',
                             data: [porcentaje],
@@ -756,7 +782,6 @@
                             barPercentage: 1.0,
                             categoryPercentage: 1.0,
                         },
-                        // Dataset para la porción faltante
                         {
                             label: 'Faltó',
                             data: [100 - porcentaje],
@@ -800,7 +825,7 @@
         }
 
 
-        // Funcionalidad de la descarga (sin cambios)
+        // Funcionalidad de la descarga (sin cambios funcionales)
         function descargarPDF() {
             alert("Simulando la generación y descarga del reporte detallado. En un sistema real, el archivo se descargaría ahora.");
             
