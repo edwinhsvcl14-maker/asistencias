@@ -18,6 +18,7 @@
             --color-texto-oscuro: #3E2723; /* Marrón oscuro para texto */
             --color-borde: #D2B48C; /* Tan (Marrón claro) */
             --color-exito: #38761D; /* Verde oscuro */
+            --color-dispensa: #F7D600; /* Amarillo/Dorado para Dispensa */
             --color-peligro: #CC0000; /* Rojo oscuro */
         }
 
@@ -40,7 +41,7 @@
         }
         
         /* ---------------------------------------------------------- */
-        /* Estilos del Encabezado (sin cambios) */
+        /* Estilos del Encabezado */
         /* ---------------------------------------------------------- */
         header {
             display: flex;
@@ -83,58 +84,6 @@
         }
         
         /* ---------------------------------------------------------- */
-        /* Estilos del Dashboard (sin cambios relevantes) */
-        /* ---------------------------------------------------------- */
-        .dashboard {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-bottom: 40px;
-            padding: 20px;
-            border-radius: 8px;
-            background-color: var(--color-secundario);
-            border: 1px solid var(--color-borde);
-        }
-
-        .tarjeta-resumen {
-            flex: 1 1 calc(33.33% - 20px); 
-            min-width: 250px; 
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            border-left: 5px solid var(--color-acento);
-        }
-
-        .tarjeta-resumen h3 {
-            margin-top: 0;
-            color: var(--color-acento);
-            font-size: 1.1em;
-            text-transform: uppercase;
-        }
-
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 150px; 
-            height: 150px;
-            margin: 10px auto 0 auto; 
-        }
-        
-        .tarjeta-resumen .valor {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: var(--color-texto-oscuro);
-            margin-top: 15px; 
-        }
-        .tarjeta-resumen .descripcion {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 5px;
-        }
-
-        /* ---------------------------------------------------------- */
         /* Estilos de la Tabla */
         /* ---------------------------------------------------------- */
 
@@ -158,33 +107,12 @@
             border-right: 1px solid var(--color-borde);
         }
 
-        th:last-child, td:last-child {
-            border-right: none;
-        }
-
-        thead th {
-            background-color: var(--color-acento);
-            color: white;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        
-        tbody tr:hover {
-            background-color: #E8E4D9; 
-            transition: background-color 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: #FCF8F3; 
-        }
-
-        .asistio { color: var(--color-exito); font-weight: bold; } 
-        .falto { color: var(--color-peligro); font-weight: bold; } 
+        /* Estilos de Puntuación en Tablas */
+        .score-total { font-size: 1.2em; font-weight: bold; color: var(--color-acento); }
+        .score-parcial { font-weight: bold; color: var(--color-texto-oscuro); }
+        .asistio-bg { background-color: var(--color-exito); color: white; border-radius: 4px; padding: 3px 6px; } 
+        .dispensa-bg { background-color: var(--color-dispensa); color: var(--color-texto-oscuro); border-radius: 4px; padding: 3px 6px; } 
+        .falto-bg { background-color: var(--color-peligro); color: white; border-radius: 4px; padding: 3px 6px; } 
         
         /* Estilo para el botón de Detalle */
         .btn-detalle {
@@ -201,10 +129,10 @@
             background-color: #8B4513; 
         }
 
+        /* ---------------------------------------------------------- */
+        /* Estilos del Modal */
+        /* ---------------------------------------------------------- */
 
-        /* ========================================================== */
-        /* Estilos para el MODAL (POP-UP) */
-        /* ========================================================== */
         .modal-backdrop {
             position: fixed;
             top: 0;
@@ -238,39 +166,6 @@
             position: relative;
         }
         
-        .modal-backdrop.show .modal-content {
-            transform: scale(1);
-        }
-
-        .modal-header {
-            border-bottom: 1px solid var(--color-borde);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h2 {
-            margin: 0;
-            font-size: 1.5em;
-            color: var(--color-acento);
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            font-size: 1.5em;
-            cursor: pointer;
-            color: var(--color-acento);
-            padding: 5px;
-            transition: color 0.2s;
-        }
-        .close-btn:hover {
-            color: var(--color-peligro);
-        }
-
-        /* Estilos internos del modal */
         .modal-stats {
             display: flex;
             gap: 20px;
@@ -282,46 +177,26 @@
             background-color: var(--color-secundario);
         }
         
-        .modal-detalle-tabla {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-        .modal-detalle-tabla th, .modal-detalle-tabla td {
-            border: 1px solid #ccc;
-            padding: 10px;
-            text-align: left;
-        }
-        .modal-detalle-tabla th {
-            background-color: var(--color-acento);
-            color: white;
-            text-transform: uppercase;
-            font-size: 0.85em;
-        }
-
         .modal-bar-chart-container {
             width: 100%;
-            height: 50px; /* Reducimos la altura de la barra */
+            height: 50px; 
             max-width: 350px; 
             margin: 0 auto;
             position: relative;
-            display: flex; /* Para centrar la barra y el label */
+            display: flex; 
             flex-direction: column;
             justify-content: center;
         }
 
-        /* Estilo para el nuevo label de porcentaje */
         #porcentajeAsistenciaLabel {
             font-size: 1.2em;
             font-weight: bold;
-            color: var(--color-exito);
+            color: var(--color-acento); /* Color más neutro para el label */
             margin-bottom: 5px;
             text-align: center;
         }
         
-        /* ---------------------------------------------------------- */
         /* Estilos del Botón de Descarga */
-        /* ---------------------------------------------------------- */
         .pie-pagina {
             text-align: center;
             margin-top: 40px;
@@ -339,15 +214,6 @@
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
-
-        #btnDescargarPDF:hover {
-            background-color: #8B4513; 
-            transform: translateY(-2px);
-        }
-
-        #btnDescargarPDF:active {
-            transform: translateY(0);
-        }
     </style>
 </head>
 <body>
@@ -358,7 +224,7 @@
                 <img src="https://edwinhsvcl14-maker.github.io/asistencias/logo_1cuadrilla.png" alt="Logo de la Cuadrilla" style="width: 80%; height: 80%; object-fit: cover; border-radius: 50%;">
             </div>
             <div class="header-titulo">
-                <h1>Control de Asistencia Primera Cuadrilla11111</h1>
+                <h1>Control de Asistencia Primera Cuadrilla</h1>
                 <p>Listado detallado de participación en actividades.</p>
             </div>
             <div class="logo-espacio" style="visibility: hidden;">
@@ -388,17 +254,13 @@
             </div>
         </section>
         
-        <h2>📋 Detalle de Asistencias</h2>
+        <h2>📋 Detalle de Puntuación</h2>
         <div class="tabla-responsive">
             <table id="tablaAsistencias">
                 <thead>
                     <tr>
                         <th style="text-align: left;">Nombre y Apellido</th>
-                        <th>Misas de Retiro</th>
-                        <th>Asambleas</th>
-                        <th>Jornadas</th>
-                        <th>Total Asistencias</th>
-                        <th>Acciones</th> 
+                        <th>Puntos Retiro</th> <th>Puntos Asambleas</th> <th>Puntos Jornadas</th> <th>PUNTUACIÓN TOTAL</th> <th>Acciones</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -414,7 +276,7 @@
     <div id="detalleModal" class="modal-backdrop">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalNombreHermano">Detalle de Asistencia</h2>
+                <h2 id="modalNombreHermano">Detalle de Puntuación</h2>
                 <button class="close-btn" onclick="cerrarModal()">&times;</button>
             </div>
 
@@ -422,8 +284,8 @@
                 
                 <div class="modal-stats">
                     <div style="flex: 1;">
-                        <p style="margin: 0; font-weight: bold; font-size: 1.1em;">Asistencia Individual</p>
-                        <p style="margin: 5px 0 0 0;">(Eventos asistidos / Eventos totales)</p>
+                        <p style="margin: 0; font-weight: bold; font-size: 1.1em;">Puntuación Individual</p>
+                        <p style="margin: 5px 0 0 0;">(Puntos obtenidos / Puntos posibles)</p>
                     </div>
                     
                     <div class="modal-bar-chart-container" style="flex: 2;">
@@ -437,8 +299,7 @@
                         <tr>
                             <th>Evento</th>
                             <th>Sub-Evento</th>
-                            <th>Asistencia</th>
-                        </tr>
+                            <th>Estado</th> <th>Puntuación</th> </tr>
                     </thead>
                     <tbody id="modalDetalleBody">
                         </tbody>
@@ -448,24 +309,50 @@
         </div>
     </div>
     <script>
-        // Datos simulados con sub-eventos detallados
+        // Constantes de Puntuación
+        const PUNTOS = {
+            ASISTIO: 1.0,
+            DISPENSA: 0.5,
+            FALTO: 0.0
+        };
+
+        // Función de utilidad para obtener el valor numérico
+        function obtenerPuntuacion(estado) {
+            return PUNTOS[estado] || 0.0;
+        }
+        
+        // Función de utilidad para obtener el texto y estilo
+        function obtenerTextoEstado(estado) {
+            switch (estado) {
+                case 'ASISTIO':
+                    return { texto: 'Asistió', clase: 'asistio-bg' };
+                case 'DISPENSA':
+                    return { texto: 'Dispensa', clase: 'dispensa-bg' };
+                case 'FALTO':
+                    return { texto: 'Faltó', clase: 'falto-bg' };
+                default:
+                    return { texto: 'N/A', clase: '' };
+            }
+        }
+
+        // Datos simulados con el nuevo campo 'estado'
         const datosAsistencias = [
             { 
                 id: 1, 
                 nombre: "ALVA ALVAREZ ALFONSO DE JESUS", 
                 eventos: {
-                    retiro: [{ nombre: "Misa Agosto", asistio: true }, { nombre: "Misa Septiembre", asistio: true }],
-                    asamblea: [{ nombre: "Asamblea Mayo", asistio: true }, { nombre: "Asamblea Octubre", asistio: true }],
-                    jornadas: [{ nombre: "Jornada 1", asistio: false }]
+                    retiro: [{ nombre: "Misa Agosto", estado: 'ASISTIO' }, { nombre: "Misa Septiembre", estado: 'DISPENSA' }],
+                    asamblea: [{ nombre: "Asamblea Mayo", estado: 'ASISTIO' }, { nombre: "Asamblea Octubre", estado: 'ASISTIO' }],
+                    jornadas: [{ nombre: "Jornada 1", estado: 'FALTO' }]
                 }
             },
             { 
                 id: 2, 
                 nombre: "AQUIJE VALDEZ WILLY HUDSON", 
                 eventos: {
-                    retiro: [{ nombre: "Misa Agosto", asistio: true }, { nombre: "Misa Septiembre", asistio: true }],
-                    asamblea: [{ nombre: "Asamblea Mayo", asistio: true }, { nombre: "Asamblea Octubre", asistio: false }],
-                    jornadas: [{ nombre: "Jornada 1", asistio: false }]
+                    retiro: [{ nombre: "Misa Agosto", estado: 'ASISTIO' }, { nombre: "Misa Septiembre", estado: 'DISPENSA' }],
+                    asamblea: [{ nombre: "Asamblea Mayo", estado: 'ASISTIO' }, { nombre: "Asamblea Octubre", estado: 'FALTO' }],
+                    jornadas: [{ nombre: "Jornada 1", estado: 'DISPENSA' }]
                 }
             },
             // ************ SIMULAMOS EL RESTO DE LOS 74 HERMANOS ************
@@ -473,9 +360,9 @@
                 id: i + 3, 
                 nombre: `HERMANO SIMULADO ${i + 3}`, 
                 eventos: {
-                    retiro: [{ nombre: "Misa Agosto", asistio: true }, { nombre: "Misa Septiembre", asistio: true }],
-                    asamblea: [{ nombre: "Asamblea Mayo", asistio: true }, { nombre: "Asamblea Octubre", asistio: false }],
-                    jornadas: [{ nombre: "Jornada 1", asistio: false }]
+                    retiro: [{ nombre: "Misa Agosto", estado: 'ASISTIO' }, { nombre: "Misa Septiembre", estado: 'ASISTIO' }],
+                    asamblea: [{ nombre: "Asamblea Mayo", estado: 'FALTO' }, { nombre: "Asamblea Octubre", estado: 'DISPENSA' }],
+                    jornadas: [{ nombre: "Jornada 1", estado: 'FALTO' }]
                 }
             }))
         ];
@@ -484,7 +371,7 @@
         const btnDescargar = document.getElementById('btnDescargarPDF');
         const detalleModal = document.getElementById('detalleModal');
         const modalDetalleBody = document.getElementById('modalDetalleBody');
-        const porcentajeLabel = document.getElementById('porcentajeAsistenciaLabel'); // Nuevo elemento
+        const porcentajeLabel = document.getElementById('porcentajeAsistenciaLabel'); 
 
         let chartPromedioGeneral;
         let chartPromedioMisas;
@@ -495,8 +382,10 @@
         const colorAcento = getComputedStyle(document.documentElement).getPropertyValue('--color-acento').trim();
         const colorExito = getComputedStyle(document.documentElement).getPropertyValue('--color-exito').trim();
         const colorFondoGrafico = '#E0E0E0'; 
+        const colorDispensa = getComputedStyle(document.documentElement).getPropertyValue('--color-dispensa').trim();
 
-        // ** Plugin 1: Texto en el centro del Doughnut (para Dashboard)**
+
+        // ** Plugin: Texto en el centro del Doughnut (para Dashboard)**
         const centerTextDoughnutPlugin = {
             id: 'centerTextDoughnut',
             beforeDraw: function(chart) {
@@ -520,46 +409,39 @@
                 }
             }
         };
-        Chart.register(centerTextDoughnutPlugin); // Solo registramos el plugin del dashboard
+        Chart.register(centerTextDoughnutPlugin);
 
-        // --- Funciones del Dashboard Global ---
+
+        // --- Funciones del Dashboard Global (Adaptadas a Puntos) ---
 
         function calcularEstadisticas() {
-            // ... (Lógica de cálculo de estadísticas) ...
             const totalHermanos = datosAsistencias.length;
-            let totalMisasAsistidas = 0;
-            let sumaTotalAsistenciasEventosIndividuales = 0; 
+            let totalMisasAsistidasPuntos = 0;
+            let sumaTotalPuntosEventosIndividuales = 0; 
             
             const eventosPlantilla = datosAsistencias[0].eventos;
-            const numeroTotalSubEventos = eventosPlantilla.retiro.length + eventosPlantilla.asamblea.length + eventosPlantilla.jornadas.length;
+            
+            // Calculamos el número total de eventos (puntos posibles individuales)
+            const numeroTotalEventos = eventosPlantilla.retiro.length + eventosPlantilla.asamblea.length + eventosPlantilla.jornadas.length;
 
             datosAsistencias.forEach(persona => {
-                let asistenciasPersona = 0;
+                const resumen = obtenerResumenPuntos(persona);
+                sumaTotalPuntosEventosIndividuales += resumen.total;
                 
-                Object.values(persona.eventos).forEach(subEventos => {
-                    subEventos.forEach(evento => {
-                        if (evento.asistio) {
-                            asistenciasPersona++;
-                        }
-                    });
-                });
-                
-                sumaTotalAsistenciasEventosIndividuales += asistenciasPersona;
-                
-                const asistioMisa = persona.eventos.retiro.some(e => e.asistio);
-                if (asistioMisa) totalMisasAsistidas++;
+                // Para el chart de Misas, consideramos la suma de puntos de Retiro
+                totalMisasAsistidasPuntos += resumen.retiro;
             });
 
-            const totalAsistenciasPosiblesEnTodosLosEventos = totalHermanos * numeroTotalSubEventos;
-            const promedioGeneralPorcentaje = (sumaTotalAsistenciasEventosIndividuales / totalAsistenciasPosiblesEnTodosLosEventos) * 100;
+            const totalPuntosPosiblesEnTodosLosEventos = totalHermanos * numeroTotalEventos * PUNTOS.ASISTIO;
+            const promedioGeneralPorcentaje = (sumaTotalPuntosEventosIndividuales / totalPuntosPosiblesEnTodosLosEventos) * 100;
 
-            const promedioMisasPorcentaje = (totalMisasAsistidas / totalHermanos) * 100;
+            const promedioMisasPorcentaje = (totalMisasAsistidasPuntos / (totalHermanos * eventosPlantilla.retiro.length * PUNTOS.ASISTIO)) * 100;
 
             return {
                 totalHermanos,
                 promedioGeneral: parseFloat(promedioGeneralPorcentaje.toFixed(1)),
                 promedioMisas: parseFloat(promedioMisasPorcentaje.toFixed(1)),
-                numeroTotalSubEventos
+                numeroTotalEventos
             };
         }
 
@@ -568,7 +450,7 @@
             
             document.getElementById('totalHermanos').textContent = stats.totalHermanos;
 
-            // 1. Gráfico de Promedio General
+            // 1. Gráfico de Promedio General (basado en puntos)
             const ctxGeneral = document.getElementById('chartPromedioGeneral').getContext('2d');
             if (chartPromedioGeneral) chartPromedioGeneral.destroy();
             chartPromedioGeneral = new Chart(ctxGeneral, {
@@ -585,7 +467,7 @@
                 }
             });
 
-            // 2. Gráfico de Participación en Misas
+            // 2. Gráfico de Participación en Misas (basado en puntos)
             const ctxMisas = document.getElementById('chartPromedioMisas').getContext('2d');
             if (chartPromedioMisas) chartPromedioMisas.destroy();
             chartPromedioMisas = new Chart(ctxMisas, {
@@ -603,59 +485,68 @@
             });
         }
 
-        // --- Funciones de la Tabla y el Modal ---
 
-        function obtenerResumenAsistencias(hermano) {
-            let resumen = { retiro: 0, asamblea: 0, jornadas: 0, total: 0 };
+        // --- Funciones de la Tabla y el Modal (Adaptadas a Puntos) ---
+
+        function obtenerResumenPuntos(hermano) {
+            let resumen = { retiro: 0, asamblea: 0, jornadas: 0, total: 0, totalEventos: 0 };
             
             Object.keys(hermano.eventos).forEach(tipo => {
                 hermano.eventos[tipo].forEach(evento => {
-                    if (evento.asistio) {
-                        resumen[tipo]++;
-                        resumen.total++;
-                    }
+                    const puntos = obtenerPuntuacion(evento.estado);
+                    resumen[tipo] += puntos;
+                    resumen.total += puntos;
+                    resumen.totalEventos += 1;
                 });
             });
+            // Redondeamos los totales a un decimal para presentación
+            resumen.retiro = parseFloat(resumen.retiro.toFixed(1));
+            resumen.asamblea = parseFloat(resumen.asamblea.toFixed(1));
+            resumen.jornadas = parseFloat(resumen.jornadas.toFixed(1));
+            resumen.total = parseFloat(resumen.total.toFixed(1));
+
             return resumen;
         }
 
         function renderizarTabla() {
-            // ... (Lógica de renderizado de tabla) ...
             tablaBody.innerHTML = ''; 
 
             datosAsistencias.forEach(persona => {
-                const resumen = obtenerResumenAsistencias(persona);
+                const resumen = obtenerResumenPuntos(persona);
                 const fila = document.createElement('tr');
 
+                // Nombre
                 const celdaNombre = document.createElement('td');
                 celdaNombre.textContent = persona.nombre;
                 celdaNombre.style.textAlign = 'left'; 
                 fila.appendChild(celdaNombre);
 
-                let celdaMisa = document.createElement('td');
-                const asistioMisa = persona.eventos.retiro.some(e => e.asistio);
-                celdaMisa.textContent = asistioMisa ? '✅' : '❌';
-                celdaMisa.classList.add(asistioMisa ? 'asistio' : 'falto');
-                fila.appendChild(celdaMisa);
+                // Puntos Retiro
+                let celdaRetiro = document.createElement('td');
+                celdaRetiro.textContent = resumen.retiro.toFixed(1);
+                celdaRetiro.classList.add('score-parcial');
+                fila.appendChild(celdaRetiro);
                 
+                // Puntos Asamblea
                 let celdaAsamblea = document.createElement('td');
-                const asistioAsamblea = persona.eventos.asamblea.some(e => e.asistio);
-                celdaAsamblea.textContent = asistioAsamblea ? '✅' : '❌';
-                celdaAsamblea.classList.add(asistioAsamblea ? 'asistio' : 'falto');
+                celdaAsamblea.textContent = resumen.asamblea.toFixed(1);
+                celdaAsamblea.classList.add('score-parcial');
                 fila.appendChild(celdaAsamblea);
 
+                // Puntos Jornadas
                 let celdaJornada = document.createElement('td');
-                const asistioJornada = persona.eventos.jornadas.some(e => e.asistio);
-                celdaJornada.textContent = asistioJornada ? '✅' : '❌';
-                celdaJornada.classList.add(asistioJornada ? 'asistio' : 'falto');
+                celdaJornada.textContent = resumen.jornadas.toFixed(1);
+                celdaJornada.classList.add('score-parcial');
                 fila.appendChild(celdaJornada);
 
 
+                // Puntuación Total
                 const celdaTotal = document.createElement('td');
-                celdaTotal.textContent = resumen.total;
-                celdaTotal.style.fontWeight = 'bold';
+                celdaTotal.textContent = resumen.total.toFixed(1);
+                celdaTotal.classList.add('score-total');
                 fila.appendChild(celdaTotal);
                 
+                // Columna: Ver Detalle
                 const celdaAccion = document.createElement('td');
                 const btnDetalle = document.createElement('button');
                 btnDetalle.textContent = 'Ver Detalle';
@@ -672,43 +563,56 @@
             const hermano = datosAsistencias.find(p => p.id === idHermano);
             if (!hermano) return;
 
-            document.getElementById('modalNombreHermano').textContent = `Detalle de Asistencia: ${hermano.nombre}`;
+            document.getElementById('modalNombreHermano').textContent = `Detalle de Puntuación: ${hermano.nombre}`;
             modalDetalleBody.innerHTML = '';
             
-            let asistidos = 0;
-            let totales = 0;
+            let puntosObtenidos = 0;
+            let puntosPosibles = 0;
             
             // Cargar tabla interna
             Object.keys(hermano.eventos).forEach(tipo => {
                 const tipoDisplay = tipo.charAt(0).toUpperCase() + tipo.slice(1);
                 hermano.eventos[tipo].forEach(evento => {
-                    // ... (Lógica para llenar la tabla de detalle) ...
+                    const puntos = obtenerPuntuacion(evento.estado);
+                    const estadoDetalle = obtenerTextoEstado(evento.estado);
+                    
+                    puntosObtenidos += puntos;
+                    puntosPosibles += PUNTOS.ASISTIO; // Máximo punto posible por evento
+                    
                     const fila = document.createElement('tr');
                     
+                    // Columna Evento
                     const celdaTipo = document.createElement('td');
                     celdaTipo.textContent = tipoDisplay;
                     
+                    // Columna Sub-Evento
                     const celdaNombre = document.createElement('td');
                     celdaNombre.textContent = evento.nombre;
 
-                    const celdaAsistencia = document.createElement('td');
-                    celdaAsistencia.textContent = evento.asistio ? '✅ Asistió' : '❌ Faltó';
-                    celdaAsistencia.classList.add(evento.asistio ? 'asistio' : 'falto');
+                    // Columna Estado (Texto y Estilo)
+                    const celdaEstado = document.createElement('td');
+                    const spanEstado = document.createElement('span');
+                    spanEstado.textContent = estadoDetalle.texto;
+                    spanEstado.className = estadoDetalle.clase;
+                    celdaEstado.appendChild(spanEstado);
                     
-                    if(evento.asistio) asistidos++;
-                    totales++;
-
+                    // Columna Puntuación (Valor numérico)
+                    const celdaPuntuacion = document.createElement('td');
+                    celdaPuntuacion.textContent = puntos.toFixed(1); 
+                    
                     fila.appendChild(celdaTipo);
                     fila.appendChild(celdaNombre);
-                    fila.appendChild(celdaAsistencia);
+                    fila.appendChild(celdaEstado);
+                    fila.appendChild(celdaPuntuacion);
                     modalDetalleBody.appendChild(fila);
                 });
             });
             
-            const porcentaje = totales === 0 ? 0 : (asistidos / totales) * 100;
+            puntosObtenidos = parseFloat(puntosObtenidos.toFixed(1));
+            const porcentajePuntos = puntosPosibles === 0 ? 0 : (puntosObtenidos / puntosPosibles) * 100;
             
-            // ** ACTUALIZACIÓN CLAVE: Insertar el porcentaje y conteo en el nuevo <span> **
-            porcentajeLabel.textContent = `${porcentaje.toFixed(1)}% (${asistidos}/${totales})`;
+            // ** ACTUALIZACIÓN CLAVE: Insertar la puntuación y puntos posibles en el Label **
+            porcentajeLabel.textContent = `${porcentajePuntos.toFixed(1)}% (${puntosObtenidos.toFixed(1)} / ${puntosPosibles.toFixed(1)} Puntos)`;
             
             // Mostrar Modal *antes* de renderizar el gráfico
             detalleModal.style.display = 'flex';
@@ -716,7 +620,7 @@
             setTimeout(() => {
                 detalleModal.classList.add('show');
                 // Renderizar gráfico *después* de que el contenedor es visible
-                renderizarChartIndividual(porcentaje);
+                renderizarChartIndividual(porcentajePuntos);
             }, 50); 
         }
 
@@ -742,10 +646,10 @@
             chartAsistenciaIndividual = new Chart(ctxIndividual, {
                 type: 'bar',
                 data: {
-                    labels: ['Asistencia'],
+                    labels: ['Puntuación'],
                     datasets: [
                         {
-                            label: 'Asistió',
+                            label: 'Puntos Obtenidos',
                             data: [porcentaje],
                             backgroundColor: colorExito,
                             borderWidth: 0,
@@ -753,7 +657,7 @@
                             categoryPercentage: 1.0,
                         },
                         {
-                            label: 'Faltó',
+                            label: 'Puntos Faltantes',
                             data: [100 - porcentaje],
                             backgroundColor: colorFondoGrafico,
                             borderWidth: 0,
@@ -781,7 +685,6 @@
                     plugins: {
                         legend: { display: false },
                         tooltip: { enabled: true },
-                        // Eliminamos el plugin centerTextBar, ya no es necesario
                     },
                     animation: {
                         duration: 1000,
@@ -796,11 +699,11 @@
         function descargarPDF() {
             alert("Simulando la generación y descarga del reporte detallado. En un sistema real, el archivo se descargaría ahora.");
             
-            const contenido = "--- Reporte Detallado de Asistencias - Primera Cuadrilla ---\n\n" + 
-                              "Nombre | Total Sub-Eventos Asistidos\n" +
+            const contenido = "--- Reporte Detallado de Puntuación - Primera Cuadrilla ---\n\n" + 
+                              "Nombre | Puntuación Total\n" +
                               "---------------------------------------------------\n" +
                               datosAsistencias.map(p => 
-                                  `${p.nombre} | ${obtenerResumenAsistencias(p).total}`
+                                  `${p.nombre} | ${obtenerResumenPuntos(p).total.toFixed(1)}`
                               ).join('\n');
 
             const blob = new Blob([contenido], { type: 'text/plain' });
@@ -808,7 +711,7 @@
             
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'Reporte_Asistencias_Cuadrilla.txt';
+            a.download = 'Reporte_Puntuacion_Cuadrilla.txt';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
