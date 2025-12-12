@@ -12,14 +12,14 @@
         /* ========================================================== */
 
         :root {
-            --color-principal: #F5F5DC; /* Cream (Crema) */
-            --color-secundario: #FAF0E6; /* Linen (Blanco roto) */
-            --color-acento: #A0522D; /* Sienna (Marrón medio) (Marrón fuerte) */
-            --color-texto-oscuro: #3E2723; /* Marrón oscuro para texto */
-            --color-borde: #D2B48C; /* Tan (Marrón claro) */
-            --color-exito: #38761D; /* Verde oscuro */
-            --color-dispensa: #F7D600; /* Amarillo/Dorado para Dispensa */
-            --color-peligro: #CC0000; /* Rojo oscuro */
+            --color-principal: #F5F5DC; 
+            --color-secundario: #FAF0E6; 
+            --color-acento: #A0522D; 
+            --color-texto-oscuro: #3E2723; 
+            --color-borde: #D2B48C; 
+            --color-exito: #38761D; 
+            --color-dispensa: #F7D600; 
+            --color-peligro: #CC0000; 
         }
 
         body {
@@ -40,9 +40,6 @@
             padding: 30px;
         }
         
-        /* ---------------------------------------------------------- */
-        /* Estilos del Encabezado */
-        /* ---------------------------------------------------------- */
         header {
             display: flex;
             justify-content: space-between; 
@@ -73,7 +70,7 @@
         }
         
         /* ---------------------------------------------------------- */
-        /* Estilos del Dashboard (Ajuste de Balance) */
+        /* Estilos del Dashboard */
         /* ---------------------------------------------------------- */
         .dashboard {
             display: flex;
@@ -95,7 +92,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
             text-align: center;
             border-left: 5px solid var(--color-acento);
-            display: flex; /* Para centrar contenido */
+            display: flex; 
             flex-direction: column;
             justify-content: space-between;
         }
@@ -107,209 +104,128 @@
             text-transform: uppercase;
         }
         
-        /* Contenedor del valor del Total de Hermanos */
         .valor {
-            font-size: 4em; /* Aumentar el tamaño para igualar la altura del gráfico */
+            font-size: 4em; 
             font-weight: bold;
             color: var(--color-exito);
-            line-height: 1.1; /* Ajustar línea para el centrado visual */
+            line-height: 1.1; 
             padding-top: 10px;
             padding-bottom: 15px;
         }
 
-        /* Contenedor del gráfico para darle la misma altura que el número */
         .chart-container {
             position: relative;
             width: 100%;
             max-width: 150px; 
-            height: 150px; /* Altura para igualar el espacio del número */
+            height: 150px; 
             margin: 10px auto 0 auto; 
         }
         
         /* ---------------------------------------------------------- */
-        /* Estilos de la Tabla y Puntuación */
+        /* Estilos de la Tabla y Botón de Detalle */
         /* ---------------------------------------------------------- */
 
-        .tabla-responsive {
-            overflow-x: auto; 
-        }
-
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            border: 1px solid var(--color-borde);
-            border-radius: 8px;
-            overflow: hidden; 
-        }
-
-        th, td {
-            padding: 14px 18px;
-            text-align: center;
-            border-bottom: 1px solid var(--color-borde);
-            border-right: 1px solid var(--color-borde);
-        }
-        
+        .tabla-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--color-borde); border-radius: 8px; overflow: hidden; }
+        th, td { padding: 14px 18px; text-align: center; border-bottom: 1px solid var(--color-borde); border-right: 1px solid var(--color-borde); }
         .score-total { font-size: 1.2em; font-weight: bold; color: var(--color-acento); }
         .score-parcial { font-weight: bold; color: var(--color-texto-oscuro); }
         .asistio-bg { background-color: var(--color-exito); color: white; border-radius: 4px; padding: 3px 6px; } 
         .dispensa-bg { background-color: var(--color-dispensa); color: var(--color-texto-oscuro); border-radius: 4px; padding: 3px 6px; } 
         .falto-bg { background-color: var(--color-peligro); color: white; border-radius: 4px; padding: 3px 6px; } 
-        
-        .btn-detalle {
-            background-color: var(--color-acento);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 0.9em;
-        }
+        .btn-detalle { background-color: var(--color-acento); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; font-size: 0.9em; }
 
         /* ---------------------------------------------------------- */
-        /* Estilos del Modal */
+        /* Estilos del Modal (Ajuste para el gráfico interno) */
         /* ---------------------------------------------------------- */
 
         .modal-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: none; 
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0; 
-            transition: opacity 0.3s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); display: none; 
+            justify-content: center; align-items: center; z-index: 1000;
+            opacity: 0; transition: opacity 0.3s ease;
         }
 
-        .modal-content {
-            background-color: white;
-            color: var(--color-texto-oscuro);
-            padding: 30px;
-            padding-top: 50px; 
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 700px;
-            transform: scale(0.9); 
-            transition: transform 0.3s ease;
-            position: relative; 
-        }
-        
         .modal-backdrop.show {
             display: flex;
             opacity: 1;
         }
-        
+
+        .modal-content {
+            background-color: white; color: var(--color-texto-oscuro);
+            padding: 30px; padding-top: 50px; border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 90%; max-width: 700px;
+            transform: scale(0.9); transition: transform 0.3s ease;
+            position: relative; 
+        }
+
+        .modal-stats {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Corregido: Limitar el tamaño del contenedor del gráfico de barra */
+        .modal-bar-chart-container {
+            flex: 2; /* Mantener la proporción, pero restringir el ancho máximo */
+            width: 100%;
+            max-width: 400px; /* Definir un ancho máximo estricto para que no se estire */
+            height: 50px; 
+            margin: 0; /* Limpiar márgenes automáticos si los hubiera */
+            position: relative;
+        }
+
         .close-btn {
-            position: absolute; 
-            top: 10px;
-            right: 15px;
-            background: none;
-            border: none;
-            font-size: 2.5em; 
-            line-height: 1;
-            cursor: pointer;
-            color: var(--color-acento);
-            padding: 5px;
-            transition: color 0.2s;
-            z-index: 10; 
+            position: absolute; top: 10px; right: 15px;
+            background: none; border: none; font-size: 2.5em; 
+            line-height: 1; cursor: pointer; color: var(--color-acento);
+            padding: 5px; transition: color 0.2s; z-index: 10; 
         }
 
         /* ---------------------------------------------------------- */
-        /* Estilos del Botón de Descarga (Asegurando el estilo) */
+        /* Estilos del Botón de Descarga */
         /* ---------------------------------------------------------- */
-        .pie-pagina {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px dashed var(--color-borde);
-        }
-
         #btnDescargarPDF {
-            background-color: var(--color-acento);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.1em;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-        
-        #btnDescargarPDF:hover {
-            background-color: #8B4513; /* Tono más oscuro de Sienna */
-            transform: translateY(-2px);
+            background-color: var(--color-acento); color: white; border: none;
+            padding: 15px 30px; font-size: 1.1em; border-radius: 8px;
+            cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         /* ========================================================== */
-        /* MEDIA QUERIES (Responsive Design) - Sin cambios, mantenemos la estructura */
+        /* MEDIA QUERIES (Responsive Design) */
         /* ========================================================== */
 
         @media (max-width: 768px) {
             
-            /* Dashboard se apila */
-            .tarjeta-resumen {
-                flex: 1 1 100%;
-                min-width: auto;
-            }
-
-            /* Encabezado para pantallas pequeñas */
-            header {
-                flex-direction: column;
-                text-align: center;
-            }
+            .tarjeta-resumen { flex: 1 1 100%; min-width: auto; }
+            header { flex-direction: column; text-align: center; }
 
             /* Tabla principal se convierte en tarjetas apiladas */
-            table { border: none; }
-            thead { display: none; }
+            table { border: none; } thead { display: none; }
             tbody, tr { display: block; }
             
-            tbody tr {
-                margin-bottom: 20px;
-                border: 1px solid var(--color-borde);
-                border-radius: 8px;
-                background-color: white;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            }
+            tbody tr { margin-bottom: 20px; border: 1px solid var(--color-borde); border-radius: 8px; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
 
-            td {
-                display: block;
-                text-align: right;
-                border-bottom: 1px solid #eee;
-                border-right: none;
-                padding: 10px 15px;
-                position: relative;
-            }
+            td { display: block; text-align: right; border-bottom: 1px solid #eee; border-right: none; padding: 10px 15px; position: relative; }
             
-            td::before {
-                content: attr(data-label);
-                position: absolute;
-                left: 15px;
-                font-weight: bold;
-                color: var(--color-acento);
-                text-align: left;
-            }
+            td::before { content: attr(data-label); position: absolute; left: 15px; font-weight: bold; color: var(--color-acento); text-align: left; }
             
-            tbody tr td:first-child {
-                text-align: left;
-                font-size: 1.1em;
-                font-weight: bold;
-                color: var(--color-texto-oscuro);
-                border-bottom: 2px solid var(--color-borde);
-            }
+            tbody tr td:first-child { text-align: left; font-size: 1.1em; font-weight: bold; color: var(--color-texto-oscuro); border-bottom: 2px solid var(--color-borde); }
             
-            tbody tr td:first-child::before {
-                content: ""; 
-            }
+            tbody tr td:first-child::before { content: ""; }
             
-            tbody tr td:last-child {
-                border-bottom: none;
-                text-align: center;
+            tbody tr td:last-child { border-bottom: none; text-align: center; }
+            
+            /* Modal en móvil */
+            .modal-content { width: 95%; margin: 10px; }
+            .modal-stats { flex-direction: column; align-items: stretch; }
+            
+            /* Asegurar que en móvil el gráfico ocupe casi todo el ancho, pero no se desborde */
+            .modal-bar-chart-container {
+                max-width: 100%; 
+                margin-top: 10px;
             }
         }
     </style>
@@ -392,8 +308,8 @@
                         <p style="margin: 5px 0 0 0;">(Puntos obtenidos / Puntos posibles)</p>
                     </div>
                     
-                    <div class="modal-bar-chart-container" style="flex: 2;">
-                        <span id="porcentajeAsistenciaLabel"></span> 
+                    <div class="modal-bar-chart-container">
+                        <span id="porcentajeAsistenciaLabel" style="text-align: right; display: block; margin-bottom: 5px; font-weight: bold;"></span> 
                         <canvas id="chartAsistenciaIndividual"></canvas>
                     </div>
                 </div>
@@ -417,68 +333,31 @@
     <script>
         // Constantes de Puntuación
         const PUNTOS = {
-            ASISTIO: 1.0,
-            DISPENSA: 0.5,
-            FALTO: 0.0
+            ASISTIO: 1.0, DISPENSA: 0.5, FALTO: 0.0
         };
         
         // Mapeo de Headers de Tabla (Para Responsive)
         const headerLabels = {
-            'Nombre y Apellido': '', 
-            'Puntos Retiro': 'Puntos Retiro',
-            'Puntos Asambleas': 'Puntos Asambleas',
-            'Puntos Jornadas': 'Puntos Jornadas',
-            'PUNTUACIÓN TOTAL': 'Puntuación Total',
-            'Acciones': '' 
+            'Nombre y Apellido': '', 'Puntos Retiro': 'Puntos Retiro',
+            'Puntos Asambleas': 'Puntos Asambleas', 'Puntos Jornadas': 'Puntos Jornadas',
+            'PUNTUACIÓN TOTAL': 'Puntuación Total', 'Acciones': '' 
         };
 
-        function obtenerPuntuacion(estado) {
-            return PUNTOS[estado] || 0.0;
-        }
+        function obtenerPuntuacion(estado) { return PUNTOS[estado] || 0.0; }
         
         function obtenerTextoEstado(estado) {
             switch (estado) {
-                case 'ASISTIO':
-                    return { texto: 'Asistió', clase: 'asistio-bg' };
-                case 'DISPENSA':
-                    return { texto: 'Dispensa', clase: 'dispensa-bg' };
-                case 'FALTO':
-                    return { texto: 'Faltó', clase: 'falto-bg' };
-                default:
-                    return { texto: 'N/A', clase: '' };
+                case 'ASISTIO': return { texto: 'Asistió', clase: 'asistio-bg' };
+                case 'DISPENSA': return { texto: 'Dispensa', clase: 'dispensa-bg' };
+                case 'FALTO': return { texto: 'Faltó', clase: 'falto-bg' };
+                default: return { texto: 'N/A', clase: '' };
             }
         }
 
-        // Datos simulados (sin cambios en la estructura)
         const datosAsistencias = [
-            { 
-                id: 1, 
-                nombre: "ALVA ALVAREZ ALFONSO DE JESUS", 
-                eventos: {
-                    retiro: [{ nombre: "Misa Agosto", estado: 'ASISTIO' }, { nombre: "Misa Septiembre", estado: 'DISPENSA' }],
-                    asamblea: [{ nombre: "Asamblea Mayo", estado: 'ASISTIO' }, { nombre: "Asamblea Octubre", estado: 'ASISTIO' }],
-                    jornadas: [{ nombre: "Jornada 1", estado: 'FALTO' }]
-                }
-            },
-            { 
-                id: 2, 
-                nombre: "AQUIJE VALDEZ WILLY HUDSON", 
-                eventos: {
-                    retiro: [{ nombre: "Misa Agosto", estado: 'ASISTIO' }, { nombre: "Misa Septiembre", estado: 'DISPENSA' }],
-                    asamblea: [{ nombre: "Asamblea Mayo", estado: 'ASISTIO' }, { nombre: "Asamblea Octubre", estado: 'FALTO' }],
-                    jornadas: [{ nombre: "Jornada 1", estado: 'DISPENSA' }]
-                }
-            },
-            // ************ SIMULAMOS EL RESTO DE LOS 74 HERMANOS ************
-            ...Array.from({ length: 72 }, (_, i) => ({ 
-                id: i + 3, 
-                nombre: `HERMANO SIMULADO ${i + 3}`, 
-                eventos: {
-                    retiro: [{ nombre: "Misa Agosto", estado: 'ASISTIO' }, { nombre: "Misa Septiembre", estado: 'ASISTIO' }],
-                    asamblea: [{ nombre: "Asamblea Mayo", estado: 'FALTO' }, { nombre: "Asamblea Octubre", estado: 'DISPENSA' }],
-                    jornadas: [{ nombre: "Jornada 1", estado: 'FALTO' }]
-                }
-            }))
+            { id: 1, nombre: "ALVA ALVAREZ ALFONSO DE JESUS", eventos: { retiro: [{ nombre: "Misa Agosto", estado: 'ASISTIO' }, { nombre: "Misa Septiembre", estado: 'DISPENSA' }], asamblea: [{ nombre: "Asamblea Mayo", estado: 'ASISTIO' }, { nombre: "Asamblea Octubre", estado: 'ASISTIO' }], jornadas: [{ nombre: "Jornada 1", estado: 'FALTO' }] } },
+            { id: 2, nombre: "AQUIJE VALDEZ WILLY HUDSON", eventos: { retiro: [{ nombre: "Misa Agosto", estado: 'ASISTIO' }, { nombre: "Misa Septiembre", estado: 'DISPENSA' }], asamblea: [{ nombre: "Asamblea Mayo", estado: 'ASISTIO' }, { nombre: "Asamblea Octubre", estado: 'FALTO' }], jornadas: [{ nombre: "Jornada 1", estado: 'DISPENSA' }] } },
+            ...Array.from({ length: 72 }, (_, i) => ({ id: i + 3, nombre: `HERMANO SIMULADO ${i + 3}`, eventos: { retiro: [{ nombre: "Misa Agosto", estado: 'ASISTIO' }, { nombre: "Misa Septiembre", estado: 'ASISTIO' }], asamblea: [{ nombre: "Asamblea Mayo", estado: 'FALTO' }, { nombre: "Asamblea Octubre", estado: 'DISPENSA' }], jornadas: [{ nombre: "Jornada 1", estado: 'FALTO' }] } }))
         ];
 
         const tablaBody = document.querySelector('#tablaAsistencias tbody');
@@ -490,13 +369,11 @@
         let chartPromedioMisas;
         let chartAsistenciaIndividual; 
 
-        // Colores y variables del CSS
         const colorTextoOscuro = getComputedStyle(document.documentElement).getPropertyValue('--color-texto-oscuro').trim();
         const colorAcento = getComputedStyle(document.documentElement).getPropertyValue('--color-acento').trim();
         const colorExito = getComputedStyle(document.documentElement).getPropertyValue('--color-exito').trim();
         const colorFondoGrafico = '#E0E0E0'; 
 
-        // Plugin de Chart.js
         const centerTextDoughnutPlugin = {
             id: 'centerTextDoughnut',
             beforeDraw: function(chart) {
@@ -518,14 +395,11 @@
         };
         Chart.register(centerTextDoughnutPlugin);
 
-
         function calcularEstadisticas() {
             const totalHermanos = datosAsistencias.length;
             let totalMisasAsistidasPuntos = 0;
             let sumaTotalPuntosEventosIndividuales = 0; 
-            
             const eventosPlantilla = datosAsistencias[0].eventos;
-            
             const numeroTotalEventos = eventosPlantilla.retiro.length + eventosPlantilla.asamblea.length + eventosPlantilla.jornadas.length;
 
             datosAsistencias.forEach(persona => {
@@ -550,48 +424,26 @@
 
         function renderizarDashboard() {
             const stats = calcularEstadisticas();
-            
             document.getElementById('totalHermanos').textContent = stats.totalHermanos;
 
-            // 1. Gráfico de Promedio General
             const ctxGeneral = document.getElementById('chartPromedioGeneral').getContext('2d');
             if (chartPromedioGeneral) chartPromedioGeneral.destroy();
             chartPromedioGeneral = new Chart(ctxGeneral, {
-                type: 'doughnut',
-                data: { datasets: [{
-                    data: [stats.promedioGeneral, 100 - stats.promedioGeneral],
-                    backgroundColor: [colorExito, colorFondoGrafico],
-                    hoverOffset: 4
-                }]},
-                options: {
-                    responsive: true, maintainAspectRatio: false, cutout: '75%', 
-                    plugins: { legend: { display: false }, tooltip: { enabled: true }, centerTextDoughnut: true },
-                    animation: { animateRotate: true, animateScale: true }
-                }
+                type: 'doughnut', data: { datasets: [{ data: [stats.promedioGeneral, 100 - stats.promedioGeneral], backgroundColor: [colorExito, colorFondoGrafico], hoverOffset: 4 }]},
+                options: { responsive: true, maintainAspectRatio: false, cutout: '75%', plugins: { legend: { display: false }, tooltip: { enabled: true }, centerTextDoughnut: true }, animation: { animateRotate: true, animateScale: true } }
             });
 
-            // 2. Gráfico de Participación en Misas
             const ctxMisas = document.getElementById('chartPromedioMisas').getContext('2d');
             if (chartPromedioMisas) chartPromedioMisas.destroy();
             chartPromedioMisas = new Chart(ctxMisas, {
-                type: 'doughnut',
-                data: { datasets: [{
-                    data: [stats.promedioMisas, 100 - stats.promedioMisas],
-                    backgroundColor: [colorAcento, colorFondoGrafico],
-                    hoverOffset: 4
-                }]},
-                options: {
-                    responsive: true, maintainAspectRatio: false, cutout: '75%',
-                    plugins: { legend: { display: false }, tooltip: { enabled: true }, centerTextDoughnut: true },
-                    animation: { animateRotate: true, animateScale: true }
-                }
+                type: 'doughnut', data: { datasets: [{ data: [stats.promedioMisas, 100 - stats.promedioMisas], backgroundColor: [colorAcento, colorFondoGrafico], hoverOffset: 4 }]},
+                options: { responsive: true, maintainAspectRatio: false, cutout: '75%', plugins: { legend: { display: false }, tooltip: { enabled: true }, centerTextDoughnut: true }, animation: { animateRotate: true, animateScale: true } }
             });
         }
 
 
         function obtenerResumenPuntos(hermano) {
             let resumen = { retiro: 0, asamblea: 0, jornadas: 0, total: 0, totalEventos: 0 };
-            
             Object.keys(hermano.eventos).forEach(tipo => {
                 hermano.eventos[tipo].forEach(evento => {
                     const puntos = obtenerPuntuacion(evento.estado);
@@ -604,7 +456,6 @@
             resumen.asamblea = parseFloat(resumen.asamblea.toFixed(1));
             resumen.jornadas = parseFloat(resumen.jornadas.toFixed(1));
             resumen.total = parseFloat(resumen.total.toFixed(1));
-
             return resumen;
         }
 
@@ -616,51 +467,41 @@
                 const resumen = obtenerResumenPuntos(persona);
                 const fila = document.createElement('tr');
                 
-                // 1. Nombre
                 const celdaNombre = document.createElement('td');
                 celdaNombre.textContent = persona.nombre;
                 celdaNombre.style.textAlign = 'left'; 
                 celdaNombre.setAttribute('data-label', headerLabels[headers[0]]); 
                 fila.appendChild(celdaNombre);
 
-                // 2. Puntos Retiro
                 let celdaRetiro = document.createElement('td');
                 celdaRetiro.textContent = resumen.retiro.toFixed(1);
                 celdaRetiro.classList.add('score-parcial');
                 celdaRetiro.setAttribute('data-label', headerLabels[headers[1]]); 
                 fila.appendChild(celdaRetiro);
                 
-                // 3. Puntos Asamblea
                 let celdaAsamblea = document.createElement('td');
                 celdaAsamblea.textContent = resumen.asamblea.toFixed(1);
                 celdaAsamblea.classList.add('score-parcial');
                 celdaAsamblea.setAttribute('data-label', headerLabels[headers[2]]); 
                 fila.appendChild(celdaAsamblea);
 
-                // 4. Puntos Jornadas
                 let celdaJornada = document.createElement('td');
                 celdaJornada.textContent = resumen.jornadas.toFixed(1);
                 celdaJornada.classList.add('score-parcial');
                 celdaJornada.setAttribute('data-label', headerLabels[headers[3]]); 
                 fila.appendChild(celdaJornada);
 
-
-                // 5. Puntuación Total
                 const celdaTotal = document.createElement('td');
                 celdaTotal.textContent = resumen.total.toFixed(1);
                 celdaTotal.classList.add('score-total');
                 celdaTotal.setAttribute('data-label', headerLabels[headers[4]]); 
                 fila.appendChild(celdaTotal);
                 
-                // 6. Columna: Ver Detalle
                 const celdaAccion = document.createElement('td');
                 const btnDetalle = document.createElement('button');
                 btnDetalle.textContent = 'Ver Detalle';
                 btnDetalle.classList.add('btn-detalle');
-                
-                // Asociar el evento click aquí para que funcione la apertura del modal
                 btnDetalle.onclick = () => abrirModal(persona.id);
-                
                 celdaAccion.appendChild(btnDetalle);
                 celdaAccion.setAttribute('data-label', headerLabels[headers[5]]); 
                 fila.appendChild(celdaAccion);
@@ -679,7 +520,6 @@
             let puntosObtenidos = 0;
             let puntosPosibles = 0;
             
-            // Cargar tabla interna
             Object.keys(hermano.eventos).forEach(tipo => {
                 const tipoDisplay = tipo.charAt(0).toUpperCase() + tipo.slice(1);
                 hermano.eventos[tipo].forEach(evento => {
@@ -706,10 +546,8 @@
                     const celdaPuntuacion = document.createElement('td');
                     celdaPuntuacion.textContent = puntos.toFixed(1); 
                     
-                    fila.appendChild(celdaTipo);
-                    fila.appendChild(celdaNombre);
-                    fila.appendChild(celdaEstado);
-                    fila.appendChild(celdaPuntuacion);
+                    fila.appendChild(celdaTipo); fila.appendChild(celdaNombre);
+                    fila.appendChild(celdaEstado); fila.appendChild(celdaPuntuacion);
                     modalDetalleBody.appendChild(fila);
                 });
             });
@@ -717,13 +555,10 @@
             puntosObtenidos = parseFloat(puntosObtenidos.toFixed(1));
             const porcentajePuntos = puntosPosibles === 0 ? 0 : (puntosObtenidos / puntosPosibles) * 100;
             
-            // Insertar la puntuación y puntos posibles en el Label
             porcentajeLabel.textContent = `${porcentajePuntos.toFixed(1)}% (${puntosObtenidos.toFixed(1)} / ${puntosPosibles.toFixed(1)} Puntos)`;
             
-            // Corrección: Asegurar que el modal se muestre y la transición funcione.
-            // Primero se asegura que esté visible (display: flex)
             detalleModal.style.display = 'flex'; 
-            // Luego se añade la clase 'show' para la opacidad
+            
             setTimeout(() => {
                 detalleModal.classList.add('show');
                 renderizarChartIndividual(porcentajePuntos);
@@ -800,8 +635,7 @@
 
 
         function descargarPDF() {
-            alert("Simulando la generación y descarga del reporte detallado. En un sistema real, el archivo se descargaría ahora.");
-            
+            alert("Simulando la generación y descarga del reporte detallado.");
             const contenido = "--- Reporte Detallado de Puntuación - Primera Cuadrilla ---\n\n" + 
                               "Nombre | Puntuación Total\n" +
                               "---------------------------------------------------\n" +
@@ -811,7 +645,6 @@
 
             const blob = new Blob([contenido], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
-            
             const a = document.createElement('a');
             a.href = url;
             a.download = 'Reporte_Puntuacion_Cuadrilla.txt';
@@ -820,16 +653,12 @@
             document.body.removeChild(a);
         }
 
-        // Inicialización de la página al cargar
         document.addEventListener('DOMContentLoaded', () => {
             renderizarDashboard();
             renderizarTabla();
-            
-            // Asegurar que el listener del botón de descarga esté activo
             document.getElementById('btnDescargarPDF').addEventListener('click', descargarPDF);
         });
         
-        // Cerrar modal al hacer clic fuera y con ESC
         detalleModal.addEventListener('click', (e) => {
             if (e.target === detalleModal) {
                 cerrarModal();
