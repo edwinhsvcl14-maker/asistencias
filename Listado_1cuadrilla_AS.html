@@ -52,21 +52,12 @@
             margin-bottom: 30px;
         }
 
-        .header-titulo {
-            flex-grow: 1; 
-            text-align: center;
-        }
-
         .header-titulo h1 {
             color: var(--color-acento);
             font-size: 2.2em; 
             margin: 0;
         }
         
-        .header-titulo p {
-            margin: 5px 0 0 0;
-        }
-
         .logo-espacio {
             width: 100px; 
             height: 100px;
@@ -75,8 +66,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 0.8em;
-            color: var(--color-acento);
             flex-shrink: 0; 
             padding: 5px;
             box-sizing: border-box;
@@ -84,7 +73,7 @@
         }
         
         /* ---------------------------------------------------------- */
-        /* Estilos del Dashboard */
+        /* Estilos del Dashboard (Ajuste de Balance) */
         /* ---------------------------------------------------------- */
         .dashboard {
             display: flex;
@@ -99,21 +88,50 @@
 
         .tarjeta-resumen {
             flex: 1 1 calc(33.33% - 20px); 
-            min-width: 250px; /* Asegura que no se haga demasiado pequeña en desktop */
+            min-width: 250px; 
             background-color: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
             text-align: center;
             border-left: 5px solid var(--color-acento);
+            display: flex; /* Para centrar contenido */
+            flex-direction: column;
+            justify-content: space-between;
         }
 
+        .tarjeta-resumen h3 {
+            margin-top: 0;
+            color: var(--color-acento);
+            font-size: 1.1em;
+            text-transform: uppercase;
+        }
+        
+        /* Contenedor del valor del Total de Hermanos */
+        .valor {
+            font-size: 4em; /* Aumentar el tamaño para igualar la altura del gráfico */
+            font-weight: bold;
+            color: var(--color-exito);
+            line-height: 1.1; /* Ajustar línea para el centrado visual */
+            padding-top: 10px;
+            padding-bottom: 15px;
+        }
+
+        /* Contenedor del gráfico para darle la misma altura que el número */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 150px; 
+            height: 150px; /* Altura para igualar el espacio del número */
+            margin: 10px auto 0 auto; 
+        }
+        
         /* ---------------------------------------------------------- */
-        /* Estilos de la Tabla (Ponderación) */
+        /* Estilos de la Tabla y Puntuación */
         /* ---------------------------------------------------------- */
 
         .tabla-responsive {
-            overflow-x: auto; /* Permite scroll horizontal si es necesario, pero lo manejaremos con CSS responsive */
+            overflow-x: auto; 
         }
 
         table {
@@ -132,7 +150,6 @@
             border-right: 1px solid var(--color-borde);
         }
         
-        /* Estilos de Puntuación en Tablas */
         .score-total { font-size: 1.2em; font-weight: bold; color: var(--color-acento); }
         .score-parcial { font-weight: bold; color: var(--color-texto-oscuro); }
         .asistio-bg { background-color: var(--color-exito); color: white; border-radius: 4px; padding: 3px 6px; } 
@@ -183,6 +200,11 @@
             position: relative; 
         }
         
+        .modal-backdrop.show {
+            display: flex;
+            opacity: 1;
+        }
+        
         .close-btn {
             position: absolute; 
             top: 10px;
@@ -197,54 +219,55 @@
             transition: color 0.2s;
             z-index: 10; 
         }
-        .close-btn:hover {
-            color: var(--color-peligro);
+
+        /* ---------------------------------------------------------- */
+        /* Estilos del Botón de Descarga (Asegurando el estilo) */
+        /* ---------------------------------------------------------- */
+        .pie-pagina {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--color-borde);
         }
 
-        .modal-bar-chart-container {
-            width: 100%;
-            height: 50px; 
-            max-width: 350px; 
-            margin: 0 auto;
-            position: relative;
-            display: flex; 
-            flex-direction: column;
-            justify-content: center;
+        #btnDescargarPDF {
+            background-color: var(--color-acento);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
         
+        #btnDescargarPDF:hover {
+            background-color: #8B4513; /* Tono más oscuro de Sienna */
+            transform: translateY(-2px);
+        }
+
         /* ========================================================== */
-        /* MEDIA QUERIES (Responsive Design) */
+        /* MEDIA QUERIES (Responsive Design) - Sin cambios, mantenemos la estructura */
         /* ========================================================== */
 
         @media (max-width: 768px) {
             
-            /* 1. Dashboard se apila */
+            /* Dashboard se apila */
             .tarjeta-resumen {
-                flex: 1 1 100%; /* Ocupa todo el ancho disponible */
+                flex: 1 1 100%;
                 min-width: auto;
             }
 
-            /* 2. Encabezado para pantallas pequeñas */
+            /* Encabezado para pantallas pequeñas */
             header {
                 flex-direction: column;
                 text-align: center;
             }
-            .header-titulo {
-                margin-top: 10px;
-            }
 
-            /* 3. Tabla principal se convierte en tarjetas apiladas */
-            table {
-                border: none; /* Quitamos bordes de la tabla general */
-            }
-
-            thead {
-                display: none; /* Oculta la cabecera de la tabla */
-            }
-
-            tbody, tr {
-                display: block;
-            }
+            /* Tabla principal se convierte en tarjetas apiladas */
+            table { border: none; }
+            thead { display: none; }
+            tbody, tr { display: block; }
             
             tbody tr {
                 margin-bottom: 20px;
@@ -255,15 +278,14 @@
             }
 
             td {
-                display: block; /* Cada celda toma todo el ancho */
+                display: block;
                 text-align: right;
                 border-bottom: 1px solid #eee;
                 border-right: none;
                 padding: 10px 15px;
-                position: relative; /* Para la etiqueta del atributo */
+                position: relative;
             }
             
-            /* Añade la etiqueta de la columna (Header) usando pseudo-elemento */
             td::before {
                 content: attr(data-label);
                 position: absolute;
@@ -273,9 +295,8 @@
                 text-align: left;
             }
             
-            /* Ajuste para la primera columna (Nombre) y la última (Acciones) */
             tbody tr td:first-child {
-                text-align: left; /* El nombre sigue a la izquierda */
+                text-align: left;
                 font-size: 1.1em;
                 font-weight: bold;
                 color: var(--color-texto-oscuro);
@@ -283,23 +304,12 @@
             }
             
             tbody tr td:first-child::before {
-                content: ""; /* No mostrar etiqueta "Nombre" */
+                content: ""; 
             }
             
             tbody tr td:last-child {
                 border-bottom: none;
                 text-align: center;
-            }
-            
-            /* 4. Modal en móvil */
-            .modal-content {
-                width: 95%;
-                margin: 10px;
-            }
-            
-            .modal-stats {
-                flex-direction: column;
-                align-items: stretch;
             }
         }
     </style>
@@ -414,12 +424,12 @@
         
         // Mapeo de Headers de Tabla (Para Responsive)
         const headerLabels = {
-            'Nombre y Apellido': '', // No se usa para el primer TD
+            'Nombre y Apellido': '', 
             'Puntos Retiro': 'Puntos Retiro',
             'Puntos Asambleas': 'Puntos Asambleas',
             'Puntos Jornadas': 'Puntos Jornadas',
             'PUNTUACIÓN TOTAL': 'Puntuación Total',
-            'Acciones': '' // No se usa para el botón
+            'Acciones': '' 
         };
 
         function obtenerPuntuacion(estado) {
@@ -510,7 +520,6 @@
 
 
         function calcularEstadisticas() {
-            // ... (Lógica de cálculo de estadísticas) ...
             const totalHermanos = datosAsistencias.length;
             let totalMisasAsistidasPuntos = 0;
             let sumaTotalPuntosEventosIndividuales = 0; 
@@ -540,7 +549,6 @@
         }
 
         function renderizarDashboard() {
-            // ... (Renderizado de dashboard) ...
             const stats = calcularEstadisticas();
             
             document.getElementById('totalHermanos').textContent = stats.totalHermanos;
@@ -612,28 +620,28 @@
                 const celdaNombre = document.createElement('td');
                 celdaNombre.textContent = persona.nombre;
                 celdaNombre.style.textAlign = 'left'; 
-                celdaNombre.setAttribute('data-label', headerLabels[headers[0]]); // Responsive
+                celdaNombre.setAttribute('data-label', headerLabels[headers[0]]); 
                 fila.appendChild(celdaNombre);
 
                 // 2. Puntos Retiro
                 let celdaRetiro = document.createElement('td');
                 celdaRetiro.textContent = resumen.retiro.toFixed(1);
                 celdaRetiro.classList.add('score-parcial');
-                celdaRetiro.setAttribute('data-label', headerLabels[headers[1]]); // Responsive
+                celdaRetiro.setAttribute('data-label', headerLabels[headers[1]]); 
                 fila.appendChild(celdaRetiro);
                 
                 // 3. Puntos Asamblea
                 let celdaAsamblea = document.createElement('td');
                 celdaAsamblea.textContent = resumen.asamblea.toFixed(1);
                 celdaAsamblea.classList.add('score-parcial');
-                celdaAsamblea.setAttribute('data-label', headerLabels[headers[2]]); // Responsive
+                celdaAsamblea.setAttribute('data-label', headerLabels[headers[2]]); 
                 fila.appendChild(celdaAsamblea);
 
                 // 4. Puntos Jornadas
                 let celdaJornada = document.createElement('td');
                 celdaJornada.textContent = resumen.jornadas.toFixed(1);
                 celdaJornada.classList.add('score-parcial');
-                celdaJornada.setAttribute('data-label', headerLabels[headers[3]]); // Responsive
+                celdaJornada.setAttribute('data-label', headerLabels[headers[3]]); 
                 fila.appendChild(celdaJornada);
 
 
@@ -641,7 +649,7 @@
                 const celdaTotal = document.createElement('td');
                 celdaTotal.textContent = resumen.total.toFixed(1);
                 celdaTotal.classList.add('score-total');
-                celdaTotal.setAttribute('data-label', headerLabels[headers[4]]); // Responsive
+                celdaTotal.setAttribute('data-label', headerLabels[headers[4]]); 
                 fila.appendChild(celdaTotal);
                 
                 // 6. Columna: Ver Detalle
@@ -649,9 +657,12 @@
                 const btnDetalle = document.createElement('button');
                 btnDetalle.textContent = 'Ver Detalle';
                 btnDetalle.classList.add('btn-detalle');
+                
+                // Asociar el evento click aquí para que funcione la apertura del modal
                 btnDetalle.onclick = () => abrirModal(persona.id);
+                
                 celdaAccion.appendChild(btnDetalle);
-                celdaAccion.setAttribute('data-label', headerLabels[headers[5]]); // Responsive
+                celdaAccion.setAttribute('data-label', headerLabels[headers[5]]); 
                 fila.appendChild(celdaAccion);
 
                 tablaBody.appendChild(fila);
@@ -676,26 +687,22 @@
                     const estadoDetalle = obtenerTextoEstado(evento.estado);
                     
                     puntosObtenidos += puntos;
-                    puntosPosibles += PUNTOS.ASISTIO; // Máximo punto posible por evento
+                    puntosPosibles += PUNTOS.ASISTIO; 
                     
                     const fila = document.createElement('tr');
                     
-                    // Columna Evento
                     const celdaTipo = document.createElement('td');
                     celdaTipo.textContent = tipoDisplay;
                     
-                    // Columna Sub-Evento
                     const celdaNombre = document.createElement('td');
                     celdaNombre.textContent = evento.nombre;
 
-                    // Columna Estado (Texto y Estilo)
                     const celdaEstado = document.createElement('td');
                     const spanEstado = document.createElement('span');
                     spanEstado.textContent = estadoDetalle.texto;
                     spanEstado.className = estadoDetalle.clase;
                     celdaEstado.appendChild(spanEstado);
                     
-                    // Columna Puntuación (Valor numérico)
                     const celdaPuntuacion = document.createElement('td');
                     celdaPuntuacion.textContent = puntos.toFixed(1); 
                     
@@ -713,12 +720,12 @@
             // Insertar la puntuación y puntos posibles en el Label
             porcentajeLabel.textContent = `${porcentajePuntos.toFixed(1)}% (${puntosObtenidos.toFixed(1)} / ${puntosPosibles.toFixed(1)} Puntos)`;
             
-            // Mostrar Modal *antes* de renderizar el gráfico
-            detalleModal.style.display = 'flex';
-            
+            // Corrección: Asegurar que el modal se muestre y la transición funcione.
+            // Primero se asegura que esté visible (display: flex)
+            detalleModal.style.display = 'flex'; 
+            // Luego se añade la clase 'show' para la opacidad
             setTimeout(() => {
                 detalleModal.classList.add('show');
-                // Renderizar gráfico *después* de que el contenedor es visible
                 renderizarChartIndividual(porcentajePuntos);
             }, 50); 
         }
@@ -817,8 +824,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             renderizarDashboard();
             renderizarTabla();
+            
+            // Asegurar que el listener del botón de descarga esté activo
+            document.getElementById('btnDescargarPDF').addEventListener('click', descargarPDF);
         });
-        document.getElementById('btnDescargarPDF').addEventListener('click', descargarPDF);
         
         // Cerrar modal al hacer clic fuera y con ESC
         detalleModal.addEventListener('click', (e) => {
