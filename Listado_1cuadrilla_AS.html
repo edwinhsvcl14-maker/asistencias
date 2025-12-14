@@ -3,419 +3,814 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visor de Asistencia de Cuadrilla</title>
+    <title id="pageTitle">Control de Asistencia</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* CSS Básico */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f2f5;
-            color: #333;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            background: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .header h1 {
-            color: #4a4a4a;
-            font-size: 2em;
-            margin-top: 10px;
-        }
-        .logo {
-            max-width: 120px;
-            height: auto;
-            margin-bottom: 15px;
-            border-radius: 50%;
-            border: 3px solid #7c0000; /* Color simbólico de Hermandad */
-        }
-        /* Estilos de Búsqueda */
-        .search-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-        }
-        #searchInput {
-            flex-grow: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1em;
-        }
-        #searchButton {
-            padding: 10px 15px;
-            background-color: #7c0000;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        #searchButton:hover {
-            background-color: #5d0000;
+        /*
+        ========================================================== */
+        /* Estilos CSS Base y Colores */
+        /*
+        ========================================================== */
+        
+        :root {
+            --color-principal: #F5F5DC; 
+            --color-secundario: #FAF0E6; 
+            --color-acento: #A0522D; 
+            --color-texto-oscuro: #3E2723; 
+            --color-borde: #D2B48C; 
+            --color-exito: #38761D; 
+            --color-dispensa: #F7D600; 
+            --color-peligro: #CC0000; 
         }
 
-        /* Estilos de la Tabla */
-        .data-table-container {
-            overflow-x: auto;
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--color-secundario);
+            color: var(--color-texto-oscuro);
         }
-        #attendanceTable {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+
+        .contenedor {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+            background-color: var(--color-principal);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 30px;
         }
-        #attendanceTable th, #attendanceTable td {
-            border: 1px solid #ddd;
-            padding: 10px;
+        
+        header {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--color-acento);
+            margin-bottom: 30px;
+        }
+
+        .header-titulo h1 {
+            color: var(--color-acento);
+            font-size: 2.2em; 
+            margin: 0;
+        }
+        
+        .logo-espacio {
+            width: 100px; 
+            height: 100px;
+            border: 2px dashed var(--color-borde);
+            border-radius: 50%; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0; 
+            padding: 5px;
+            box-sizing: border-box;
+            background-color: white; 
+        }
+        
+        .logo-espacio img {
+            width: 80%; 
+            height: 80%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        /*
+        ---------------------------------------------------------- */
+        /* Estilos del Dashboard */
+        /*
+        ---------------------------------------------------------- */
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: var(--color-secundario);
+            border: 1px solid var(--color-borde);
+        }
+
+        .tarjeta-resumen {
+            flex: 1 1 calc(33.33% - 20px); 
+            min-width: 250px; 
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
             text-align: center;
+            border-left: 5px solid var(--color-acento);
+            display: flex; 
+            flex-direction: column;
+            justify-content: space-between;
         }
-        #attendanceTable th {
-            background-color: #7c0000;
-            color: white;
+
+        .tarjeta-resumen h3 {
+            margin-top: 0;
+            color: var(--color-acento);
+            font-size: 1.1em;
             text-transform: uppercase;
-            font-size: 0.85em;
-            cursor: pointer; /* Para futura funcionalidad de ordenar */
         }
-        #attendanceTable tr:nth-child(even) {
-            background-color: #f2f2f2;
+        
+        .valor {
+            font-size: 4em; 
+            font-weight: bold;
+            color: var(--color-exito);
+            line-height: 1.1; 
+            padding-top: 10px;
+            padding-bottom: 15px;
         }
-        #attendanceTable tr:hover {
-            background-color: #e9e9e9;
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 150px; 
+            height: 150px; 
+            margin: 10px auto 0 auto; 
         }
-        /* Estilos específicos para la columna de nombre */
-        #attendanceTable .hermano-name {
-            text-align: left;
-            font-weight: 500;
+        
+        /*
+        ---------------------------------------------------------- */
+        /* Estilos de la Tabla y Botón de Detalle */
+        /*
+        ---------------------------------------------------------- */
+
+        .tabla-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--color-borde); border-radius: 8px; overflow: hidden; }
+        th, td { padding: 14px 18px; text-align: center; border-bottom: 1px solid var(--color-borde); border-right: 1px solid var(--color-borde); }
+        .score-total { font-size: 1.2em; font-weight: bold; color: var(--color-acento); }
+        .score-parcial { font-weight: bold; color: var(--color-texto-oscuro); }
+        .asistio-bg { background-color: var(--color-exito); color: white; border-radius: 4px; padding: 3px 6px; } 
+        .dispensa-bg { background-color: var(--color-dispensa); color: var(--color-texto-oscuro); border-radius: 4px; padding: 3px 6px; } 
+        .falto-bg { background-color: var(--color-peligro); color: white; border-radius: 4px; padding: 3px 6px; } 
+        .btn-detalle { background-color: var(--color-acento); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; font-size: 0.9em; }
+
+        /*
+        ---------------------------------------------------------- */
+        /* Estilos del Modal (Ajuste para el gráfico interno) */
+        /*
+        ---------------------------------------------------------- */
+
+        .modal-backdrop {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); display: none; 
+            justify-content: center; align-items: center; z-index: 1000;
+            opacity: 0; transition: opacity 0.3s ease;
         }
-        /* Estilo para las asistencias (1 o 0) */
-        .asistencia-si { color: green; font-weight: bold; }
-        .asistencia-no { color: red; }
+
+        .modal-backdrop.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: white; color: var(--color-texto-oscuro);
+            padding: 30px; padding-top: 50px; border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 90%; max-width: 700px;
+            transform: scale(0.9); transition: transform 0.3s ease;
+            position: relative; 
+        }
+
+        .modal-stats {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Corregido: Limitar el tamaño del contenedor del gráfico de barra */
+        .modal-bar-chart-container {
+            flex: 2;
+            width: 100%;
+            max-width: 400px; 
+            height: 50px; 
+            margin: 0;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute; top: 10px; right: 15px;
+            background: none; border: none; font-size: 2.5em; 
+            line-height: 1; cursor: pointer; color: var(--color-acento);
+            padding: 5px; transition: color 0.2s; z-index: 10; 
+        }
+
+        /*
+        ---------------------------------------------------------- */
+        /* Estilos del Botón de Descarga */
+        /*
+        ---------------------------------------------------------- */
+        #btnDescargarPDF {
+            background-color: var(--color-acento); color: white; border: none;
+            padding: 15px 30px; font-size: 1.1em; border-radius: 8px;
+            cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        /*
+        ========================================================== */
+        /* MEDIA QUERIES (Responsive Design) */
+        /*
+        ========================================================== */
+
+        @media (max-width: 768px) {
+            
+            .tarjeta-resumen { flex: 1 1 100%; min-width: auto; }
+            header { flex-direction: column; text-align: center; }
+
+            /* Tabla principal se convierte en tarjetas apiladas */
+            table { border: none; } thead { display: none; }
+            tbody, tr { display: block; }
+            
+            tbody tr { margin-bottom: 20px; border: 1px solid var(--color-borde); border-radius: 8px; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+
+            td { display: block; text-align: right; border-bottom: 1px solid #eee; border-right: none; padding: 10px 15px; position: relative; }
+            
+            td::before { content: attr(data-label); position: absolute; left: 15px; font-weight: bold; color: var(--color-acento); text-align: left; }
+            
+            tbody tr td:first-child { text-align: left; font-size: 1.1em; font-weight: bold; color: var(--color-texto-oscuro); border-bottom: 2px solid var(--color-borde); }
+            
+            tbody tr td:first-child::before { content: ""; }
+            
+            tbody tr td:last-child { border-bottom: none; text-align: center; }
+            
+            /* Modal en móvil */
+            .modal-content { width: 95%; margin: 10px; }
+            .modal-stats { flex-direction: column; align-items: stretch; }
+            
+            /* Asegurar que en móvil el gráfico ocupe casi todo el ancho, pero no se desborde */
+            .modal-bar-chart-container {
+                max-width: 100%; 
+                margin-top: 10px;
+            }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <img id="cuadrillaLogo" class="logo" src="" alt="Logo de Cuadrilla">
-        <h1 id="cuadrillaTitle">Cargando Título...</h1>
-        <p id="infoId">ID de Cuadrilla: Cargando...</p>
-    </div>
+    <div class="contenedor fade-in">
+        <header>
+            <div class="logo-espacio" id="logoCuadrilla">
+                <img id="logoImg" src="" alt="Logo de la Cuadrilla">
+            </div>
+            <div class="header-titulo">
+                <h1 id="cuadrillaTitulo">Cargando Cuadrilla...</h1>
+                <p>Listado detallado de participación en actividades.</p>
+            </div>
+            <div class="logo-espacio" style="visibility: hidden;"></div> 
+        </header>
 
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Buscar hermano por nombre o apellido...">
-        <button id="searchButton" onclick="filterTable()">Buscar</button>
-    </div>
+        <h2>📊 Resumen de Puntuación</h2>
+        <section class="dashboard">
+            <div class="tarjeta-resumen">
+                <h3>Total de Hermanos</h3>
+                <div class="valor" id="totalHermanos">0</div>
+                <p class="descripcion">Miembros activos en la lista.</p>
+            </div>
 
-    <div class="data-table-container">
-        <table id="attendanceTable">
-            <thead>
-                <tr id="tableHeaderRow">
+            <div class="tarjeta-resumen">
+                <h3>Promedio General</h3>
+                <div class="chart-container">
+                    <canvas id="chartPromedioGeneral"></canvas>
+                </div>
+            </div>
+
+            <div class="tarjeta-resumen">
+                <h3>Participación Misas</h3>
+                <div class="chart-container">
+                    <canvas id="chartPromedioMisas"></canvas>
+                </div>
+            </div>
+        </section>
+        
+        <h2>📋 Detalle de Puntuación</h2>
+        <div class="tabla-responsive">
+            <table id="tablaAsistencias">
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Nombre y Apellido</th>
+                        <th>Puntos Retiro</th> 
+                        <th>Puntos Asambleas</th> 
+                        <th>Puntos Jornadas</th> 
+                        <th>PUNTUACIÓN TOTAL</th> 
+                        <th>Acciones</th> 
                     </tr>
-            </thead>
-            <tbody id="tableBody">
+                </thead>
+                <tbody>
                 </tbody>
-        </table>
-        <p id="noResults" style="display:none; text-align: center; margin-top: 20px; color: #7c0000;">No se encontraron resultados para la búsqueda.</p>
+            </table>
+        </div>
+
+        <div class="pie-pagina">
+            <button id="btnDescargarPDF">Descargar Reporte Detallado (Simulación)</button>
+        </div>
     </div>
-</div>
-
-<script>
-    // Función para obtener el parámetro 'id' de la URL
-    function getQueryParam(param) {
-        const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get(param);
-    }
-
-    // Función para determinar el título de la cuadrilla
-    function getCuadrillaTitle(id) {
-        const titles = {
-            '1': 'Primera Cuadrilla', '2': 'Segunda Cuadrilla', '3': 'Tercera Cuadrilla', '4': 'Cuarta Cuadrilla', 
-            '5': 'Quinta Cuadrilla', '6': 'Sexta Cuadrilla', '7': 'Séptima Cuadrilla', '8': 'Octava Cuadrilla', 
-            '9': 'Novena Cuadrilla', '10': 'Décima Cuadrilla', '11': 'Undécima Cuadrilla', '12': 'Duodécima Cuadrilla', 
-            '13': 'Decimotercera Cuadrilla', '14': 'Decimocuarta Cuadrilla', '15': 'Decimoquinta Cuadrilla', 
-            '16': 'Decimosexta Cuadrilla', '17': 'Decimoséptima Cuadrilla', '18': 'Decimoctava Cuadrilla', 
-            '19': 'Decimonovena Cuadrilla', '20': 'Vigésima Cuadrilla',
-            'gs': 'Grupo de Sahumadoras',
-            'gc': 'Grupo de Cantoras'
-        };
-        return titles[id] || `Cuadrilla ID ${id} (Desconocida)`;
-    }
-
-    // Función para determinar el nombre del archivo de logo
-    function getLogoFileName(id) {
-        if (id >= 1 && id <= 20) {
-            return `${id}__.png`; // Asumiendo que el formato es N_.png, usé N__.png como ejemplo. Si el formato es N_.png, cambia a `${id}_.png`
-        } else if (id === 'gs') {
-            return 'gs_.png';
-        } else if (id === 'gc') {
-            return 'gc_.png';
-        }
-        return 'default.png'; // Un logo por defecto si el ID es inválido
-    }
-
-    // Datos JSON de la Cuadrilla 12 (SIMULACIÓN DE CARGA)
-    // En un entorno real, la función loadAttendanceData haría una petición `fetch('12.json')`
-    const dataCuadrilla12 = [
-        // Aquí va el JSON completo que proporcionaste
-        { "nro": 1, "apellidos_y_nombres": "ACOSTA NAFRIA, GUSTAVO JESUS", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 1, "JN4": 0, "JN5": 0, "JN6": 1, "TOT": 2 } }, "total_general_puntos": 4 },
-        { "nro": 2, "apellidos_y_nombres": "AGUILAR VILLA, MIGUEL ERNESTO", "asistencias": { "misa_de_retiro": { "AGO": 1, "SET": 1, "OCT": 1, "NOV": 1, "TOT": 4 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 0, "TOT": 1 }, "jornadas": { "JN1": 1, "JN2": 1, "JN3": 1, "JN4": 1, "JN5": 1, "JN6": 1, "TOT": 6 } }, "total_general_puntos": 11 },
-        { "nro": 3, "apellidos_y_nombres": "ALVARADO AVALOS, FRANCIS EMANUEL", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 1, "TOT": 1 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 3 },
-        { "nro": 4, "apellidos_y_nombres": "ANDRADE CACERES, RAUL ALBERTO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 1, "JN2": 1, "JN3": 1, "JN4": 1, "JN5": 1, "JN6": 1, "TOT": 6 } }, "total_general_puntos": 8 },
-        { "nro": 5, "apellidos_y_nombres": "ANDRADE CACERES, RAUL ELIAS", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 1, "OCT": 1, "NOV": 1, "TOT": 3 }, "asambleas": { "AGO": 1, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 1 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 1, "JN5": 0, "JN6": 1, "TOT": 2 } }, "total_general_puntos": 6 },
-        { "nro": 6, "apellidos_y_nombres": "BAILÓN ROJAS, LUIS ALFONSO", "asistencias": { "misa_de_retiro": { "AGO": 1, "SET": 1, "OCT": 1, "NOV": 1, "TOT": 4 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 4 },
-        { "nro": 7, "apellidos_y_nombres": "BALDEÓN ROJAS, OSWALDO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 8, "apellidos_y_nombres": "BARBOZA DIAZ, JAVIER WILFREDO", "asistencias": { "misa_de_retiro": { "AGO": 1, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 3 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 1, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 1 } }, "total_general_puntos": 4 },
-        { "nro": 9, "apellidos_y_nombres": "BERNILLA MASUDA, JUAN CARLOS", "asistencias": { "misa_de_retiro": { "AGO": 1, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 3 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 1, "JN4": 1, "JN5": 0, "JN6": 1, "TOT": 3 } }, "total_general_puntos": 6 },
-        { "nro": 10, "apellidos_y_nombres": "BERTO VALENCIA, ALEX ROLANDO", "asistencias": { "misa_de_retiro": { "AGO": 1, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 3 }, "asambleas": { "AGO": 1, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 1 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 1, "JN4": 1, "JN5": 0, "JN6": 1, "TOT": 3 } }, "total_general_puntos": 7 },
-        { "nro": 11, "apellidos_y_nombres": "BOHORQUEZ PEREZ, MANUEL", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 12, "apellidos_y_nombres": "BONILLA MASUDA, LIZANDRO ALBERTO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 1, "JN4": 0, "JN5": 0, "JN6": 1, "TOT": 2 } }, "total_general_puntos": 4 },
-        { "nro": 13, "apellidos_y_nombres": "BONILLA ROJAS, SANTOS MARTIN", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 1, "JN5": 1, "JN6": 0, "TOT": 2 } }, "total_general_puntos": 4 },
-        { "nro": 14, "apellidos_y_nombres": "CABRERA ECHEVARRIA, FELIX DAMIANO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 1, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 1 } }, "total_general_puntos": 3 },
-        { "nro": 15, "apellidos_y_nombres": "CANDELA ROLDAN, RUBEN", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 1, "JN2": 1, "JN3": 1, "JN4": 1, "JN5": 1, "JN6": 1, "TOT": 6 } }, "total_general_puntos": 8 },
-        { "nro": 16, "apellidos_y_nombres": "CANO RIVERA, LUIS ALBERTO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 17, "apellidos_y_nombres": "CAVERO CASARRANCAN, MIGUEL GERMAN", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 18, "apellidos_y_nombres": "CENTENO URDINITA, ERNESTO ROMAN", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 1, "TOT": 1 } }, "total_general_puntos": 3 },
-        { "nro": 19, "apellidos_y_nombres": "COLLAZOS PEREZ, MANUEL", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 1, "JN4": 0, "JN5": 0, "JN6": 1, "TOT": 2 } }, "total_general_puntos": 4 },
-        { "nro": 20, "apellidos_y_nombres": "COLAN AVALOS, MIGUEL ANGEL", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 21, "apellidos_y_nombres": "CORDOVA CUETO, MANUEL ARTURO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 22, "apellidos_y_nombres": "COVETTO CEDAÑO, PEDRO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 23, "apellidos_y_nombres": "CUSTODIO BUENO, LUIS ENRIQUE", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 24, "apellidos_y_nombres": "DELGADO RAMIREZ, CARLOS RICARDO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 1, "TOT": 1 } }, "total_general_puntos": 3 },
-        { "nro": 25, "apellidos_y_nombres": "DURAND GOMEZ, JOSE ANGEL", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 1, "JN2": 1, "JN3": 1, "JN4": 1, "JN5": 1, "JN6": 1, "TOT": 6 } }, "total_general_puntos": 8 },
-        { "nro": 26, "apellidos_y_nombres": "DURAN MUÑOZ, HILMER JAVIER AUGUSTO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 1, "JN2": 1, "JN3": 0, "JN4": 0, "JN5": 1, "JN6": 1, "TOT": 4 } }, "total_general_puntos": 6 },
-        { "nro": 27, "apellidos_y_nombres": "FLORIAN RODRIGUEZ, JORGE REYNALDO", "asistencias": { "misa_de_retiro": { "AGO": 0.5, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2.5 }, "asambleas": { "AGO": 1, "SET": 0.5, "OCT": 0, "NOV": 0, "TOT": 1.5 }, "jornadas": { "JN1": 1, "JN2": 0, "JN3": 1, "JN4": 0, "JN5": 1, "JN6": 1, "TOT": 4 } }, "total_general_puntos": 8 },
-        { "nro": 28, "apellidos_y_nombres": "FLORINDEZ NOIRI, SAMUEL ROLANDO", "asistencias": { "misa_de_retiro": { "AGO": 1, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 3 }, "asambleas": { "AGO": 1, "SET": 1, "OCT": 0, "NOV": 0, "TOT": 2 }, "jornadas": { "JN1": 1, "JN2": 0, "JN3": 1, "JN4": 0, "JN5": 1, "JN6": 1, "TOT": 4 } }, "total_general_puntos": 9 },
-        { "nro": 29, "apellidos_y_nombres": "FLORES BLAS, JOSE ALFREDO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 30, "apellidos_y_nombres": "FUENTES SAMAME, GERMAN", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 1, "JN4": 1, "JN5": 0, "JN6": 0, "TOT": 2 } }, "total_general_puntos": 4 },
-        { "nro": 31, "apellidos_y_nombres": "GUZMÁN ROMERO, JORGE EDUARDO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 1, "TOT": 1 } }, "total_general_puntos": 3 },
-        { "nro": 32, "apellidos_y_nombres": "HEREDIA ALVAREZ, JAIR JESUS", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 33, "apellidos_y_nombres": "HERERA AYMAR, ANGEL ANTONIO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 34, "apellidos_y_nombres": "HERRERA CHAVEZ, JUAN ANTONIO GUILLERMO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 1, "TOT": 1 } }, "total_general_puntos": 3 },
-        { "nro": 35, "apellidos_y_nombres": "HERRERA CHAVEZ, RAY LEONARDO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 1, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 1 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 3 },
-        { "nro": 36, "apellidos_y_nombres": "HURTADO JARA, LUIS ANGEL", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 1, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 1 }, "jornadas": { "JN1": 1, "JN2": 1, "JN3": 1, "JN4": 1, "JN5": 1, "JN6": 1, "TOT": 6 } }, "total_general_puntos": 9 },
-        { "nro": 37, "apellidos_y_nombres": "INGA DIAZ, JOSE ANTONIO GUILLERMO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 1, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 1 }, "jornadas": { "JN1": 1, "JN2": 0, "JN3": 0, "JN4": 1, "JN5": 0, "JN6": 1, "TOT": 3 } }, "total_general_puntos": 6 },
-        { "nro": 38, "apellidos_y_nombres": "INGA ROJAS, JAIME", "asistencias": { "misa_de_retiro": { "AGO": 1, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 3 }, "asambleas": { "AGO": 1, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 1 }, "jornadas": { "JN1": 1, "JN2": 0, "JN3": 1, "JN4": 0, "JN5": 1, "JN6": 0, "TOT": 3 } }, "total_general_puntos": 7 },
-        { "nro": 39, "apellidos_y_nombres": "IZQUIERDO BERNAL, JOSE LUIS", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 1, "JN2": 1, "JN3": 1, "JN4": 0, "JN5": 1, "JN6": 1, "TOT": 5 } }, "total_general_puntos": 7 },
-        { "nro": 40, "apellidos_y_nombres": "JARA PORTILLO, CARLOS DANIEL", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 1, "JN4": 1, "JN5": 0, "JN6": 1, "TOT": 3 } }, "total_general_puntos": 5 },
-        { "nro": 41, "apellidos_y_nombres": "LA PUERTA FERNANDEZ, FRANCISCO JOSE", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 1, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 1 }, "jornadas": { "JN1": 1, "JN2": 0, "JN3": 0, "JN4": 1, "JN5": 0, "JN6": 0, "TOT": 2 } }, "total_general_puntos": 5 },
-        { "nro": 42, "apellidos_y_nombres": "LAZO GOMEZ, JAIME", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 1, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 1 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 1, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 1 } }, "total_general_puntos": 4 },
-        { "nro": 43, "apellidos_y_nombres": "LEANO HUAMAN, TOMAS ALFONSO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 1, "JN4": 1, "JN5": 0, "JN6": 0, "TOT": 2 } }, "total_general_puntos": 4 },
-        { "nro": 44, "apellidos_y_nombres": "LIZARRAGA LLERENA, RAFAEL AUGUSTO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 1, "JN2": 0, "JN3": 1, "JN4": 0, "JN5": 1, "JN6": 1, "TOT": 4 } }, "total_general_puntos": 6 },
-        { "nro": 45, "apellidos_y_nombres": "LLERENA ROJAS, SEGUNDO FERNANDO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 1, "JN4": 0, "JN5": 0, "JN6": 1, "TOT": 2 } }, "total_general_puntos": 4 },
-        { "nro": 46, "apellidos_y_nombres": "LUNA LUNA, LUIS MARTIN", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0.5, "NOV": 0, "TOT": 0.5 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 1, "JN4": 0, "JN5": 1, "JN6": 1, "TOT": 3 } }, "total_general_puntos": 5.5 },
-        { "nro": 47, "apellidos_y_nombres": "MACHICADO VELARDE, JORGE LUIS", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 1, "JN4": 0, "JN5": 0, "JN6": 1, "TOT": 2 } }, "total_general_puntos": 4 },
-        { "nro": 48, "apellidos_y_nombres": "MACHICADO VELARDE, JOSE LUIS", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 49, "apellidos_y_nombres": "MACHICADO VELARDE, JUAN FRANCISCO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 50, "apellidos_y_nombres": "MALASQUEZ LEYTON, BLADY ALFREDO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 1, "JN2": 1, "JN3": 1, "JN4": 1, "JN5": 1, "JN6": 1, "TOT": 6 } }, "total_general_puntos": 8 },
-        { "nro": 51, "apellidos_y_nombres": "MENACHO GUERRERO, ALEX ANTONIO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 52, "apellidos_y_nombres": "MENACHO GUERRERO, OMAR WILLIAMS", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 53, "apellidos_y_nombres": "MOLINERO AYALA, JULIO CESAR", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 54, "apellidos_y_nombres": "MOLINERO SILVA, JORGE EDUARDO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 1, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 1 }, "jornadas": { "JN1": 1, "JN2": 0, "JN3": 1, "JN4": 0, "JN5": 1, "JN6": 1, "TOT": 4 } }, "total_general_puntos": 7 },
-        { "nro": 55, "apellidos_y_nombres": "MONTI BUSTAMANTE, ULDARICO ALFREDO", "asistencias": { "misa_de_retiro": { "AGO": 1, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 3 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 1, "JN2": 1, "JN3": 1, "JN4": 1, "JN5": 0, "JN6": 0, "TOT": 4 } }, "total_general_puntos": 7 },
-        { "nro": 56, "apellidos_y_nombres": "MONTES CASTILLO, CARLOS ALBERTO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 },
-        { "nro": 57, "apellidos_y_nombres": "NAVARRO MUNDO, CRISTIAN ORLANDO", "asistencias": { "misa_de_retiro": { "AGO": 0, "SET": 0, "OCT": 1, "NOV": 1, "TOT": 2 }, "asambleas": { "AGO": 0, "SET": 0, "OCT": 0, "NOV": 0, "TOT": 0 }, "jornadas": { "JN1": 0, "JN2": 0, "JN3": 0, "JN4": 0, "JN5": 0, "JN6": 0, "TOT": 0 } }, "total_general_puntos": 2 }
-    ];
-
-    // Variable global para almacenar los datos cargados
-    let attendanceData = [];
-
-    // Función para simular la carga de datos (deberías reemplazar esto por una llamada fetch real)
-    function loadAttendanceData(id) {
-        // En un entorno de producción, harías: 
-        // return fetch(`${id}.json`).then(response => response.json());
-        
-        // SIMULACIÓN: devolver los datos de la Cuadrilla 12
-        if (id === '12') {
-            return Promise.resolve(dataCuadrilla12);
-        }
-        
-        // SIMULACIÓN DE DATOS PARA OTRAS CUADRILLAS (ajustar según el ID real)
-        if (id === '1' || id === 'gs') {
-             // Este es un ejemplo de cómo podría verse un JSON diferente
-             return Promise.resolve([
-                { "nro": 1, "apellidos_y_nombres": "EJEMPLO SAHUMADORA, ANA MARIA", "asistencias": { "culto": { "OCT": 1, "NOV": 1, "TOT": 2 }, "ensayo": { "ENS1": 1, "ENS2": 0, "TOT": 1 } }, "total_general_puntos": 3 },
-                { "nro": 2, "apellidos_y_nombres": "PRUEBA CANTORA, LUZ ELENA", "asistencias": { "culto": { "OCT": 0, "NOV": 1, "TOT": 1 }, "ensayo": { "ENS1": 1, "ENS2": 1, "TOT": 2 } }, "total_general_puntos": 3 }
-            ]);
-        }
-
-        // Si el ID no es 12, devuelve una promesa vacía por defecto.
-        return Promise.resolve([]); 
-    }
-
-    // Función principal para renderizar la tabla
-    function renderAttendanceTable(data) {
-        if (data.length === 0) {
-            document.getElementById('tableBody').innerHTML = '<tr><td colspan="100%" style="padding: 20px; color: #7c0000; font-weight: bold;">No hay datos de asistencia disponibles para esta Cuadrilla.</td></tr>';
-            return;
-        }
-
-        const tableBody = document.getElementById('tableBody');
-        const tableHeaderRow = document.getElementById('tableHeaderRow');
-        
-        tableBody.innerHTML = '';
-        tableHeaderRow.innerHTML = '';
-
-        // 1. GENERAR CABECERAS
-        tableHeaderRow.innerHTML += '<th>Nro</th><th>Apellidos y Nombres</th>';
-        
-        // Obtener la estructura de actividades (asistencias) del primer hermano
-        const sampleMember = data[0];
-        const activityGroups = sampleMember.asistencias; // misa_de_retiro, asambleas, jornadas
-
-        let colspanIndex = {}; // Guardar cuántas subcolumnas tiene cada grupo
-        
-        for (const groupName in activityGroups) {
-            const activities = activityGroups[groupName]; // {AGO: 0, SET: 0, ...}
-            const activityKeys = Object.keys(activities).filter(key => key !== 'TOT'); // Excluir la columna TOTAL de la sub-cabecera
-            
-            colspanIndex[groupName] = activityKeys.length + 1; // +1 para la columna TOT
-            
-            // Sub-cabecera (combinada, ejemplo: MISAS DE RETIRO)
-            const combinedHeader = document.createElement('th');
-            combinedHeader.colSpan = colspanIndex[groupName];
-            combinedHeader.textContent = groupName.replace(/_/g, ' ').toUpperCase(); // Título legible
-            tableHeaderRow.appendChild(combinedHeader);
-        }
-        
-        tableHeaderRow.innerHTML += '<th>Total Puntos</th>';
-
-        // Insertar una segunda fila de cabecera para los meses/jornadas
-        const subHeaderRow = document.createElement('tr');
-        subHeaderRow.innerHTML += '<th></th><th></th>'; // Espacios para Nro y Nombre
-
-        for (const groupName in activityGroups) {
-            const activities = activityGroups[groupName];
-            const activityKeys = Object.keys(activities);
-            
-            activityKeys.forEach(key => {
-                const th = document.createElement('th');
-                th.textContent = key;
-                // Aplicar estilo de color diferente para el total (TOT)
-                if (key === 'TOT') {
-                    th.style.backgroundColor = '#5d0000';
-                }
-                subHeaderRow.appendChild(th);
-            });
-        }
-        document.querySelector('#attendanceTable thead').appendChild(subHeaderRow);
-
-
-        // 2. GENERAR CUERPO DE LA TABLA (DATOS)
-        data.forEach(hermano => {
-            const row = document.createElement('tr');
-            
-            // Columna 1: Nro
-            row.innerHTML += `<td>${hermano.nro}</td>`;
-            
-            // Columna 2: Nombre (usada para búsqueda)
-            row.innerHTML += `<td class="hermano-name">${hermano.apellidos_y_nombres}</td>`;
-            
-            // Columnas de Asistencia
-            for (const groupName in hermano.asistencias) {
-                const activities = hermano.asistencias[groupName];
-                for (const key in activities) {
-                    const value = activities[key];
-                    let cellClass = '';
-                    let displayValue = value;
-
-                    if (key !== 'TOT') {
-                        cellClass = (value >= 1) ? 'asistencia-si' : ((value > 0) ? 'asistencia-si' : 'asistencia-no');
-                        displayValue = (value >= 1) ? '✓' : (value > 0 ? '½' : 'X');
-                    }
-                    
-                    const td = document.createElement('td');
-                    td.className = cellClass;
-                    td.textContent = displayValue;
-                    
-                    // Resaltar totales
-                    if (key === 'TOT') {
-                        td.style.fontWeight = 'bold';
-                        td.style.backgroundColor = '#fce4ec'; /* Un color de fondo suave */
-                    }
-
-                    row.appendChild(td);
-                }
-            }
-            
-            // Columna Final: Total General de Puntos
-            row.innerHTML += `<td><strong>${hermano.total_general_puntos}</strong></td>`;
-            
-            tableBody.appendChild(row);
-        });
-    }
     
-    // Función de Búsqueda
-    function filterTable() {
-        const input = document.getElementById('searchInput');
-        const filter = input.value.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Normalizar tildes/ñ
-        const table = document.getElementById('attendanceTable');
-        const tr = table.getElementsByTagName('tr');
-        let found = false;
-        let visibleCount = 0;
+    <div id="detalleModal" class="modal-backdrop">
+        <div class="modal-content">
+            
+            <button class="close-btn" onclick="cerrarModal()">&times;</button>
 
-        for (let i = 2; i < tr.length; i++) { // Empezar en la fila 2 para saltar las dos filas de encabezado
-            const td = tr[i].getElementsByTagName('td')[1]; // Columna 1 es el nombre del Hermano
-            if (td) {
-                const textValue = td.textContent || td.innerText;
-                const normalizedText = textValue.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            <div class="modal-header">
+                <h2 id="modalNombreHermano">Detalle de Puntuación</h2>
+            </div>
+
+            <div class="modal-body">
                 
-                if (normalizedText.indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                    visibleCount++;
-                } else {
-                    tr[i].style.display = "none";
-                }
+                <div class="modal-stats">
+                    <div style="flex: 1;">
+                        <p style="margin: 0; font-weight: bold; font-size: 1.1em;">Puntuación Individual</p>
+                        <p style="margin: 5px 0 0 0;">(Puntos obtenidos / Puntos posibles)</p>
+                    </div>
+                    
+                    <div class="modal-bar-chart-container">
+                        <span id="porcentajeAsistenciaLabel" style="text-align: right; display: block; margin-bottom: 5px; font-weight: bold;"></span> 
+                        <canvas id="chartAsistenciaIndividual"></canvas>
+                    </div>
+                </div>
+
+                <table class="modal-detalle-tabla">
+                    <thead>
+                        <tr>
+                            <th>Evento</th>
+                            <th>Sub-Evento</th>
+                            <th>Estado</th> 
+                            <th>Puntuación</th> 
+                        </tr>
+                    </thead>
+                    <tbody id="modalDetalleBody">
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        // ==========================================================
+        // CONSTANTES Y DATOS DINÁMICOS
+        // ==========================================================
+        const PUNTOS = {
+            ASISTIO: 1.0, DISPENSA: 0.5, FALTO: 0.0
+        };
+        
+        const headerLabels = {
+            'Nombre y Apellido': '', 'Puntos Retiro': 'Puntos Retiro',
+            'Puntos Asambleas': 'Puntos Asambleas', 'Puntos Jornadas': 'Puntos Jornadas',
+            'PUNTUACIÓN TOTAL': 'Puntuación Total', 'Acciones': '' 
+        };
+
+        const COLOR_ACCENT = getComputedStyle(document.documentElement).getPropertyValue('--color-acento').trim();
+        const COLOR_SUCCESS = getComputedStyle(document.documentElement).getPropertyValue('--color-exito').trim();
+        const COLOR_TEXT = getComputedStyle(document.documentElement).getPropertyValue('--color-texto-oscuro').trim();
+        const COLOR_BG_CHART = '#E0E0E0'; 
+
+        // --- Mapeo de datos (SIMULACIÓN DINÁMICA) ---
+        // Aquí se cargarían los datos reales según el ID.
+        // He usado tu estructura de datos simplificada para el ejemplo.
+        const DATOS_SIMULADOS = {
+            '1': [ // Datos para ?id=1 (Primera Cuadrilla)
+                { id: 1, nombre: "ALVA ALVAREZ ALFONSO DE JESUS", eventos: { retiro: [{ nombre: "Misa Ago", estado: 'ASISTIO' }, { nombre: "Misa Set", estado: 'DISPENSA' }], asamblea: [{ nombre: "Asam May", estado: 'ASISTIO' }, { nombre: "Asam Oct", estado: 'ASISTIO' }], jornadas: [{ nombre: "Jornada 1", estado: 'FALTO' }] } },
+                { id: 2, nombre: "AQUIJE VALDEZ WILLY HUDSON", eventos: { retiro: [{ nombre: "Misa Ago", estado: 'ASISTIO' }, { nombre: "Misa Set", estado: 'DISPENSA' }], asamblea: [{ nombre: "Asam May", estado: 'ASISTIO' }, { nombre: "Asam Oct", estado: 'FALTO' }], jornadas: [{ nombre: "Jornada 1", estado: 'DISPENSA' }] } },
+                // ... más 72 hermanos simulados
+                ...Array.from({ length: 72 }, (_, i) => ({ id: i + 3, nombre: `HERMANO SIMULADO ${i + 3}`, eventos: { retiro: [{ nombre: "Misa Ago", estado: 'ASISTIO' }, { nombre: "Misa Set", estado: 'ASISTIO' }], asamblea: [{ nombre: "Asam May", estado: 'FALTO' }, { nombre: "Asam Oct", estado: 'DISPENSA' }], jornadas: [{ nombre: "Jornada 1", estado: 'FALTO' }] } }))
+            ],
+            '12': [ // Datos para ?id=12 (Ejemplo)
+                { id: 101, nombre: "RAMIREZ PEREZ JULIO CESAR", eventos: { retiro: [{ nombre: "Misa Ago", estado: 'ASISTIO' }, { nombre: "Misa Set", estado: 'ASISTIO' }], asamblea: [{ nombre: "Asam May", estado: 'ASISTIO' }, { nombre: "Asam Oct", estado: 'ASISTIO' }], jornadas: [{ nombre: "Jornada 1", estado: 'ASISTIO' }] } },
+                { id: 102, nombre: "QUISPE CHOQUE JUAN MIGUEL", eventos: { retiro: [{ nombre: "Misa Ago", estado: 'FALTO' }, { nombre: "Misa Set", estado: 'ASISTIO' }], asamblea: [{ nombre: "Asam May", estado: 'DISPENSA' }, { nombre: "Asam Oct", estado: 'FALTO' }], jornadas: [{ nombre: "Jornada 1", estado: 'DISPENSA' }] } },
+            ],
+            'gs': [ // Datos para ?id=gs (Grupo Sahumadoras)
+                { id: 201, nombre: "MORALES VERA MARIA DE LA PAZ", eventos: { retiro: [{ nombre: "Misa Ago", estado: 'ASISTIO' }], asamblea: [{ nombre: "Asam May", estado: 'ASISTIO' }], jornadas: [] } },
+            ]
+            // Agregar más IDs y sus arrays de datos aquí
+        };
+        // ---------------------------------------------
+
+        let datosAsistencias = []; // Variable global que contendrá los datos cargados.
+        let chartPromedioGeneral, chartPromedioMisas, chartAsistenciaIndividual;
+        const tablaBody = document.querySelector('#tablaAsistencias tbody');
+        const detalleModal = document.getElementById('detalleModal');
+        const modalDetalleBody = document.getElementById('modalDetalleBody');
+        const porcentajeLabel = document.getElementById('porcentajeAsistenciaLabel'); 
+        
+        // ==========================================================
+        // FUNCIONES DE UTILIDAD Y MAPPING
+        // ==========================================================
+
+        function obtenerPuntuacion(estado) { return PUNTOS[estado] || 0.0; }
+        
+        function obtenerTextoEstado(estado) {
+            switch (estado) {
+                case 'ASISTIO': return { texto: 'Asistió', clase: 'asistio-bg' };
+                case 'DISPENSA': return { texto: 'Dispensa', clase: 'dispensa-bg' };
+                case 'FALTO': return { texto: 'Faltó', clase: 'falto-bg' };
+                default: return { texto: 'N/A', clase: '' };
             }
         }
-
-        // Mostrar u ocultar el mensaje de "No Results"
-        document.getElementById('noResults').style.display = (visibleCount === 0) ? 'block' : 'none';
-    }
-
-
-    // *************************
-    // LÓGICA DE INICIALIZACIÓN
-    // *************************
-    
-    document.addEventListener('DOMContentLoaded', () => {
-        const cuadrillaId = getQueryParam('id') || '12'; // Por defecto es 12 si no hay parámetro.
-
-        // 1. Configurar Título y Logo
-        const title = getCuadrillaTitle(cuadrillaId);
-        const logoName = getLogoFileName(cuadrillaId);
         
-        document.getElementById('cuadrillaTitle').textContent = `ASISTENCIAS - ${title.toUpperCase()}`;
-        document.getElementById('cuadrillaLogo').src = `https://edwinhsvcl14-maker.github.io/asistencias/${logoName}`; // Asume que tienes una carpeta 'assets/logos'
-        document.getElementById('infoId').textContent = `ID de Cuadrilla: ${cuadrillaId}`;
+        function getOrdinal(n) {
+            const ordinals = ['Primera', 'Segunda', 'Tercera', 'Cuarta', 'Quinta', 'Sexta', 'Séptima', 'Octava', 'Novena', 'Décima', 'Décima Primera', 'Décima Segunda', 'Décima Tercera', 'Décima Cuarta', 'Décima Quinta', 'Décima Sexta', 'Décima Séptima', 'Décima Octava', 'Décima Novena', 'Vigésima'];
+            return ordinals[n - 1] || `Cuadrilla ${n}`;
+        }
+        
+        function loadHeader(id) {
+            const titleElement = document.getElementById('cuadrillaTitulo');
+            const logoElement = document.getElementById('logoImg');
+            const pageTitleElement = document.getElementById('pageTitle');
+            let cuadrillaTitle = '';
+            let logoFileName = '';
 
-        // 2. Cargar y Renderizar Datos
-        loadAttendanceData(cuadrillaId)
-            .then(data => {
-                attendanceData = data;
-                renderAttendanceTable(attendanceData);
-            })
-            .catch(error => {
-                console.error("Error al cargar los datos de la cuadrilla:", error);
-                document.getElementById('tableBody').innerHTML = '<tr><td colspan="100%" style="color: red; font-weight: bold;">Error al cargar los datos. Verifique el ID.</td></tr>';
+            if (id >= 1 && id <= 20) {
+                const number = parseInt(id);
+                const ordinal = getOrdinal(number);
+                cuadrillaTitle = `Control de Asistencia ${ordinal} Cuadrilla`;
+                logoFileName = `logo_${id}cuadrilla.png`; // Ajustado a tu formato de URL
+            } else if (id === 'gs') {
+                cuadrillaTitle = 'Control de Asistencia Grupo de Sahumadoras';
+                logoFileName = 'logo_gs.png';
+            } else if (id === 'gc') {
+                cuadrillaTitle = 'Control de Asistencia Grupo de Cantoras';
+                logoFileName = 'logo_gc.png';
+            } else {
+                cuadrillaTitle = `Error: ID '${id}' no reconocido`;
+            }
+            
+            titleElement.textContent = cuadrillaTitle;
+            pageTitleElement.textContent = cuadrillaTitle;
+            // Usando tu URL base como ejemplo:
+            logoElement.src = `https://edwinhsvcl14-maker.github.io/asistencias/${logoFileName}`; 
+            logoElement.alt = cuadrillaTitle;
+        }
+
+        function obtenerResumenPuntos(hermano) {
+            let resumen = { retiro: 0, asamblea: 0, jornadas: 0, total: 0, totalEventos: 0 };
+            
+            // Usamos Object.keys para iterar sobre retiro, asamblea, jornadas
+            Object.keys(hermano.eventos).forEach(tipo => {
+                hermano.eventos[tipo].forEach(evento => {
+                    const puntos = obtenerPuntuacion(evento.estado);
+                    resumen[tipo] += puntos;
+                    resumen.total += puntos;
+                    resumen.totalEventos += 1;
+                });
             });
             
-        // 3. Habilitar la búsqueda al escribir (opcional: mejor UX)
-        document.getElementById('searchInput').addEventListener('keyup', filterTable);
-    });
+            // Redondear a un decimal
+            resumen.retiro = parseFloat(resumen.retiro.toFixed(1));
+            resumen.asamblea = parseFloat(resumen.asamblea.toFixed(1));
+            resumen.jornadas = parseFloat(resumen.jornadas.toFixed(1));
+            resumen.total = parseFloat(resumen.total.toFixed(1));
+            return resumen;
+        }
 
-</script>
+        // ==========================================================
+        // LÓGICA DE CHART.JS (TU CÓDIGO ORIGINAL)
+        // ==========================================================
+
+        const centerTextDoughnutPlugin = {
+            id: 'centerTextDoughnut',
+            beforeDraw: function(chart) {
+                if (chart.config.options.plugins.centerTextDoughnut) {
+                    const {width, height, ctx} = chart;
+                    ctx.restore();
+                    // Aseguramos que data[0] exista antes de acceder a fixed
+                    const percentage = chart.data.datasets[0].data[0] !== undefined ? chart.data.datasets[0].data[0].toFixed(1) : '0.0';
+                    const fontSize = (height / 120).toFixed(2);
+                    ctx.font = `bold ${fontSize}em 'Georgia', serif`;
+                    ctx.textBaseline = "middle";
+                    const text = `${percentage}%`;
+                    const textX = Math.round((width - ctx.measureText(text).width) / 2);
+                    const textY = height / 2;
+                    ctx.fillStyle = COLOR_TEXT; 
+                    ctx.fillText(text, textX, textY);
+                    ctx.save();
+                }
+            }
+        };
+        Chart.register(centerTextDoughnutPlugin);
+
+        function calcularEstadisticas() {
+            const totalHermanos = datosAsistencias.length;
+            if (totalHermanos === 0) {
+                return { totalHermanos: 0, promedioGeneral: 0, promedioMisas: 0, numeroTotalEventos: 0 };
+            }
+
+            let totalMisasAsistidasPuntos = 0;
+            let sumaTotalPuntosEventosIndividuales = 0; 
+            
+            // Usamos el primer hermano para obtener la plantilla de eventos
+            const eventosPlantilla = datosAsistencias[0].eventos;
+            let numeroTotalEventos = 0;
+            let numMisas = 0;
+            Object.keys(eventosPlantilla).forEach(tipo => {
+                numeroTotalEventos += eventosPlantilla[tipo].length;
+                if (tipo === 'retiro') {
+                    numMisas = eventosPlantilla[tipo].length;
+                }
+            });
+            
+            // Si no hay eventos, el promedio es 0
+            if (numeroTotalEventos === 0) {
+                return { totalHermanos, promedioGeneral: 0, promedioMisas: 0, numeroTotalEventos: 0 };
+            }
+
+
+            datosAsistencias.forEach(persona => {
+                const resumen = obtenerResumenPuntos(persona);
+                sumaTotalPuntosEventosIndividuales += resumen.total;
+                totalMisasAsistidasPuntos += resumen.retiro;
+            });
+
+            // Promedio General
+            const totalPuntosPosiblesEnTodosLosEventos = totalHermanos * numeroTotalEventos * PUNTOS.ASISTIO;
+            const promedioGeneralPorcentaje = (sumaTotalPuntosEventosIndividuales / totalPuntosPosiblesEnTodosLosEventos) * 100;
+
+            // Promedio Misas
+            const promedioMisasPosibles = totalHermanos * numMisas * PUNTOS.ASISTIO;
+            const promedioMisasPorcentaje = (promedioMisasPosibles === 0) ? 0 : (totalMisasAsistidasPuntos / promedioMisasPosibles) * 100;
+
+            return {
+                totalHermanos,
+                promedioGeneral: parseFloat(promedioGeneralPorcentaje.toFixed(1)),
+                promedioMisas: parseFloat(promedioMisasPorcentaje.toFixed(1)),
+                numeroTotalEventos
+            };
+        }
+
+        function renderizarDashboard() {
+            const stats = calcularEstadisticas();
+            document.getElementById('totalHermanos').textContent = stats.totalHermanos;
+
+            // Gráfico de Promedio General
+            const ctxGeneral = document.getElementById('chartPromedioGeneral').getContext('2d');
+            if (chartPromedioGeneral) chartPromedioGeneral.destroy();
+            chartPromedioGeneral = new Chart(ctxGeneral, {
+                type: 'doughnut', data: { datasets: [{ data: [stats.promedioGeneral, 100 - stats.promedioGeneral], backgroundColor: [COLOR_SUCCESS, COLOR_BG_CHART], hoverOffset: 4 }]},
+                options: { responsive: true, maintainAspectRatio: false, cutout: '75%',
+                plugins: { legend: { display: false }, tooltip: { enabled: true }, centerTextDoughnut: true }, animation: { animateRotate: true, animateScale: true } }
+            });
+
+            // Gráfico de Promedio Misas
+            const ctxMisas = document.getElementById('chartPromedioMisas').getContext('2d');
+            if (chartPromedioMisas) chartPromedioMisas.destroy();
+            chartPromedioMisas = new Chart(ctxMisas, {
+                type: 'doughnut', data: { datasets: [{ data: [stats.promedioMisas, 100 - stats.promedioMisas], backgroundColor: [COLOR_ACCENT, COLOR_BG_CHART], hoverOffset: 4 }]},
+                options: { responsive: true, maintainAspectRatio: false, cutout: '75%',
+                plugins: { legend: { display: false }, tooltip: { enabled: true }, centerTextDoughnut: true }, animation: { animateRotate: true, animateScale: true } }
+            });
+        }
+        
+        function renderizarTabla() {
+            tablaBody.innerHTML = ''; 
+            const headers = ['Nombre y Apellido', 'Puntos Retiro', 'Puntos Asambleas', 'Puntos Jornadas', 'PUNTUACIÓN TOTAL', 'Acciones'];
+
+            datosAsistencias.forEach(persona => {
+                const resumen = obtenerResumenPuntos(persona);
+                const fila = document.createElement('tr');
+                
+                // Nombre
+                const celdaNombre = document.createElement('td');
+                celdaNombre.textContent = persona.nombre;
+                celdaNombre.style.textAlign = 'left'; 
+                celdaNombre.setAttribute('data-label', headerLabels[headers[0]]); 
+                fila.appendChild(celdaNombre);
+
+                // Puntos Retiro
+                let celdaRetiro = document.createElement('td');
+                celdaRetiro.textContent = resumen.retiro.toFixed(1);
+                celdaRetiro.classList.add('score-parcial');
+                celdaRetiro.setAttribute('data-label', headerLabels[headers[1]]); 
+                fila.appendChild(celdaRetiro);
+                
+                // Puntos Asamblea
+                let celdaAsamblea = document.createElement('td');
+                celdaAsamblea.textContent = resumen.asamblea.toFixed(1);
+                celdaAsamblea.classList.add('score-parcial');
+                celdaAsamblea.setAttribute('data-label', headerLabels[headers[2]]); 
+                fila.appendChild(celdaAsamblea);
+
+                // Puntos Jornada
+                let celdaJornada = document.createElement('td');
+                celdaJornada.textContent = resumen.jornadas.toFixed(1);
+                celdaJornada.classList.add('score-parcial');
+                celdaJornada.setAttribute('data-label', headerLabels[headers[3]]); 
+                fila.appendChild(celdaJornada);
+
+                // Total
+                const celdaTotal = document.createElement('td');
+                celdaTotal.textContent = resumen.total.toFixed(1);
+                celdaTotal.classList.add('score-total');
+                celdaTotal.setAttribute('data-label', headerLabels[headers[4]]); 
+                fila.appendChild(celdaTotal);
+                
+                // Acción
+                const celdaAccion = document.createElement('td');
+                const btnDetalle = document.createElement('button');
+                btnDetalle.textContent = 'Ver Detalle';
+                btnDetalle.classList.add('btn-detalle');
+                btnDetalle.onclick = () => abrirModal(persona.id);
+                celdaAccion.appendChild(btnDetalle);
+                celdaAccion.setAttribute('data-label', headerLabels[headers[5]]); 
+                fila.appendChild(celdaAccion);
+
+                tablaBody.appendChild(fila);
+            });
+        }
+
+        // ==========================================================
+        // LÓGICA DEL MODAL (TU CÓDIGO ORIGINAL)
+        // ==========================================================
+
+        function abrirModal(idHermano) {
+            const hermano = datosAsistencias.find(p => p.id === idHermano);
+            if (!hermano) return;
+
+            document.getElementById('modalNombreHermano').textContent = `Detalle de Puntuación: ${hermano.nombre}`;
+            modalDetalleBody.innerHTML = '';
+            
+            let puntosObtenidos = 0;
+            let puntosPosibles = 0;
+            
+            Object.keys(hermano.eventos).forEach(tipo => {
+                const tipoDisplay = tipo.charAt(0).toUpperCase() + tipo.slice(1);
+                hermano.eventos[tipo].forEach(evento => {
+                    const puntos = obtenerPuntuacion(evento.estado);
+                    const estadoDetalle = obtenerTextoEstado(evento.estado);
+                    
+                    puntosObtenidos += puntos;
+                    puntosPosibles += PUNTOS.ASISTIO; 
+                    
+                    const fila = document.createElement('tr');
+                    
+                    const celdaTipo = document.createElement('td');
+                    celdaTipo.textContent = tipoDisplay;
+                    
+                    const celdaNombre = document.createElement('td');
+                    celdaNombre.textContent = evento.nombre;
+
+                    const celdaEstado = document.createElement('td');
+                    const spanEstado = document.createElement('span');
+                    spanEstado.textContent = estadoDetalle.texto;
+                    spanEstado.className = estadoDetalle.clase;
+                    celdaEstado.appendChild(spanEstado);
+                    
+                    const celdaPuntuacion = document.createElement('td');
+                    celdaPuntuacion.textContent = puntos.toFixed(1); 
+                    
+                    fila.appendChild(celdaTipo); fila.appendChild(celdaNombre);
+                    fila.appendChild(celdaEstado); fila.appendChild(celdaPuntuacion);
+                    modalDetalleBody.appendChild(fila);
+                });
+            });
+            
+            puntosObtenidos = parseFloat(puntosObtenidos.toFixed(1));
+            const porcentajePuntos = puntosPosibles === 0 ? 0 : (puntosObtenidos / puntosPosibles) * 100;
+            
+            porcentajeLabel.textContent = `${porcentajePuntos.toFixed(1)}% (${puntosObtenidos.toFixed(1)} / ${puntosPosibles.toFixed(1)} Puntos)`;
+            
+            detalleModal.style.display = 'flex'; 
+            
+            setTimeout(() => {
+                detalleModal.classList.add('show');
+                renderizarChartIndividual(porcentajePuntos);
+            }, 50); 
+        }
+
+        function cerrarModal() {
+            detalleModal.classList.remove('show');
+            setTimeout(() => detalleModal.style.display = 'none', 300); 
+            
+            if (chartAsistenciaIndividual) {
+                chartAsistenciaIndividual.destroy();
+                chartAsistenciaIndividual = null;
+            }
+        }
+        
+        function renderizarChartIndividual(porcentaje) {
+            const ctxIndividual = document.getElementById('chartAsistenciaIndividual').getContext('2d');
+            
+            if (chartAsistenciaIndividual) {
+                chartAsistenciaIndividual.destroy();
+            }
+
+            chartAsistenciaIndividual = new Chart(ctxIndividual, {
+                type: 'bar',
+                data: {
+                    labels: ['Puntuación'],
+                    datasets: [
+                        {
+                            label: 'Puntos Obtenidos',
+                            data: [porcentaje],
+                            backgroundColor: COLOR_SUCCESS,
+                            borderWidth: 0,
+                            barPercentage: 1.0,
+                            categoryPercentage: 1.0,
+                        },
+                        {
+                            label: 'Puntos Faltantes',
+                            data: [100 - porcentaje],
+                            backgroundColor: COLOR_BG_CHART,
+                            borderWidth: 0,
+                            barPercentage: 1.0,
+                            categoryPercentage: 1.0,
+                        }
+                    ]
+                },
+                options: {
+                    indexAxis: 'y', 
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            stacked: true,
+                            max: 100,
+                            min: 0,
+                            display: false 
+                        },
+                        y: {
+                            stacked: true,
+                            display: false 
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: true },
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeInOutQuad'
+                    }
+                }
+            });
+        }
+
+
+        function descargarPDF() {
+            alert("Simulando la generación y descarga del reporte detallado.");
+            const contenido = "--- Reporte Detallado de Puntuación ---\n\n" + 
+                               "Cuadrilla: " + document.getElementById('cuadrillaTitulo').textContent + "\n\n" +
+                               "Nombre | Puntuación Total\n" +
+                               "---------------------------------------------------\n" +
+                               datosAsistencias.map(p => 
+                                    `${p.nombre} | ${obtenerResumenPuntos(p).total.toFixed(1)}`
+                               ).join('\n');
+
+            const blob = new Blob([contenido], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Reporte_Puntuacion_Cuadrilla.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // ==========================================================
+        // INICIALIZACIÓN (MODIFICADA PARA DINAMISMO)
+        // ==========================================================
+
+        function initializePage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const cuadrillaId = urlParams.get('id');
+
+            if (!cuadrillaId || !DATOS_SIMULADOS[cuadrillaId]) {
+                const cuadrillaTitulo = document.getElementById('cuadrillaTitulo');
+                cuadrillaTitulo.textContent = 'Error: ID de cuadrilla no encontrado.';
+                cuadrillaTitulo.style.color = 'var(--color-peligro)';
+                return;
+            }
+
+            datosAsistencias = DATOS_SIMULADOS[cuadrillaId];
+            
+            // 1. Cargar Título y Logo
+            loadHeader(cuadrillaId);
+            
+            // 2. Renderizar Contenido
+            if (datosAsistencias.length > 0) {
+                renderizarDashboard();
+                renderizarTabla();
+            } else {
+                document.getElementById('cuadrillaTitulo').textContent += " (Sin datos para mostrar)";
+            }
+
+            // 3. Configurar Event Listeners
+            document.getElementById('btnDescargarPDF').addEventListener('click', descargarPDF);
+            detalleModal.addEventListener('click', (e) => {
+                if (e.target === detalleModal) {
+                    cerrarModal();
+                }
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape" && detalleModal.classList.contains('show')) {
+                    cerrarModal();
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
 
 </body>
 </html>
