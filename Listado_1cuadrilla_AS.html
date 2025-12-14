@@ -427,13 +427,13 @@
                 const number = parseInt(id);
                 const ordinal = getOrdinal(number);
                 cuadrillaTitle = `Control de Asistencia ${ordinal} Cuadrilla`;
-                logoFileName = `logo_${id}cuadrilla.png`;
+                logoFileName = `${id}_.png`;
             } else if (id === 'gs') {
                 cuadrillaTitle = 'Control de Asistencia Grupo de Sahumadoras';
-                logoFileName = 'logo_gs.png';
+                logoFileName = 'gs_.png';
             } else if (id === 'gc') {
                 cuadrillaTitle = 'Control de Asistencia Grupo de Cantoras';
-                logoFileName = 'logo_gc.png';
+                logoFileName = 'gc_.png';
             } else {
                 // Este caso no debería ocurrir si se usa el default '12' correctamente
                 cuadrillaTitle = `Error: ID '${id}' no reconocido`;
