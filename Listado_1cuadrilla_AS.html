@@ -368,8 +368,6 @@
         const COLOR_BG_CHART = '#E0E0E0'; 
 
         // --- Mapeo de datos (SIMULACIÓN DINÁMICA) ---
-        // Aquí se cargarían los datos reales según el ID.
-        // He usado tu estructura de datos simplificada para el ejemplo.
         const DATOS_SIMULADOS = {
             '1': [ // Datos para ?id=1 (Primera Cuadrilla)
                 { id: 1, nombre: "ALVA ALVAREZ ALFONSO DE JESUS", eventos: { retiro: [{ nombre: "Misa Ago", estado: 'ASISTIO' }, { nombre: "Misa Set", estado: 'DISPENSA' }], asamblea: [{ nombre: "Asam May", estado: 'ASISTIO' }, { nombre: "Asam Oct", estado: 'ASISTIO' }], jornadas: [{ nombre: "Jornada 1", estado: 'FALTO' }] } },
@@ -377,18 +375,21 @@
                 // ... más 72 hermanos simulados
                 ...Array.from({ length: 72 }, (_, i) => ({ id: i + 3, nombre: `HERMANO SIMULADO ${i + 3}`, eventos: { retiro: [{ nombre: "Misa Ago", estado: 'ASISTIO' }, { nombre: "Misa Set", estado: 'ASISTIO' }], asamblea: [{ nombre: "Asam May", estado: 'FALTO' }, { nombre: "Asam Oct", estado: 'DISPENSA' }], jornadas: [{ nombre: "Jornada 1", estado: 'FALTO' }] } }))
             ],
-            '12': [ // Datos para ?id=12 (Ejemplo)
+            // **ESTE ES EL ID POR DEFECTO REQUERIDO**
+            '12': [ 
                 { id: 101, nombre: "RAMIREZ PEREZ JULIO CESAR", eventos: { retiro: [{ nombre: "Misa Ago", estado: 'ASISTIO' }, { nombre: "Misa Set", estado: 'ASISTIO' }], asamblea: [{ nombre: "Asam May", estado: 'ASISTIO' }, { nombre: "Asam Oct", estado: 'ASISTIO' }], jornadas: [{ nombre: "Jornada 1", estado: 'ASISTIO' }] } },
                 { id: 102, nombre: "QUISPE CHOQUE JUAN MIGUEL", eventos: { retiro: [{ nombre: "Misa Ago", estado: 'FALTO' }, { nombre: "Misa Set", estado: 'ASISTIO' }], asamblea: [{ nombre: "Asam May", estado: 'DISPENSA' }, { nombre: "Asam Oct", estado: 'FALTO' }], jornadas: [{ nombre: "Jornada 1", estado: 'DISPENSA' }] } },
             ],
-            'gs': [ // Datos para ?id=gs (Grupo Sahumadoras)
+            'gs': [ 
                 { id: 201, nombre: "MORALES VERA MARIA DE LA PAZ", eventos: { retiro: [{ nombre: "Misa Ago", estado: 'ASISTIO' }], asamblea: [{ nombre: "Asam May", estado: 'ASISTIO' }], jornadas: [] } },
+            ],
+            'gc': [
+                 { id: 301, nombre: "SANCHEZ PEREZ TERESA", eventos: { retiro: [{ nombre: "Misa 1", estado: 'ASISTIO' }], asamblea: [{ nombre: "Asam 1", estado: 'ASISTIO' }], jornadas: [{ nombre: "Jornada 1", estado: 'ASISTIO' }] } },
             ]
-            // Agregar más IDs y sus arrays de datos aquí
         };
         // ---------------------------------------------
 
-        let datosAsistencias = []; // Variable global que contendrá los datos cargados.
+        let datosAsistencias = []; 
         let chartPromedioGeneral, chartPromedioMisas, chartAsistenciaIndividual;
         const tablaBody = document.querySelector('#tablaAsistencias tbody');
         const detalleModal = document.getElementById('detalleModal');
@@ -426,7 +427,7 @@
                 const number = parseInt(id);
                 const ordinal = getOrdinal(number);
                 cuadrillaTitle = `Control de Asistencia ${ordinal} Cuadrilla`;
-                logoFileName = `logo_${id}cuadrilla.png`; // Ajustado a tu formato de URL
+                logoFileName = `logo_${id}cuadrilla.png`;
             } else if (id === 'gs') {
                 cuadrillaTitle = 'Control de Asistencia Grupo de Sahumadoras';
                 logoFileName = 'logo_gs.png';
@@ -434,12 +435,12 @@
                 cuadrillaTitle = 'Control de Asistencia Grupo de Cantoras';
                 logoFileName = 'logo_gc.png';
             } else {
+                // Este caso no debería ocurrir si se usa el default '12' correctamente
                 cuadrillaTitle = `Error: ID '${id}' no reconocido`;
             }
             
             titleElement.textContent = cuadrillaTitle;
             pageTitleElement.textContent = cuadrillaTitle;
-            // Usando tu URL base como ejemplo:
             logoElement.src = `https://edwinhsvcl14-maker.github.io/asistencias/${logoFileName}`; 
             logoElement.alt = cuadrillaTitle;
         }
@@ -447,7 +448,6 @@
         function obtenerResumenPuntos(hermano) {
             let resumen = { retiro: 0, asamblea: 0, jornadas: 0, total: 0, totalEventos: 0 };
             
-            // Usamos Object.keys para iterar sobre retiro, asamblea, jornadas
             Object.keys(hermano.eventos).forEach(tipo => {
                 hermano.eventos[tipo].forEach(evento => {
                     const puntos = obtenerPuntuacion(evento.estado);
@@ -457,7 +457,6 @@
                 });
             });
             
-            // Redondear a un decimal
             resumen.retiro = parseFloat(resumen.retiro.toFixed(1));
             resumen.asamblea = parseFloat(resumen.asamblea.toFixed(1));
             resumen.jornadas = parseFloat(resumen.jornadas.toFixed(1));
@@ -466,7 +465,7 @@
         }
 
         // ==========================================================
-        // LÓGICA DE CHART.JS (TU CÓDIGO ORIGINAL)
+        // LÓGICA DE CHART.JS 
         // ==========================================================
 
         const centerTextDoughnutPlugin = {
@@ -475,7 +474,6 @@
                 if (chart.config.options.plugins.centerTextDoughnut) {
                     const {width, height, ctx} = chart;
                     ctx.restore();
-                    // Aseguramos que data[0] exista antes de acceder a fixed
                     const percentage = chart.data.datasets[0].data[0] !== undefined ? chart.data.datasets[0].data[0].toFixed(1) : '0.0';
                     const fontSize = (height / 120).toFixed(2);
                     ctx.font = `bold ${fontSize}em 'Georgia', serif`;
@@ -500,7 +498,6 @@
             let totalMisasAsistidasPuntos = 0;
             let sumaTotalPuntosEventosIndividuales = 0; 
             
-            // Usamos el primer hermano para obtener la plantilla de eventos
             const eventosPlantilla = datosAsistencias[0].eventos;
             let numeroTotalEventos = 0;
             let numMisas = 0;
@@ -511,7 +508,6 @@
                 }
             });
             
-            // Si no hay eventos, el promedio es 0
             if (numeroTotalEventos === 0) {
                 return { totalHermanos, promedioGeneral: 0, promedioMisas: 0, numeroTotalEventos: 0 };
             }
@@ -620,7 +616,7 @@
         }
 
         // ==========================================================
-        // LÓGICA DEL MODAL (TU CÓDIGO ORIGINAL)
+        // LÓGICA DEL MODAL
         // ==========================================================
 
         function abrirModal(idHermano) {
@@ -699,24 +695,10 @@
                 type: 'bar',
                 data: {
                     labels: ['Puntuación'],
-                    datasets: [
-                        {
-                            label: 'Puntos Obtenidos',
-                            data: [porcentaje],
-                            backgroundColor: COLOR_SUCCESS,
-                            borderWidth: 0,
-                            barPercentage: 1.0,
-                            categoryPercentage: 1.0,
-                        },
-                        {
-                            label: 'Puntos Faltantes',
-                            data: [100 - porcentaje],
-                            backgroundColor: COLOR_BG_CHART,
-                            borderWidth: 0,
-                            barPercentage: 1.0,
-                            categoryPercentage: 1.0,
-                        }
-                    ]
+                    datasets: [{
+                        data: [porcentaje, 100 - porcentaje], 
+                        backgroundColor: [COLOR_SUCCESS, COLOR_BG_CHART], 
+                    }]
                 },
                 options: {
                     indexAxis: 'y', 
@@ -725,92 +707,55 @@
                     scales: {
                         x: {
                             stacked: true,
-                            max: 100,
-                            min: 0,
-                            display: false 
+                            max: 100, 
+                            display: false, 
                         },
                         y: {
                             stacked: true,
-                            display: false 
+                            display: false, 
                         }
                     },
                     plugins: {
                         legend: { display: false },
-                        tooltip: { enabled: true },
+                        tooltip: { enabled: false }
                     },
-                    animation: {
-                        duration: 1000,
-                        easing: 'easeInOutQuad'
+                    layout: {
+                        padding: { top: 0, bottom: 0 }
                     }
                 }
             });
         }
-
-
-        function descargarPDF() {
-            alert("Simulando la generación y descarga del reporte detallado.");
-            const contenido = "--- Reporte Detallado de Puntuación ---\n\n" + 
-                               "Cuadrilla: " + document.getElementById('cuadrillaTitulo').textContent + "\n\n" +
-                               "Nombre | Puntuación Total\n" +
-                               "---------------------------------------------------\n" +
-                               datosAsistencias.map(p => 
-                                    `${p.nombre} | ${obtenerResumenPuntos(p).total.toFixed(1)}`
-                               ).join('\n');
-
-            const blob = new Blob([contenido], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Reporte_Puntuacion_Cuadrilla.txt';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
-
+        
         // ==========================================================
-        // INICIALIZACIÓN (MODIFICADA PARA DINAMISMO)
+        // FUNCIÓN DE INICIALIZACIÓN CON LÓGICA DE ID POR DEFECTO
         // ==========================================================
 
-        function initializePage() {
+        function inicializar() {
             const urlParams = new URLSearchParams(window.location.search);
-            const cuadrillaId = urlParams.get('id');
+            let idCuadrilla = urlParams.get('id');
 
-            if (!cuadrillaId || !DATOS_SIMULADOS[cuadrillaId]) {
-                const cuadrillaTitulo = document.getElementById('cuadrillaTitulo');
-                cuadrillaTitulo.textContent = 'Error: ID de cuadrilla no encontrado.';
-                cuadrillaTitulo.style.color = 'var(--color-peligro)';
-                return;
+            // LÓGICA CLAVE: Si no hay ID o si el ID en la URL no tiene datos, USAR '12'.
+            if (!idCuadrilla || !DATOS_SIMULADOS[idCuadrilla]) {
+                idCuadrilla = '12'; 
             }
+            
+            datosAsistencias = DATOS_SIMULADOS[idCuadrilla];
 
-            datosAsistencias = DATOS_SIMULADOS[cuadrillaId];
-            
-            // 1. Cargar Título y Logo
-            loadHeader(cuadrillaId);
-            
-            // 2. Renderizar Contenido
-            if (datosAsistencias.length > 0) {
-                renderizarDashboard();
-                renderizarTabla();
+            if (!datosAsistencias) {
+                // Este bloque maneja un caso de error si el ID por defecto no tuviera datos.
+                document.getElementById('cuadrillaTitulo').textContent = `Error: ID de cuadrilla no encontrado. (ID usado: ${idCuadrilla})`;
+                datosAsistencias = []; 
             } else {
-                document.getElementById('cuadrillaTitulo').textContent += " (Sin datos para mostrar)";
+                loadHeader(idCuadrilla);
             }
-
-            // 3. Configurar Event Listeners
-            document.getElementById('btnDescargarPDF').addEventListener('click', descargarPDF);
-            detalleModal.addEventListener('click', (e) => {
-                if (e.target === detalleModal) {
-                    cerrarModal();
-                }
-            });
-            document.addEventListener('keydown', (e) => {
-                if (e.key === "Escape" && detalleModal.classList.contains('show')) {
-                    cerrarModal();
-                }
-            });
+            
+            renderizarDashboard();
+            renderizarTabla();
         }
 
-        document.addEventListener('DOMContentLoaded', initializePage);
-    </script>
+        // Ejecutar la función de inicialización al cargar la página
+        window.onload = inicializar;
 
+    </script>
 </body>
 </html>
